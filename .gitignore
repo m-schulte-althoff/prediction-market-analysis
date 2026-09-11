@@ -216,3 +216,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+prompts/
+
+# Research data and run logs are generated locally. Raw snapshots are immutable
+# and derived tables are reproducible from the public APIs.
+data/
+logs/

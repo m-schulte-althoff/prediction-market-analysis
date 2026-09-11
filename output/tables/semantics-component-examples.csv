@@ -1,0 +1,9 @@
+platform,platform_contract_id,question,source_specificity,temporal_specificity,outcome_definition,edge_completeness,discretion_clarity,determinacy_score,rule_word_count
+Kalshi,SENATETX-26-D,Will Democratics win the Senate race in Texas?,0.0,0.15,0.43000000000000005,0.12,0.75,0.29000000000000004,76.0
+Kalshi,SENATETX-26-R,Will Republicans win the Senate race in Texas?,0.0,0.15,0.43000000000000005,0.12,0.75,0.29000000000000004,76.0
+Kalshi,KXGOVTSHUTLENGTH-26FEB07-G3,"Will the US government be shut down for at least 3 days between Feb 7, 2026 and Dec 31, 2026?",1.0,0.8500000000000001,0.7799999999999999,0.6,1.0,0.8460000000000001,544.0
+Kalshi,KXGOVTSHUTLENGTH-26FEB07-G5,"Will the US government be shut down for at least 5 days between Feb 7, 2026 and Dec 31, 2026?",1.0,0.8500000000000001,0.7799999999999999,0.6,1.0,0.8460000000000001,544.0
+Polymarket,505616,Will Drake Maye win NFL Offensive Rookie of the Year?,0.0,0.0,0.55,0.36,0.5,0.28200000000000003,67.0
+Polymarket,505750,Will another player win NFL Offensive Rookie of the Year?,0.0,0.0,0.55,0.36,0.5,0.28200000000000003,90.0
+Polymarket,1894790,Will WTI Crude Oil (WTI) hit (LOW) $90 in April?,1.0,0.8500000000000001,0.8999999999999999,0.72,1.0,0.8939999999999999,415.0
+Polymarket,1929111,Will WTI Crude Oil (WTI) hit (LOW) $75 in April?,1.0,0.8500000000000001,0.8999999999999999,0.72,1.0,0.8939999999999999,415.0
