@@ -26,6 +26,22 @@ def matching_text(question: str) -> str:
     return SPACE.sub(" ", GENERIC_WORDS.sub(" ", text)).strip()
 
 
+def phenomenon_text(question: str) -> str:
+    """Remove claim-specific quantities when retrieving shared-phenomenon candidates."""
+
+    return SPACE.sub(" ", re.sub(r"\b\d+(?:\.\d+)?%?\b", " ", matching_text(question))).strip()
+
+
+def _token_similarity(left: str, right: str) -> float:
+    """Return auditable Jaccard similarity for full claim wording."""
+
+    left_tokens = set(matching_text(left).split())
+    right_tokens = set(matching_text(right).split())
+    if not left_tokens and not right_tokens:
+        return 1.0
+    return len(left_tokens & right_tokens) / len(left_tokens | right_tokens)
+
+
 def _number_overlap(left: str, right: str) -> float:
     """Return set overlap for explicit thresholds and year/date numbers."""
 
@@ -98,14 +114,14 @@ def _nearest_candidates(
 
 
 def match_contracts(contracts: pd.DataFrame, neighbors: int = 3) -> pd.DataFrame:
-    """Generate high-confidence, probable, and rejected cross-platform candidates."""
+    """Retrieve shared phenomena, then separately classify claim-equivalence candidates."""
 
     kalshi = contracts.loc[contracts["platform"] == "Kalshi"].reset_index(drop=True)
     poly = contracts.loc[contracts["platform"] == "Polymarket"].reset_index(drop=True)
     if kalshi.empty or poly.empty:
         return pd.DataFrame()
-    kalshi_text = kalshi["question"].map(matching_text).tolist()
-    poly_text = poly["question"].map(matching_text).tolist()
+    kalshi_text = kalshi["question"].map(phenomenon_text).tolist()
+    poly_text = poly["question"].map(phenomenon_text).tolist()
     distances, indices = _nearest_candidates(kalshi_text, poly_text, neighbors)
 
     candidates: list[dict[str, object]] = []
@@ -115,7 +131,8 @@ def match_contracts(contracts: pd.DataFrame, neighbors: int = 3) -> pd.DataFrame
             zip(distances[left_index], indices[left_index], strict=True), start=1
         ):
             right = poly.iloc[int(right_index)]
-            lexical = _bounded_similarity(1 - float(distance))
+            phenomenon_similarity = _bounded_similarity(1 - float(distance))
+            lexical = _token_similarity(str(left["question"]), str(right["question"]))
             number_overlap = _number_overlap(left["question"], right["question"])
             deadline_days = _day_difference(left["close_timestamp"], right["close_timestamp"])
             absolute_days = abs(deadline_days) if np.isfinite(deadline_days) else 9_999.0
@@ -150,13 +167,22 @@ def match_contracts(contracts: pd.DataFrame, neighbors: int = 3) -> pd.DataFrame
                     "kalshi_close_timestamp": left["close_timestamp"],
                     "polymarket_close_timestamp": right["close_timestamp"],
                     "candidate_rank": rank,
+                    "phenomenon_similarity": phenomenon_similarity,
+                    "phenomenon_match_label": (
+                        "strong_candidate"
+                        if phenomenon_similarity >= 0.55
+                        else "possible_candidate"
+                        if phenomenon_similarity >= 0.40
+                        else "weak_candidate"
+                    ),
                     "lexical_similarity": lexical,
                     "number_overlap": number_overlap,
                     "predicate_compatible": predicate_compatible,
                     "deadline_difference_days": deadline_days,
-                    "match_confidence": 0.75 * lexical
+                    "match_confidence": 0.55 * lexical
                     + 0.15 * number_overlap
-                    + 0.10 * max(0.0, 1 - absolute_days / 180),
+                    + 0.10 * max(0.0, 1 - absolute_days / 180)
+                    + 0.20 * phenomenon_similarity,
                     "match_label": label,
                     **divergence,
                 }

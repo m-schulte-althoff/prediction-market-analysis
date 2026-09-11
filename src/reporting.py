@@ -8,6 +8,21 @@ from pathlib import Path
 import pandas as pd
 
 
+def _records(frame: pd.DataFrame) -> list[dict[str, object]]:
+    """Convert pandas records to mappings with explicit string keys."""
+
+    return [
+        {str(key): value for key, value in record.items()}
+        for record in frame.to_dict(orient="records")
+    ]
+
+
+def _value(record: dict[str, object], key: str) -> float:
+    """Convert one model-table cell to a float."""
+
+    return float(str(record[key]))
+
+
 def coverage_table(contracts: pd.DataFrame) -> pd.DataFrame:
     """Summarize market counts, dates, and volume by platform."""
 
@@ -48,6 +63,25 @@ def semantic_examples(contracts: pd.DataFrame) -> pd.DataFrame:
     return pd.concat(examples, ignore_index=True)[columns]
 
 
+def _model_record(models: pd.DataFrame, name: str) -> dict[str, object] | None:
+    """Return one named model record when it was estimable."""
+
+    if models.empty:
+        return None
+    rows = models.loc[models["model"] == name]
+    return None if rows.empty else _records(rows)[0]
+
+
+def _estimate(record: dict[str, object], uncertainty: str = "SE") -> str:
+    """Format a coefficient with uncertainty and sample size."""
+
+    return (
+        f"{_value(record, 'coefficient'):.3f} ({uncertainty} "
+        f"{_value(record, 'std_error'):.3f}, p={_value(record, 'p_value'):.3g}, "
+        f"n={int(_value(record, 'n')):,})"
+    )
+
+
 def write_research_log(
     path: Path,
     models: pd.DataFrame,
@@ -55,90 +89,59 @@ def write_research_log(
     matches: pd.DataFrame,
     matched_models: pd.DataFrame,
 ) -> None:
-    """Record all substantive specifications, including weak or infeasible ones."""
+    """Record substantive specifications, including weakened and infeasible results."""
 
+    baseline = _model_record(models, "main_composite")
+    cohort = _model_record(models, "cohort_exposure_adjusted")
+    within_kalshi = _model_record(models, "within_family_kalshi")
+    within_poly = _model_record(models, "within_family_polymarket")
+    counts = matches["match_label"].value_counts() if not matches.empty else pd.Series(dtype=int)
     lines = [
         "# Research Log",
         "",
-        f"## {date.today().isoformat()} — Iteration 1: transparent composite",
+        f"## {date.today().isoformat()} — sample and exposure audit",
         "",
+        "- Removed sports before imposing the Polymarket volume cap using official fields plus a documented conservative taxonomy. This corrects contamination by tournament families.",
+        "- Parsed mixed ISO timestamp precision explicitly; the prior coercion had erased Polymarket resolution timestamps.",
+        "- Replaced scheduled duration with retrieval-capped observed exposure in the preferred volume specification and added opening-year cohorts.",
     ]
-    main = models.loc[models["model"] == "main_composite"] if not models.empty else pd.DataFrame()
-    if not main.empty:
-        main_row = main.iloc[0]
-        lines.extend(
-            [
-                "- Question: Does semantic determinacy predict within-platform standardized log volume, controlling for rule length, market duration, platform, and category?",
-                f"- Result: coefficient {main_row['coefficient']:.3f} (HC3 SE {main_row['std_error']:.3f}, p={main_row['p_value']:.3g}, n={int(main_row['n'])}).",
-                "- Interpretation: The inverse sign contradicts a simple participation-cost account and is consistent with ambiguity attracting heterogeneous-interpretation trading; volume is not direct evidence of forecast quality or causality.",
-                "- Decision: Separate semantic clarity from rule complexity and repeat within platform.",
-            ]
-        )
-    lines.extend(["", f"## {date.today().isoformat()} — Iteration 2: complexity separation", ""])
-    robust = (
-        models.loc[models["model"] == "complexity_separated"]
-        if not models.empty
-        else pd.DataFrame()
-    )
-    if not robust.empty:
-        robust_row = robust.iloc[0]
-        lines.extend(
-            [
-                "- Question: Does a core score excluding edge-case completeness survive controls for both rule length and conditional-clause count?",
-                f"- Result: coefficient {robust_row['coefficient']:.3f} (HC3 SE {robust_row['std_error']:.3f}, p={robust_row['p_value']:.3g}).",
-                "- Interpretation: This check reduces the risk that the composite is merely a verbose-rules measure.",
-                "- Decision: Add clustered and event/series-aggregated specifications to rule out repeated-template pseudoreplication.",
-            ]
-        )
-    robustness = (
-        models.loc[models["model"].isin(["main_series_clustered", "event_series_aggregated"])]
-        if not models.empty
-        else pd.DataFrame()
-    )
+    if baseline is not None:
+        lines.append(f"- Original-style baseline determinacy coefficient: {_estimate(baseline, 'HC3 SE')}.")
+    if cohort is not None:
+        lines.append(f"- Preferred exposure/cohort-adjusted coefficient: {_estimate(cohort, 'HC3 SE')}.")
     lines.extend(
         [
             "",
-            f"## {date.today().isoformat()} — Iteration 3: dependence and forecast error",
+            f"## {date.today().isoformat()} — within-family diagnostic",
             "",
+            "- Question: Does determinacy predict volume using only variation inside repeated Kalshi series or Polymarket events? This removes stable family popularity by demeaning outcomes and controls within family.",
         ]
     )
-    for record in robustness.to_dict(orient="records"):
-        lines.append(
-            f"- {record['model']}: determinacy coefficient {record['coefficient']:.3f} (SE {record['std_error']:.3f}, p={record['p_value']:.3g}, n={int(record['n'])})."
-        )
-    if not error_models.empty:
-        error_row = error_models.iloc[0]
-        lines.extend(
-            [
-                f"- Terminal-error result: coefficient {error_row['coefficient']:.3f} probability points per determinacy SD (series-clustered SE {error_row['std_error']:.3f}, p={error_row['p_value']:.3g}, n={int(error_row['n'])}).",
-                "- Interpretation: The volume pattern does not translate into detectable last-trade accuracy differences; this is an important null, and terminal timing is not a fixed forecast horizon.",
-                "- Decision: Reframe the current result as an ambiguity–activity phenomenon and prioritize fixed-horizon errors/spreads in follow-up work.",
-            ]
-        )
-    counts = matches["match_label"].value_counts() if not matches.empty else pd.Series(dtype=int)
+    for platform, record in (("Kalshi", within_kalshi), ("Polymarket", within_poly)):
+        if record is not None:
+            lines.append(f"- {platform}: {_estimate(record, 'family-clustered SE')}.")
+    lines.append(
+        "- Decision: Treat the determinacy–volume association as secondary and exploratory unless stronger within-family or fixed-window-volume evidence emerges. A weak/null within-family estimate is evidence about identification, not evidence that representations do not matter."
+    )
     lines.extend(
         [
             "",
-            f"## {date.today().isoformat()} — Iteration 4: cross-platform matching",
+            f"## {date.today().isoformat()} — construct and case audit",
             "",
-            "- Question: Can same-underlying-event contracts be isolated with conservative lexical, numeric, and date agreement before comparing resolution conditions?",
-            f"- Result: {int(counts.get('high_confidence', 0))} high-confidence, {int(counts.get('probable', 0))} probable, and {int(counts.get('rejected', 0))} rejected candidates retained for audit.",
+            "- Recast semantic determinacy as an intra-contract property and divergence as an inter-contract property; neither is a substitute for the other.",
+            "- Require a counterfactual witness state and implied settlement on each side before calling a pair truth-condition divergent. Automated text distances remain candidate diagnostics only.",
+            f"- Matching inventory: {int(counts.get('high_confidence', 0))} high-confidence, {int(counts.get('probable', 0))} probable, and {int(counts.get('rejected', 0))} rejected candidates retained for audit.",
         ]
     )
     if not matched_models.empty:
-        matched_row = matched_models.iloc[0]
-        lines.extend(
-            [
-                f"- Price-panel result: a one-unit divergence increase corresponds to {matched_row['coefficient']:.3f} absolute probability disagreement in the last 30 days (HC3 SE {matched_row['std_error']:.3f}, p={matched_row['p_value']:.3g}, n={int(matched_row['n'])}).",
-                "- Decision: Treat this small matched-panel estimate as suggestive mechanism evidence pending human validation and broader price-history coverage.",
-            ]
+        lines.append(
+            f"- Sparse matched-price diagnostic: {_estimate(_records(matched_models)[0], 'HC3 SE')}."
         )
     else:
-        lines.extend(
-            [
-                "- Price-panel result: insufficient aligned high-confidence histories for a stable regression; retained as a visible failed/limited specification.",
-                "- Decision: Use matched examples diagnostically and prioritize human validation plus expanded history coverage.",
-            ]
+        lines.append("- Matched-price regression remains infeasible; no average divergence claim is made.")
+    if not error_models.empty:
+        lines.append(
+            f"- Kalshi last-trade error diagnostic: {_estimate(_records(error_models)[0], 'series-clustered SE')}; this is not a common-horizon accuracy test."
         )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -152,156 +155,246 @@ def write_research_summary(
     matches: pd.DataFrame,
     panel_summary: pd.DataFrame,
     matched_models: pd.DataFrame,
+    cases: pd.DataFrame,
 ) -> None:
-    """Write the requested first-study summary with appropriately bounded claims."""
+    """Write the paper-oriented summary with bounded, critic-audited claims."""
 
     coverage = coverage_table(contracts)
     platform_descriptions = "; ".join(
-        f"{record['platform']}: {int(float(record['contracts'])):,} contracts"
-        for record in coverage.to_dict(orient="records")
+        f"{record['platform']}: {int(_value(record, 'contracts')):,} contracts"
+        for record in _records(coverage)
     )
     high_matches = matches.loc[matches["match_label"] == "high_confidence"]
-    main = models.loc[models["model"] == "main_composite"]
-    robust = models.loc[models["model"] == "complexity_separated"]
-    platform_rows = models.loc[models["model"].str.startswith("within_")]
-    dependence_rows = models.loc[
-        models["model"].isin(["main_series_clustered", "event_series_aggregated"])
-    ]
-
-    results: list[str] = []
-    if not main.empty:
-        main_row = main.iloc[0]
-        results.append(
-            f"**Primary exploratory association.** A one-SD increase in within-platform determinacy is associated with {main_row['coefficient']:.3f} SD in log volume (HC3 SE {main_row['std_error']:.3f}, 95% CI [{main_row['ci_lower']:.3f}, {main_row['ci_upper']:.3f}], p={main_row['p_value']:.3g}; n={int(main_row['n']):,})."
-        )
-    if not robust.empty:
-        robust_row = robust.iloc[0]
-        results.append(
-            f"**Complexity-separated robustness.** Excluding edge-case completeness from the clarity score while directly controlling rule length and conditional clauses gives {robust_row['coefficient']:.3f} SD (SE {robust_row['std_error']:.3f}, p={robust_row['p_value']:.3g})."
-        )
-    if not platform_rows.empty:
-        detail = "; ".join(
-            f"{str(record['model']).removeprefix('within_').title()} {record['coefficient']:.3f} (p={record['p_value']:.3g})"
-            for record in platform_rows.to_dict(orient="records")
-        )
-        results.append(f"**Platform heterogeneity.** {detail}.")
-    if not dependence_rows.empty:
-        detail = "; ".join(
-            f"{record['model']}: {record['coefficient']:.3f} (SE {record['std_error']:.3f}, p={record['p_value']:.3g})"
-            for record in dependence_rows.to_dict(orient="records")
-        )
-        results.append(f"**Dependence robustness.** {detail}.")
-    if not error_models.empty:
-        error_row = error_models.iloc[0]
-        results.append(
-            f"**Forecast-error null.** For Kalshi's last traded price, determinacy predicts {error_row['coefficient']:.3f} probability points of absolute error per SD (series-clustered SE {error_row['std_error']:.3f}, p={error_row['p_value']:.3g}; n={int(error_row['n']):,}). This is not statistically distinguishable from zero."
-        )
-    if not matched_models.empty:
-        matched_row = matched_models.iloc[0]
-        results.append(
-            f"**Suggestive matched evidence.** In {int(matched_row['n'])} aligned pairs, a one-unit divergence increase predicts {matched_row['coefficient']:.3f} greater absolute probability disagreement during the last 30 days (SE {matched_row['std_error']:.3f}, p={matched_row['p_value']:.3g})."
-        )
-    else:
-        results.append(
-            "**Matched-price limitation.** The first aligned panel is too small for a stable divergence regression; matched contracts are evidence-generating examples, not a confirmed average effect."
-        )
-
-    example_lines: list[str] = []
-    examples = high_matches.sort_values(
-        ["semantic_divergence", "match_confidence"], ascending=False
-    ).head(4)
-    for record in examples.to_dict(orient="records"):
-        example_lines.append(
-            f"- **Kalshi:** {record['kalshi_question']} **Polymarket:** {record['polymarket_question']} Difference flagged: {record['identified_semantic_difference']}."
-        )
-    if not example_lines:
-        example_lines.append("- No pair crossed the deliberately conservative high-confidence threshold.")
-
+    baseline = _model_record(models, "main_composite")
+    cohort = _model_record(models, "cohort_exposure_adjusted")
+    resolved = _model_record(models, "resolved_cohort_adjusted")
+    within_kalshi = _model_record(models, "within_family_kalshi")
+    within_poly = _model_record(models, "within_family_polymarket")
+    qualitative = _model_record(models, "qualitative_contracts")
+    quantitative = _model_record(models, "quantitative_contracts")
+    ambiguity = _model_record(models, "direct_ambiguity_count")
+    temporal_rows = models.loc[models["model"].str.startswith("temporal_")]
     first_open = contracts["open_timestamp"].min()
     last_resolution = contracts["resolution_timestamp"].max()
-    observed_pairs = len(panel_summary)
+
+    result_lines: list[str] = []
+    if baseline is not None:
+        result_lines.append(
+            f"- **Baseline association:** one within-platform SD more measured determinacy corresponds to {_estimate(baseline, 'HC3 SE')} SD in log volume."
+        )
+    if cohort is not None:
+        result_lines.append(
+            f"- **Preferred cohort/exposure specification:** replacing scheduled duration with observed exposure and adding opening-year controls gives {_estimate(cohort, 'HC3 SE')}."
+        )
+    if resolved is not None:
+        result_lines.append(f"- **Resolved contracts only:** {_estimate(resolved, 'HC3 SE')}.")
+    for label, model_record in (("Kalshi", within_kalshi), ("Polymarket", within_poly)):
+        if model_record is not None:
+            result_lines.append(
+                f"- **Within-family {label}:** {_estimate(model_record, 'family-clustered SE')}. This estimand uses only families whose determinacy varies internally."
+            )
+    type_parts = []
+    if qualitative is not None:
+        type_parts.append(f"qualitative {_estimate(qualitative, 'SE')}")
+    if quantitative is not None:
+        type_parts.append(f"quantitative {_estimate(quantitative, 'SE')}")
+    if type_parts:
+        result_lines.append(f"- **Contract-type heterogeneity:** {'; '.join(type_parts)}.")
+    if ambiguity is not None:
+        result_lines.append(
+            f"- **Direct ambiguity lexicon check:** one SD more flagged ambiguity terms corresponds to {_estimate(ambiguity, 'SE')} SD in log volume."
+        )
+    if not temporal_rows.empty:
+        temporal_detail = "; ".join(
+            f"{str(record['model']).removeprefix('temporal_').replace('_', ' ')} {_estimate(record)}"
+            for record in _records(temporal_rows)
+        )
+        result_lines.append(
+            f"- **Temporal replication split (July 1, 2025):** {temporal_detail}. This is a stability diagnostic, not a preregistered holdout test."
+        )
+    if not error_models.empty:
+        result_lines.append(
+            f"- **Forecast-error diagnostic:** {_estimate(_records(error_models)[0], 'series-clustered SE')}. The coefficient is not a fixed-horizon accuracy comparison and a null is not evidence of equivalence."
+        )
+    diagnostic_interpretation: list[str] = []
+    if (
+        qualitative is not None
+        and quantitative is not None
+        and _value(qualitative, "p_value") >= 0.05
+        and _value(quantitative, "p_value") < 0.05
+    ):
+        diagnostic_interpretation.append(
+            "- **Interpretation:** the inverse association is concentrated in quantitative-threshold contracts; the qualitative-contract estimate is not distinguishable from zero. This is more consistent with threshold-family composition than with a general ambiguity–activity effect."
+        )
+    if ambiguity is not None and _value(ambiguity, "coefficient") <= 0:
+        diagnostic_interpretation.append(
+            "- **Interpretation:** directly flagged ambiguous language is associated with less, not more, activity after controls, so the current metadata do not directly support the heterogeneous-interpretation mechanism."
+        )
+    if (
+        within_kalshi is not None
+        and within_poly is not None
+        and _value(within_kalshi, "p_value") >= 0.05
+        and _value(within_poly, "p_value") >= 0.05
+    ):
+        diagnostic_interpretation.append(
+            "- **Interpretation:** neither platform has a detectable within-family determinacy coefficient. The pooled result is therefore primarily a between-family pattern."
+        )
+    temporal_lookup = {
+        str(record["model"]): record for record in _records(temporal_rows)
+    }
+    early_kalshi = temporal_lookup.get("temporal_early_kalshi")
+    early_poly = temporal_lookup.get("temporal_early_polymarket")
+    late_kalshi = temporal_lookup.get("temporal_late_kalshi")
+    late_poly = temporal_lookup.get("temporal_late_polymarket")
+    if (
+        early_kalshi is not None
+        and early_poly is not None
+        and late_kalshi is not None
+        and late_poly is not None
+        and _value(early_poly, "p_value") >= 0.05
+        and _value(late_poly, "p_value") < 0.05
+    ):
+        diagnostic_interpretation.append(
+            "- **Platform-time heterogeneity:** the inverse pattern is strong in early Kalshi but absent in early Polymarket, then weaker in later Kalshi and strong in later Polymarket. This crossover argues against a timeless platform-general law and points toward evolving contract-family composition or governance."
+        )
+
+    case_lines: list[str] = []
+    for record in _records(cases):
+        case_lines.append(
+            f"- **{record['phenomenon']} — {record['mechanism']}.** Witness: {record['witness_state']} Implied settlements: A = {record['payout_a']}; B = {record['payout_b']}."
+        )
+    if not case_lines:
+        case_lines.append("- Run `main.py anecdotes` to build the archived witness-state case matrix.")
+
     lines = [
-        "# 1. Research question",
+        "# Same Future, Different Claim",
         "",
-        "How does the determinacy of a platform's machine-settleable representation of a future event shape participation and cross-platform agreement in digital prediction markets?",
+        "## 1. Research question and contribution",
         "",
-        "# 2. Theoretical mechanism",
+        "How do prediction-market platforms constitute digitally tradable and institutionally resolvable claims from ostensibly the same public-world phenomenon, and what consequences follow for participation and apparent disagreement?",
         "",
-        "Prediction-market software does not receive a naturally fixed event state. Contract text, deadlines, sources, exceptions, and fallback procedures first define the state space. Determinacy can reduce interpretation costs, but indeterminacy can also create heterogeneous interpretations that stimulate speculative trade without improving accuracy. This is an Information Systems mechanism because representational design and platform governance condition downstream information aggregation.",
+        "The central contribution is upstream of aggregation: platform resolution architectures choose predicates, measurement conventions, temporal boundaries, evidence, exceptions, and fallback procedures. Markets with similar labels can therefore price non-equivalent digital claims. Apparent cross-market forecast disagreement can be rational disagreement about different state exposure.",
         "",
-        "# 3. Data",
+        "## 2. Construct architecture",
         "",
-        f"The reproducible public-API sample contains {platform_descriptions}. Opening dates run from {first_open.date() if pd.notna(first_open) else 'unknown'} through a latest observed resolution of {last_resolution.date() if pd.notna(last_resolution) else 'unknown'}. The cross-platform matcher identifies {len(high_matches):,} high-confidence metadata pairs; {observed_pairs} currently have aligned daily histories. Volume units differ across platforms and are standardized within platform. The sample is intentionally focused on high-volume non-sports Kalshi series and high-volume closed Polymarket contracts, so it is not population-representative.",
+        "A contract is a possibly set-valued mapping from world histories to institutionally permissible settlements. **Semantic determinacy** is an intra-contract property: how uniquely a relevant world history maps to a settlement. **Semantic divergence** is an inter-contract property: whether two contracts about the same phenomenon map at least one plausible world history to different payouts or procedures.",
         "",
-        "# 4. Measurement",
+        "The constructs are orthogonal. Two precise contracts can diverge (network call versus inauguration); two identically vague contracts can have low determinacy but little between-contract divergence. Automated wording, number, source, stage, and deadline distances retrieve candidates but are not treated as validated semantic equivalence measures.",
         "",
-        "The transparent 0–1 determinacy composite averages source specificity, temporal specificity, operational outcome definition, edge-case completeness, and absence of discretionary resolution language. Rule length and conditional-clause count remain separate complexity measures. For matched pairs, divergence combines wording, numeric/date conditions, named sources, required event stage, and closing-date distance. These are auditable proxies rather than validated latent-variable scales.",
+        "## 3. Audited mechanism cases",
         "",
-        "# 5. Main method",
+        *case_lines,
         "",
-        "Market-level OLS relates standardized log volume to within-platform standardized determinacy with platform/category controls, market duration, and rule length. Alternatives separate conditional complexity, cluster uncertainty by series, and collapse repeated contracts to series/events. A Kalshi model tests last-trade absolute forecast error. Matching uses nearest-neighbor lexical retrieval followed by numeric, predicate, and date gates; price histories are aligned daily using only contemporaneous or earlier observations.",
+        "Every truth-condition divergence above has a witness state and predicted settlement on both sides. The suit case instead witnesses within-contract category indeterminacy. Exact archived rules and URLs are in `tables/representation-case-matrix.csv` and `REPRESENTATION_CASEBOOK.md`.",
         "",
-        "# 6. Main results",
+        "## 4. Data and sample correction",
         "",
-        *results,
+        f"The reproducible official-API sample contains {platform_descriptions}. Openings begin {first_open.date() if pd.notna(first_open) else 'unknown'}; the latest observed resolution is {last_resolution.date() if pd.notna(last_resolution) else 'unknown'}. Polymarket sports contracts are excluded before its high-volume cap using official sports fields plus a conservative documented taxonomy. Volume remains cumulative and is standardized within platform; this purposive sample is not population-representative.",
         "",
-        "The robust inverse volume association is consistent with an ambiguity–activity mechanism: less determinate contracts may invite heterogeneous interpretations and more trade. It does not show better information aggregation, and the terminal-error null offers no accuracy benefit. Volume is a participation proxy, the associations are not causal, and high statistical visibility can partly reflect the large metadata sample.",
+        f"The automated matcher retains {len(high_matches)} high-confidence metadata pairs, dominated by repeated families. Only {len(panel_summary)} pairs have aligned histories, all too sparse and homogeneous to test whether divergence predicts price wedges.",
         "",
-        "# 7. Best empirical examples",
+        "## 5. Measurement and method",
         "",
-        *example_lines,
+        "The transparent determinacy proxy averages source specificity, temporal specificity, operational definition, edge-case completeness, and discretion clarity. Calendar years no longer count as quantitative thresholds. Leave-one-component-out models, direct ambiguity counts, and qualitative/quantitative splits expose score dependence.",
         "",
-        "# 8. Best figures/tables",
+        "Volume models compare the original baseline with a preferred retrieval-capped exposure/opening-cohort specification, resolved-only samples, family-clustered uncertainty, family aggregation, and within-family demeaning. The within-family estimates remove stable Kalshi-series or Polymarket-event popularity but are supported by relatively few families with internal semantic variation.",
         "",
-        "- `figures/views-conceptual-schematic.svg`: locates contract representation upstream of trading and resolution.",
-        "- `figures/views-determinacy-distribution.svg`: compares the score distribution across platforms.",
-        "- `figures/views-determinacy-volume.svg`: shows the raw within-platform volume gradient by score quintile.",
-        "- `figures/views-matched-trajectories.svg`: displays aligned prices for the most visibly divergent matched pairs when histories are available.",
-        "- `tables/analysis-market-models.csv`: reports the main and complexity-separated coefficients.",
-        "- `tables/matching-representative-pairs.csv`: provides auditable contract text and flagged semantic differences.",
+        "## 6. Empirical results",
         "",
-        "# 9. Information Systems paper storyline",
+        *result_lines,
         "",
-        "**Phenomenon:** Platforms encode apparently similar uncertain events into contracts with measurably different semantic precision and truth conditions.",
+        *diagnostic_interpretation,
         "",
-        "**Puzzle:** Aggregation accounts usually treat the event being priced as fixed, even though a digital platform must construct it first.",
+        "The between-contract pattern is consistent with interpretive latitude increasing activity, but attention, salience, placement, and template composition remain plausible alternatives. Weak or null within-family results would sharply limit an ambiguity-causes-trading interpretation without weakening the directly demonstrated representational phenomenon.",
         "",
-        "**Theoretical mechanism:** Determinate representations lower interpretive friction, while indeterminate ones can stimulate trade through interpretive disagreement; divergent representations can sustain rational price differences because the digital objects are not equivalent claims.",
+        "## 7. Information Systems storyline",
         "",
-        "**Evidence:** Lower determinacy is robustly associated with more volume across both platforms and after complexity/dependence checks, but not with better terminal accuracy. Concrete matched contracts expose different rules alongside price paths where available.",
+        "- **Phenomenon:** nearly identical market labels can expose traders to different platform-defined claims.",
+        "- **Puzzle:** aggregation accounts often treat the proposition being priced as fixed before it enters the information system.",
+        "- **Mechanism:** resolution architectures partition world histories through predicate selection, operationalization, boundary rules, adjudication, and fallback.",
+        "- **Evidence:** witness-state cases demonstrate non-equivalence; systematic metadata document determinacy variation; volume associations supply secondary exploratory consequences.",
+        "- **Contribution:** collective-intelligence systems govern the referents of aggregation, not only information processing about those referents.",
         "",
-        "**Contribution:** Digital systems structure the referents of collective intelligence, not merely the speed or accuracy with which information about those referents is processed.",
+        "## 8. Best outputs",
         "",
-        "# 10. Candidate paper titles",
+        "- `tables/representation-case-matrix.csv`: exact rules, signatures, witness states, and implied settlements.",
+        "- `REPRESENTATION_CASEBOOK.md`: plain-language explanations of the striking cases.",
+        "- `figures/views-conceptual-schematic.svg`: platform-specific resolution architectures and distinct claims.",
+        "- `tables/analysis-market-models.csv`: baseline, cohort/exposure, market-type, leave-one-out, and within-family estimates.",
+        "- `figures/views-determinacy-volume.svg`: descriptive score–volume pattern; not a causal figure.",
         "",
-        "- Defining the Future: Semantic Determinacy and Information Aggregation in Digital Prediction Markets",
-        "- Before the Crowd Can Forecast: How Platforms Construct Predictable Events",
-        "- Same Future, Different Contract: Semantic Divergence in Prediction Markets",
-        "- Trading on Different Meanings: Semantic Indeterminacy in Prediction Markets",
-        "- The State Space Is the System: Representation and Collective Forecasting",
+        "## 9. Candidate abstract",
         "",
-        "# 11. Candidate abstract",
+        "Prediction markets are commonly treated as information systems that aggregate beliefs about fixed future events. Yet platforms first constitute the claims whose probabilities they elicit. We distinguish semantic determinacy within a contract from semantic divergence between contracts and analyze official Kalshi and Polymarket metadata. Audited cases identify plausible world histories in which markets bearing similar labels settle differently because of event-stage, measurement, temporal, evidentiary, or fallback choices. A corrected non-sports sample and transparent text measures also show how determinacy covaries with cumulative trading activity, while exposure/cohort and within-family specifications reveal the limits of a causal ambiguity–activity interpretation. The study shifts attention from how collective-intelligence systems process information to how their resolution architectures govern the referents of aggregation.",
         "",
-        "Prediction markets are commonly understood as information systems that aggregate dispersed beliefs about future events. Yet the event is not a ready-made input: a platform must encode an uncertain real-world phenomenon as a machine-settleable digital contract. We theorize semantic determinacy—the degree to which real-world states map unambiguously onto formal outcomes—and divergence between contracts intended to represent the same event. Using reproducible public metadata and price histories from Kalshi and Polymarket, we construct transparent measures of source, temporal, definitional, edge-case, and discretion specificity. Across both platforms, lower determinacy is associated with greater trading volume after accounting for rule complexity, duration, category, and repeated series, consistent with an ambiguity–activity mechanism in which heterogeneous interpretations stimulate trade. Determinacy does not, however, predict Kalshi last-trade forecast error, cautioning against treating activity as aggregation quality. Precision-oriented matching further identifies same-event contracts with different deadlines, sources, and event stages. The study reframes prediction markets as systems that both define and aggregate information, showing that digital representation can generate participation without demonstrably improving accuracy and extending Information Systems theory on digital objects, information quality, and platform governance.",
+        "## 10. Next decisive tests",
         "",
-        "# 12. What remains before submission",
-        "",
-        "## Essential next steps",
-        "",
-        "- Human-validate a stratified sample of high-confidence, probable, and rejected matches and report precision.",
-        "- Expand price-history coverage and test spread, volatility, and fixed-horizon forecast error rather than relying on cumulative volume.",
-        "- Validate the determinacy components with independent coders or a cached structured annotation exercise.",
-        "",
-        "## Robustness extensions",
-        "",
-        "- Reweight repeated Kalshi series templates and cluster uncertainty at series/event level.",
-        "- Test alternative component weights, ambiguity lexicons, time windows, and liquidity thresholds.",
-        "- Separate quantitative threshold markets from qualitative event predicates.",
-        "",
-        "## Optional nice-to-have analyses",
-        "",
-        "- Reconstruct timestamped clarification events and examine non-causal event-time patterns.",
-        "- Add on-chain Polymarket trades and historical Kalshi bid/ask data for richer microstructure outcomes.",
+        "- Human-code representation signatures and witness states for a stratified, phenomenon-diverse match sample with independent reliability checks.",
+        "- Match public-world phenomena before comparing claims, so divergent deadlines or thresholds do not prevent candidate retrieval.",
+        "- Acquire fixed first-30-day volume, common-horizon prices, spread, and volatility rather than relying on cumulative lifetime volume.",
+        "- Expand cross-platform history coverage before estimating a divergence–price-wedge relationship.",
     ]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def write_research_status(
+    path: Path, contracts: pd.DataFrame, models: pd.DataFrame, cases: pd.DataFrame
+) -> None:
+    """Write a one-page handoff of current evidence and decisions."""
+
+    cohort = _model_record(models, "cohort_exposure_adjusted")
+    within_kalshi = _model_record(models, "within_family_kalshi")
+    within_poly = _model_record(models, "within_family_polymarket")
+    lines = [
+        "# Research Status",
+        "",
+        f"Updated {date.today().isoformat()}.",
+        "",
+        "## Current core",
+        "",
+        f"The strongest contribution is an audited account of how resolution architectures turn one public-world phenomenon into non-equivalent digital claims. The case matrix currently contains {len(cases)} mechanisms with exact rules and counterfactual witness states.",
+        "",
+        "## Current empirical package",
+        "",
+        f"The corrected non-sports metadata sample contains {len(contracts):,} contracts.",
+    ]
+    if cohort is not None:
+        lines.append(f"- Preferred cohort/exposure-adjusted determinacy–volume estimate: {_estimate(cohort, 'HC3 SE')}.")
+    if within_kalshi is not None:
+        lines.append(f"- Within-family Kalshi estimate: {_estimate(within_kalshi, 'clustered SE')}.")
+    if within_poly is not None:
+        lines.append(f"- Within-family Polymarket estimate: {_estimate(within_poly, 'clustered SE')}.")
+    qualitative = _model_record(models, "qualitative_contracts")
+    quantitative = _model_record(models, "quantitative_contracts")
+    if qualitative is not None and quantitative is not None:
+        lines.append(
+            f"- Contract-type split: qualitative {_estimate(qualitative)}; quantitative {_estimate(quantitative)}."
+        )
+    temporal_rows = models.loc[models["model"].str.startswith("temporal_")]
+    if not temporal_rows.empty:
+        detail = "; ".join(
+            f"{str(record['model']).removeprefix('temporal_').replace('_', ' ')} "
+            f"{_value(record, 'coefficient'):.3f}"
+            for record in _records(temporal_rows)
+        )
+        lines.append(f"- Temporal/platform split: {detail}.")
+    lines.extend(
+        [
+            "",
+            "These volume results are exploratory consequences, not the theory’s sole support. The tiny aligned-price panel does not identify a divergence effect.",
+            "",
+            "## Locked decisions",
+            "",
+            "- Keep determinacy (within contract) separate from divergence (between contracts).",
+            "- Require a witness state before labeling truth-condition divergence.",
+            "- Keep automated text-distance scores as candidate diagnostics until validated coding exists.",
+            "- Exclude sports before Polymarket’s high-volume cap and control cumulative-volume exposure/cohort.",
+            "",
+            "## Next decisive work",
+            "",
+            "Human-code a phenomenon-diverse match sample; acquire fixed-window volume and common-horizon prices; then test whether representation differences predict activity, spreads, volatility, or persistent price wedges.",
+        ]
+    )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")

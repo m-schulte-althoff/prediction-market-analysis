@@ -1,6 +1,6 @@
 # Data Sources
 
-Retrieval date for the first empirical package: **2026-09-10**. All used sources are official, public, and unauthenticated. No third-party dataset enters the reported results.
+Retrieval date for the included empirical package: **2026-09-10**. All used sources are official, public, and unauthenticated. No third-party dataset enters the reported results.
 
 ## Kalshi
 
@@ -44,9 +44,16 @@ Retrieval date for the first empirical package: **2026-09-10**. All used sources
 - Endpoint: `GET https://gamma-api.polymarket.com/markets/keyset`.
 - Query: `closed=true`, ordered by `volumeNum` descending, with opaque cursor pagination.
 - Fields used: market/condition/event identifiers; question; description; resolution source; opening/end/closure timestamps; outcomes and outcome prices; `volumeNum`; `liquidityNum`; CLOB token IDs; official `sportsMarketType` and `gameStartTime` flags.
-- Selection: first 8,000 high-volume closed rows, restricted after retrieval to binary `Yes`/`No` markets and excluding rows carrying either official sports flag.
-- Observed coverage: 3,663 usable non-sports binary contracts opened from 2020-10-09 onward; latest observed resolution 2026-09-09.
-- Limitations: archived category/tag labels are absent for almost all rows, so analysis categories use a fixed question/rule keyword taxonomy. `lastTradePrice` is not consistently YES-oriented for legacy AMM records and is deliberately excluded from forecast-error analysis. Sampling on volume makes the Polymarket portion unsuitable for population volume estimates.
+- Selection: scan the descending-volume archive, exclude sports using official flags plus a conservative documented text taxonomy, and only then retain the first 8,000 non-sports rows. The included snapshot scanned 23,700 raw rows; binary `Yes`/`No` validation yields 7,249 usable contracts.
+- Observed coverage: 7,249 usable non-sports binary contracts opened from 2020-10-09 onward; latest observed resolution 2026-09-10.
+- Limitations: archived category/tag labels are absent for almost all rows, so analysis categories use a fixed question/rule keyword taxonomy. Sports detection is transparent but imperfect. `lastTradePrice` is not consistently YES-oriented for legacy AMM records and is deliberately excluded from forecast-error analysis. Sampling on volume makes the Polymarket portion unsuitable for population volume estimates.
+
+### Audited representation cases
+
+- Polymarket endpoint: `GET https://gamma-api.polymarket.com/events?slug=...` for the 2028 presidential winner, September 2026 Fed decision, two Ukraine-minerals markets, and Zelenskyy-suit market.
+- Kalshi endpoint: `GET https://external-api.kalshi.com/trade-api/v2/events/{event_ticker}` for `KXPRESPERSON-28` and `KXFEDDECISION-26SEP`.
+- Fields archived: event and contract identifiers, questions, complete rule descriptions, statuses, and timestamps returned by the official endpoints.
+- Purpose: mechanism evidence only. A manually coded truth-condition divergence requires a plausible witness state and different implied settlements; these cases do not estimate population prevalence or average price effects.
 
 ### CLOB price history
 
@@ -58,4 +65,3 @@ Retrieval date for the first empirical package: **2026-09-10**. All used sources
 ## Reproducibility and immutability
 
 Raw responses are saved as date-stamped UTF-8 JSON under `data/raw/`; matched histories are additionally content-addressed by the selected match IDs and acquisition mode. Existing raw snapshots are loaded rather than overwritten. `data/` is Git-ignored because API responses can be large and are reproducible from the public sources. Derived CSV files are deterministically sorted before writing.
-

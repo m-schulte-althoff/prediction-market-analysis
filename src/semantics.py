@@ -20,6 +20,15 @@ TIME_PATTERN = re.compile(r"\b\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?)\b", re.
 TIMEZONE_PATTERN = re.compile(r"\b(?:utc|gmt|est|edt|cst|cdt|mst|mdt|pst|pdt)\b", re.I)
 URL_PATTERN = re.compile(r"https?://[^\s)]+", re.I)
 NUMBER_PATTERN = re.compile(r"(?<![a-z])[-+]?\$?\d+(?:\.\d+)?%?", re.I)
+QUANTITATIVE_THRESHOLD_PATTERN = re.compile(
+    r"(?:\b(?:at least|at most|more than|less than|greater than|fewer than|"
+    r"exactly|above|below|over|under|exceed(?:s|ed)?|between)\s+"
+    r"[-+]?\$?\d+(?:\.\d+)?(?:%|\s*(?:percent|percentage points?|basis points?|bps|"
+    r"dollars?|votes?|points?|seats?|degrees?|times?|cuts?|hikes?))?\b)"
+    r"|(?:[-+]?\$?\d+(?:\.\d+)?\s*(?:%|percent|percentage points?|basis points?|bps|"
+    r"dollars?|votes?|points?|seats?|degrees?)\b)",
+    re.IGNORECASE,
+)
 
 AUTHORITIES = (
     "associated press",
@@ -140,10 +149,14 @@ def semantic_features(question: str, rules: str, resolution_source: str = "") ->
     )
 
     definition_hits = _contains_count(text, DEFINITION_TERMS)
-    numeric_threshold = bool(NUMBER_PATTERN.search(text))
+    numeric_mention = bool(NUMBER_PATTERN.search(text))
+    quantitative_threshold = bool(QUANTITATIVE_THRESHOLD_PATTERN.search(text))
     ambiguity_hits = _contains_count(text, AMBIGUOUS_TERMS)
     outcome_definition = _bounded(
-        0.25 + 0.35 * (definition_hits > 0) + 0.30 * numeric_threshold - 0.12 * ambiguity_hits
+        0.25
+        + 0.35 * (definition_hits > 0)
+        + 0.30 * quantitative_threshold
+        - 0.12 * ambiguity_hits
     )
 
     edge_hits = _contains_count(text, EDGE_TERMS)
@@ -176,7 +189,8 @@ def semantic_features(question: str, rules: str, resolution_source: str = "") ->
         "conditional_clauses": float(conditional_clauses),
         "ambiguous_terms": float(ambiguity_hits),
         "explicit_sources": float(explicit_sources),
-        "numeric_threshold": float(numeric_threshold),
+        "numeric_mention": float(numeric_mention),
+        "quantitative_threshold": float(quantitative_threshold),
     }
 
 

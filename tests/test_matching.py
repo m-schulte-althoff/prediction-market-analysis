@@ -68,6 +68,7 @@ def test_same_words_but_remote_deadlines_are_not_accepted() -> None:
     result = match_contracts(frame, neighbors=1)
 
     assert result.iloc[0]["match_label"] == "rejected"
+    assert result.iloc[0]["phenomenon_match_label"] == "strong_candidate"
 
 
 def test_margin_threshold_is_not_same_contract_as_winner() -> None:

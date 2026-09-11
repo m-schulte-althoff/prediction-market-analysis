@@ -17,6 +17,11 @@ from src.analysis import (
     prepare_market_analysis,
     terminal_error_model,
 )
+from src.anecdotes import (
+    build_representation_case_matrix,
+    download_anecdote_sources,
+    write_casebook,
+)
 from src.config import (
     FIGURE_DIR,
     LOG_DIR,
@@ -37,6 +42,7 @@ from src.reporting import (
     coverage_table,
     semantic_examples,
     write_research_log,
+    write_research_status,
     write_research_summary,
 )
 from src.semantics import add_semantic_features
@@ -53,6 +59,7 @@ CONTRACT_PATH = PROCESSED_DIR / "semantics-contracts.csv"
 MATCH_PATH = PROCESSED_DIR / "matching-candidates.csv"
 PANEL_PATH = PROCESSED_DIR / "panel-daily.csv"
 PANEL_SUMMARY_PATH = PROCESSED_DIR / "panel-matched-summary.csv"
+CASE_PATH = TABLE_DIR / "representation-case-matrix.csv"
 
 
 def configure_logging() -> Path:
@@ -74,10 +81,23 @@ def _read_frame(path: Path, date_columns: tuple[str, ...] = ()) -> pd.DataFrame:
 
     if not path.exists():
         raise FileNotFoundError(f"Required pipeline output is missing: {path}")
-    frame = pd.read_csv(path)
+    columns = pd.read_csv(path, nrows=0).columns
+    identifier_columns = {
+        column: "string"
+        for column in (
+            "platform_contract_id",
+            "platform_event_id",
+            "kalshi_contract_id",
+            "polymarket_contract_id",
+        )
+        if column in columns
+    }
+    frame = pd.read_csv(path, dtype=identifier_columns, low_memory=False)
     for column in date_columns:
         if column in frame:
-            frame[column] = pd.to_datetime(frame[column], utc=True, errors="coerce")
+            frame[column] = pd.to_datetime(
+                frame[column], utc=True, errors="coerce", format="mixed"
+            )
     return frame
 
 
@@ -141,6 +161,8 @@ def run_match() -> pd.DataFrame:
         "polymarket_question",
         "polymarket_rule",
         "identified_semantic_difference",
+        "phenomenon_similarity",
+        "phenomenon_match_label",
         "lexical_similarity",
         "semantic_divergence",
         "match_confidence",
@@ -148,6 +170,19 @@ def run_match() -> pd.DataFrame:
     write_csv(representative[columns], TABLE_DIR / "matching-representative-pairs.csv")
     LOGGER.info("Generated %d candidates, %d high-confidence", len(matches), len(high))
     return matches
+
+
+def run_anecdotes(config: SampleConfig) -> pd.DataFrame:
+    """Archive exact cited rules and build the witness-state casebook."""
+
+    client = PublicApiClient(timeout_seconds=config.request_timeout_seconds)
+    payload = download_anecdote_sources(config, client)
+    matches = _read_frame(MATCH_PATH) if MATCH_PATH.exists() else None
+    cases = build_representation_case_matrix(payload, matches)
+    write_csv(cases, CASE_PATH, ["case_id"])
+    write_casebook(OUTPUT_DIR / "REPRESENTATION_CASEBOOK.md", cases)
+    LOGGER.info("Built %d audited representation cases", len(cases))
+    return cases
 
 
 def run_panel(config: SampleConfig) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -188,6 +223,7 @@ def run_analysis() -> None:
     panel_summary = (
         _read_frame(PANEL_SUMMARY_PATH) if PANEL_SUMMARY_PATH.exists() else pd.DataFrame()
     )
+    cases = _read_frame(CASE_PATH) if CASE_PATH.exists() else pd.DataFrame()
     analysis_frame = prepare_market_analysis(contracts)
     models = market_level_models(analysis_frame)
     bins = determinacy_bins(analysis_frame)
@@ -198,7 +234,7 @@ def run_analysis() -> None:
     write_csv(
         bins,
         TABLE_DIR / "analysis-determinacy-bins.csv",
-        ["platform", "determinacy_quintile"],
+        ["platform", "determinacy_group"],
     )
     write_csv(matched_models, TABLE_DIR / "analysis-matched-model.csv")
     write_csv(error_models, TABLE_DIR / "analysis-terminal-error.csv")
@@ -218,7 +254,9 @@ def run_analysis() -> None:
         matches,
         panel_summary,
         matched_models,
+        cases,
     )
+    write_research_status(OUTPUT_DIR / "RESEARCH_STATUS.md", contracts, models, cases)
     LOGGER.info("Analysis package written under %s", OUTPUT_DIR)
 
 
@@ -228,6 +266,7 @@ def run_all(config: SampleConfig) -> None:
     run_download(config)
     run_preprocess(config)
     run_match()
+    run_anecdotes(config)
     run_panel(config)
     run_analysis()
 
@@ -238,7 +277,16 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "command",
-        choices=("download", "preprocess", "semantics", "match", "panel", "analyze", "all"),
+        choices=(
+            "download",
+            "preprocess",
+            "semantics",
+            "match",
+            "anecdotes",
+            "panel",
+            "analyze",
+            "all",
+        ),
     )
     parser.add_argument("--retrieval-date", type=date.fromisoformat, default=date.today())
     parser.add_argument("--kalshi-series-limit", type=int, default=120)
@@ -266,6 +314,8 @@ def main() -> None:
         run_preprocess(config)
     elif arguments.command == "match":
         run_match()
+    elif arguments.command == "anecdotes":
+        run_anecdotes(config)
     elif arguments.command == "panel":
         run_panel(config)
     elif arguments.command == "analyze":

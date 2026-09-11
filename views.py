@@ -20,45 +20,63 @@ def _finish(figure: Figure, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     figure.savefig(path, format=path.suffix.removeprefix("."), bbox_inches="tight")
     plt.close(figure)
+    if path.suffix.lower() == ".svg":
+        lines = path.read_text(encoding="utf-8").splitlines()
+        normalized = "\n".join(line.rstrip() for line in lines)
+        path.write_text(normalized + "\n", encoding="utf-8")
 
 
 def conceptual_schematic(path: Path) -> None:
-    """Draw the study's digital-representation mechanism."""
+    """Draw platform branching from one phenomenon to distinct digital claims."""
 
-    figure, axis = plt.subplots(figsize=(11, 2.8))
+    figure, axis = plt.subplots(figsize=(11, 4.6))
     axis.set_xlim(0, 1)
     axis.set_ylim(0, 1)
     axis.axis("off")
-    labels = [
-        "Uncertain\nreal-world event",
-        "Platform contract\nsemantic representation",
-        "Participant\ninterpretation",
-        "Trading and\ninformation aggregation",
-        "Formal\nresolution",
+    nodes = [
+        (0.10, 0.54, "Public-world\nphenomenon", "#E7EEF5"),
+        (0.36, 0.76, "Kalshi resolution\narchitecture", "#DDEAF4"),
+        (0.36, 0.32, "Polymarket resolution\narchitecture", "#F5DFE2"),
+        (0.64, 0.76, "Digital claim A\n(determinacy $D_A$)", "#DDEAF4"),
+        (0.64, 0.32, "Digital claim B\n(determinacy $D_B$)", "#F5DFE2"),
+        (0.90, 0.76, "Beliefs and\nprice A", "#F3F0E8"),
+        (0.90, 0.32, "Beliefs and\nprice B", "#F3F0E8"),
     ]
-    positions = np.linspace(0.08, 0.92, len(labels))
-    for index, (position, label) in enumerate(zip(positions, labels, strict=True)):
-        color = "#E7EEF5" if index != 1 else "#F6D8AE"
+    for x_value, y_value, label, color in nodes:
         axis.text(
-            position,
-            0.55,
+            x_value,
+            y_value,
             label,
             ha="center",
             va="center",
             fontsize=10,
             bbox={"boxstyle": "round,pad=0.65", "facecolor": color, "edgecolor": "#333333"},
         )
-        if index < len(labels) - 1:
-            axis.annotate(
-                "",
-                xy=(positions[index + 1] - 0.085, 0.55),
-                xytext=(position + 0.085, 0.55),
-                arrowprops={"arrowstyle": "->", "color": "#555555", "lw": 1.5},
-            )
+    arrows = [
+        ((0.18, 0.57), (0.28, 0.72)),
+        ((0.18, 0.51), (0.28, 0.36)),
+        ((0.45, 0.76), (0.55, 0.76)),
+        ((0.45, 0.32), (0.55, 0.32)),
+        ((0.73, 0.76), (0.82, 0.76)),
+        ((0.73, 0.32), (0.82, 0.32)),
+    ]
+    for start, end in arrows:
+        axis.annotate(
+            "",
+            xy=end,
+            xytext=start,
+            arrowprops={"arrowstyle": "->", "color": "#555555", "lw": 1.5},
+        )
+    axis.annotate(
+        "",
+        xy=(0.64, 0.41),
+        xytext=(0.64, 0.67),
+        arrowprops={"arrowstyle": "<->", "color": "#8B5A2B", "lw": 1.7},
+    )
     axis.text(
-        positions[1],
-        0.12,
-        "Semantic determinacy shapes the state space about which beliefs can aggregate",
+        0.66,
+        0.54,
+        "Semantic divergence $\\Delta_{AB}$\n(witness state can settle differently)",
         ha="center",
         fontsize=9,
         color="#7A3E00",
@@ -92,7 +110,7 @@ def determinacy_volume_bins(bins: pd.DataFrame, path: Path) -> None:
     figure, axis = plt.subplots(figsize=(7.5, 4.8))
     for platform, group in bins.groupby("platform", sort=True):
         axis.errorbar(
-            group["determinacy_quintile"],
+            group["determinacy_group"],
             group["mean_volume_z"],
             yerr=1.96 * group["se_volume_z"].fillna(0),
             marker="o",
@@ -102,9 +120,9 @@ def determinacy_volume_bins(bins: pd.DataFrame, path: Path) -> None:
         )
     axis.axhline(0, color="#777777", linewidth=0.8)
     axis.set(
-        xlabel="Semantic determinacy quintile (within platform)",
+        xlabel="Tie-preserving determinacy quantile group (within platform)",
         ylabel="Mean standardized log volume (95% CI)",
-        xticks=range(1, 6),
+        xticks=range(1, int(bins["determinacy_group"].max()) + 1),
     )
     axis.legend(frameon=False)
     axis.grid(alpha=0.2)

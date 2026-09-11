@@ -1,7 +1,7 @@
 [project]
 name = "prediction-market-analysis"
-version = "0.1.0"
-description = "Semantic determinacy and information aggregation in prediction markets"
+version = "0.2.0"
+description = "How platform resolution architectures constitute prediction-market claims"
 requires-python = ">=3.11"
 dependencies = [
     "matplotlib>=3.9",

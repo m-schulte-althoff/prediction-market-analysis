@@ -1,10 +1,10 @@
-# Semantic Determinacy in Prediction Markets
+# Same Future, Different Claim
 
-This repository implements a first end-to-end empirical study of how prediction-market platforms define the future events they subsequently price. It introduces transparent measures of **semantic determinacy** within contracts and **semantic divergence** across same-event contracts, using official public data from Kalshi and Polymarket.
+This repository studies how prediction-market platforms turn ostensibly shared future phenomena into different digitally tradable and institutionally resolvable claims. It separates **semantic determinacy** within a contract from **semantic divergence** between contracts and combines systematic Kalshi/Polymarket metadata with an audited counterfactual casebook.
 
-The initial sample contains 12,251 non-sports Kalshi contracts and 3,663 non-sports binary Polymarket contracts spanning 2020–2026. The main exploratory result is unexpected but robust enough to motivate follow-up work: lower determinacy is associated with higher within-platform trading volume. The association survives controls for rule length, duration, category, platform, series-clustered uncertainty, and aggregation to 1,366 series/events. Determinacy does not predict Kalshi last-trade absolute forecast error. This pattern is consistent with semantic indeterminacy stimulating trade through heterogeneous interpretations without demonstrably improving accuracy; it is associative, not causal.
+The clearest result is representational: an election call and an inauguration, a 12.5-basis-point move under different quantization conventions, an announced versus signed minerals agreement, undefined “suit” attire, and announcement versus actual departure can map the same world history to different settlements. Each claim is backed by archived official rule text and a witness state in which the payouts separate.
 
-The matcher also isolates 11 manually inspected, high-confidence cross-platform pairs. Leader-departure contracts supply the clearest examples: announcement, actual removal, death, and caretaker rules can map the same real-world trajectory to different formal outcomes. Only three accepted pairs currently expose aligned histories through both official history endpoints, so the matched-price analysis remains diagnostic rather than confirmatory.
+The corrected metadata sample contains 12,251 Kalshi and 7,249 Polymarket non-sports binary contracts. The preferred exposure/cohort-adjusted association between determinacy and standardized log volume is −0.115 (HC3 SE 0.009), but it is primarily a between-family pattern: within-family estimates are −0.035 (p=.597) on Kalshi and +0.031 (p=.262) on Polymarket. The association is detectable for quantitative-threshold contracts, not qualitative contracts, and changes sharply by platform and period. These diagnostics make the volume result an interesting secondary finding rather than evidence that ambiguity causes trading.
 
 ## Reproduce the results
 
@@ -18,88 +18,88 @@ uv run ruff check .
 uv run mypy .
 ```
 
-On Windows, where the `python3` executable name may resolve to the Microsoft Store shim, use uv's managed `python` executable:
+On Windows, use uv’s managed `python` executable if `python3` resolves to the Microsoft Store shim:
 
 ```powershell
 uv run python main.py all
 ```
 
-Pipeline stages can be run separately:
+Stages can also run separately:
 
 ```bash
 uv run python3 main.py download
 uv run python3 main.py preprocess
 uv run python3 main.py match
+uv run python3 main.py anecdotes
 uv run python3 main.py panel
 uv run python3 main.py analyze
 ```
 
-The downloader caches date-stamped raw API responses and never overwrites them. To reproduce the included September 10, 2026 package exactly when those local snapshots are present:
+To reproduce the included September 10, 2026 snapshots when cached locally:
 
 ```bash
 uv run python3 main.py all --retrieval-date 2026-09-10 \
   --kalshi-series-limit 120 --polymarket-limit 8000 --matched-panel-limit 12
 ```
 
-Raw and processed data are intentionally Git-ignored. A fresh future run will use the then-current API archive and may differ as platforms revise metadata or API coverage.
+Raw API responses are date-stamped and immutable. Raw and processed data are Git-ignored; a fresh future run can differ as platform archives and rules evolve.
+
+## Design
+
+The construct architecture is documented in [docs/CONSTRUCTS.md](docs/CONSTRUCTS.md), with consequential choices in [docs/DECISIONS.md](docs/DECISIONS.md). In brief:
+
+- determinacy asks whether one contract maps a relevant world history uniquely to a settlement;
+- divergence asks whether two contracts about one phenomenon can settle differently;
+- automated text and metadata distances retrieve candidates but do not prove semantic equivalence;
+- a coded divergence requires a plausible witness state and implied settlement on both sides.
+
+The determinacy proxy averages source specificity, temporal specificity, operational definition, edge-case completeness, and discretion clarity. Calendar years are distinguished from substantive quantitative thresholds. Volume models include the original baseline, observed-exposure/opening-cohort adjustment, resolved-only estimates, qualitative/quantitative splits, leave-one-component-out checks, family clustering and aggregation, and estimates based only on within-family variation.
+
+Matching now has two stages: retrieval uses shared-phenomenon language without quantities, while claim-equivalence screening separately considers full wording, numeric overlap, predicates, and deadlines. This prevents divergent thresholds or dates from automatically removing an otherwise useful phenomenon candidate.
 
 ## Data sources
 
-Only unauthenticated official platform APIs are used:
+Only unauthenticated official APIs are used:
 
-- Kalshi series, live/historical markets, historical cutoff, and daily candlesticks.
-- Polymarket Gamma market metadata via keyset pagination and CLOB token price histories.
+- Kalshi series, live/historical markets, historical cutoff, event records, and candlesticks.
+- Polymarket Gamma market/event metadata and CLOB token price histories.
 
-Exact endpoints, fields, retrieval dates, coverage, and limitations are documented in [DATA_SOURCES.md](DATA_SOURCES.md).
-
-## Measurement and analysis
-
-The 0–1 determinacy composite averages five auditable components:
-
-1. named resolution-source specificity;
-2. explicit date/time/timezone specificity;
-3. operational outcome definition;
-4. edge-case and fallback completeness;
-5. absence of discretionary resolution language.
-
-Rule length and conditional-clause counts remain separate from determinacy. The cross-platform divergence measure separately compares wording, numeric/date conditions, named sources, required event stages, and deadlines. No LLM annotations or expensive model calls are needed.
-
-Market models use standardized log volume within platform. Main uncertainty is HC3; a robustness model clusters by Kalshi series or Polymarket event, and another collapses repeated contracts to those units. Kalshi last-trade error is tested separately with series-clustered uncertainty. Price histories are oriented to YES and aligned daily using only contemporaneous or earlier observations.
+Polymarket sports rows are removed before its high-volume cap using official sports fields plus the conservative taxonomy in `src/taxonomy.py`. Exact endpoints, fields, selection rules, and limitations are in [DATA_SOURCES.md](DATA_SOURCES.md).
 
 ## Main outputs
 
-- [Research summary](output/RESEARCH_SUMMARY.md): question, mechanism, estimates, examples, storyline, abstract, and next steps.
-- [Research log](output/research-log.md): all substantive iterations, including the terminal-error null and limited matched-price specification.
-- `output/tables/analysis-market-models.csv`: main and robustness models.
-- `output/tables/matching-representative-pairs.csv`: full rules for auditable matched examples.
-- `output/figures/views-determinacy-volume.svg`: the central descriptive pattern.
-- `output/figures/views-matched-trajectories.svg`: the three currently aligned matched pairs.
+- [Research summary](output/RESEARCH_SUMMARY.md): current contribution, cases, estimates, interpretation, and paper storyline.
+- [Representation casebook](output/REPRESENTATION_CASEBOOK.md): plain-language explanations with exact archived rules.
+- [Research status](output/RESEARCH_STATUS.md): concise handoff of current evidence and locked decisions.
+- `output/tables/representation-case-matrix.csv`: structured signatures, witness states, payouts, URLs, scope, and confidence.
+- `output/tables/analysis-market-models.csv`: all main and robustness estimates.
+- `output/tables/matching-representative-pairs.csv`: auditable automated candidates; divergence columns remain diagnostics.
+- `output/figures/views-conceptual-schematic.svg`: one phenomenon branching into platform-specific claims.
+- `output/figures/views-determinacy-volume.svg`: descriptive score–volume pattern.
 
 ## File structure
 
 ```text
 main.py                  # controller / command dispatch
-views.py                 # tables and vector figures
+views.py                 # vector figures
 src/
-  config.py              # paths and sample design
-  http_client.py         # bounded retries for public APIs
-  kalshi.py              # Kalshi acquisition
-  polymarket.py          # Polymarket acquisition
-  preprocessing.py       # common contract database
-  semantics.py           # determinacy/divergence measures
-  matching.py            # conservative event matching
-  panel.py               # price-history alignment
-  analysis.py            # empirical models
-  reporting.py           # research log and summary
+  anecdotes.py           # official-rule archive and witness-state case matrix
+  taxonomy.py            # shared sports exclusion rules
+  preprocessing.py       # normalized contract database and observed exposure
+  semantics.py           # determinacy and diagnostic divergence features
+  matching.py            # phenomenon retrieval and claim screening
+  panel.py               # diagnostic price-history alignment
+  analysis.py            # empirical models and robustness checks
+  reporting.py           # generated research documents
+docs/                    # constructs and persistent research decisions
 tests/                   # unit tests; no network or LLM calls
 data/raw/                # immutable local API snapshots (ignored)
 data/processed/          # reproducible derived data (ignored)
-output/tables/           # analysis tables
-output/figures/          # vector figures
+output/tables/           # generated analysis tables
+output/figures/          # generated vector figures
 logs/                    # timestamped pipeline logs (ignored)
 ```
 
-## Current limitations
+## Limitations
 
-The samples are purposive rather than population-representative: Kalshi uses the 120 highest-volume series in pre-specified non-sports categories, and Polymarket uses the 8,000 highest-volume closed markets before binary/sports filtering. Cumulative volume is participation, not aggregation quality. Terminal prices are not measured at a common forecast horizon. Archive category labels are sparse on Polymarket, requiring a fixed keyword taxonomy. Match precision has been manually checked only for the 11 accepted pairs, and official cross-platform history overlap is currently sparse. These limitations bound every claim in the generated research summary.
-
+The samples are purposive and cumulative volume is not a direct measure of information aggregation. Sports exclusion uses a transparent but imperfect taxonomy. The determinacy measure is an auditable proxy rather than a validated scale. Relatively few repeated families vary internally in determinacy. The two currently aligned matched histories are too sparse and homogeneous for a divergence–price-wedge test. The strongest next steps are independent signature coding, fixed-window volume, common-horizon prices, and broader cross-platform history coverage.

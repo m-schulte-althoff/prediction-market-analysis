@@ -8,6 +8,8 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+from src.taxonomy import is_polymarket_sports
+
 
 def _number(value: object) -> float:
     """Convert a possibly string-valued number to a float."""
@@ -186,6 +188,7 @@ def normalize_kalshi(payload: dict[str, Any]) -> pd.DataFrame:
                 "series": _text(row.get("sample_series_ticker")),
                 "yes_token_id": "",
                 "raw_status": _text(row.get("status")),
+                "snapshot_date": payload.get("retrieved_at_date"),
             }
         )
     return _finalize(pd.DataFrame.from_records(records))
@@ -196,9 +199,7 @@ def normalize_polymarket(payload: dict[str, Any]) -> pd.DataFrame:
 
     records: list[dict[str, Any]] = []
     for row in payload.get("markets", []):
-        # Official archive category labels are mostly empty. These two official
-        # fields identify sports contracts without relying on team-name guesses.
-        if row.get("sportsMarketType") or row.get("gameStartTime"):
+        if is_polymarket_sports(row):
             continue
         outcomes = [item.lower() for item in _json_list(row.get("outcomes"))]
         if outcomes[:2] != ["yes", "no"]:
@@ -233,6 +234,7 @@ def normalize_polymarket(payload: dict[str, Any]) -> pd.DataFrame:
                 "series": _text(event.get("ticker") or event.get("slug")),
                 "yes_token_id": tokens[0] if tokens else "",
                 "raw_status": "closed" if row.get("closed") else "open",
+                "snapshot_date": payload.get("retrieved_at_date"),
             }
         )
     return _finalize(pd.DataFrame.from_records(records))
@@ -244,12 +246,25 @@ def _finalize(frame: pd.DataFrame) -> pd.DataFrame:
     if frame.empty:
         return frame
     for column in ("open_timestamp", "close_timestamp", "resolution_timestamp"):
-        frame[column] = pd.to_datetime(frame[column], utc=True, errors="coerce")
+        frame[column] = pd.to_datetime(frame[column], utc=True, errors="coerce", format="mixed")
+    frame["snapshot_timestamp"] = pd.to_datetime(
+        frame["snapshot_date"], utc=True, errors="coerce", format="mixed"
+    )
     frame["market_duration_days"] = (
         (frame["close_timestamp"] - frame["open_timestamp"]).dt.total_seconds() / 86_400
     )
     frame["market_duration_days"] = frame["market_duration_days"].where(
         frame["market_duration_days"] >= 0
+    )
+    exposure_end = pd.concat(
+        [frame["close_timestamp"], frame["resolution_timestamp"], frame["snapshot_timestamp"]],
+        axis=1,
+    ).min(axis=1)
+    frame["observed_exposure_days"] = (
+        (exposure_end - frame["open_timestamp"]).dt.total_seconds() / 86_400
+    ).clip(lower=0)
+    frame["observed_exposure_days"] = frame["observed_exposure_days"].fillna(
+        frame["market_duration_days"]
     )
     frame["resolution_year"] = frame["resolution_timestamp"].dt.year.astype("Int64")
     frame["log_volume"] = np.log1p(frame["volume"].clip(lower=0))

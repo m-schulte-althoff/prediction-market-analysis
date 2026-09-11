@@ -1,5 +1,7 @@
 """Tests for platform-schema normalization."""
 
+import pytest
+
 from src.preprocessing import build_contract_table, normalize_polymarket
 
 
@@ -85,3 +87,49 @@ def test_official_sports_flags_exclude_polymarket_contract() -> None:
     )
 
     assert result.empty
+
+
+def test_sports_taxonomy_excludes_unflagged_tournament_contract() -> None:
+    """Tournament families lacking official game flags remain outside the design."""
+
+    result = normalize_polymarket(
+        {
+            "markets": [
+                {
+                    "id": "5",
+                    "question": "Will Club A win the FIFA Club World Cup?",
+                    "description": "Resolves according to the FIFA tournament winner.",
+                    "outcomes": '["Yes", "No"]',
+                    "outcomePrices": '["1", "0"]',
+                }
+            ]
+        }
+    )
+
+    assert result.empty
+
+
+def test_mixed_timestamp_formats_preserve_polymarket_resolution_dates() -> None:
+    """Pandas mixed ISO precision must not erase otherwise valid closure timestamps."""
+
+    result = normalize_polymarket(
+        {
+            "retrieved_at_date": "2026-09-10",
+            "markets": [
+                {
+                    "id": "6",
+                    "question": "Will X happen by 2026?",
+                    "description": "Resolves Yes if X happens.",
+                    "outcomes": '["Yes", "No"]',
+                    "outcomePrices": '["1", "0"]',
+                    "startDate": "2025-01-01T00:00:00Z",
+                    "endDate": "2025-03-01T00:00:00.123456Z",
+                    "closedTime": "2025-03-02T12:34:56Z",
+                }
+            ],
+        }
+    )
+
+    assert result["resolution_timestamp"].notna().all()
+    assert result["resolution_year"].iloc[0] == 2025
+    assert result["observed_exposure_days"].iloc[0] == pytest.approx(59.0, abs=0.001)

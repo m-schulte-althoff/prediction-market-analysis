@@ -26,6 +26,23 @@ def test_specific_rule_scores_above_ambiguous_rule() -> None:
     assert specific["edge_completeness"] > ambiguous["edge_completeness"]
 
 
+def test_year_is_not_misclassified_as_quantitative_threshold() -> None:
+    """Calendar years are time boundaries, not substantive numeric predicates."""
+
+    temporal = semantic_features(
+        "Will the candidate win in 2028?",
+        "Resolves Yes if the candidate wins the 2028 election.",
+    )
+    threshold = semantic_features(
+        "Will inflation exceed 3%?",
+        "Resolves Yes if inflation is greater than 3 percent.",
+    )
+
+    assert temporal["numeric_mention"] == 1.0
+    assert temporal["quantitative_threshold"] == 0.0
+    assert threshold["quantitative_threshold"] == 1.0
+
+
 def test_pair_divergence_is_zero_for_identical_structured_conditions() -> None:
     """Identical wording and conditions have zero measured divergence."""
 
