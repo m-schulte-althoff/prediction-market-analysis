@@ -2,9 +2,13 @@
 
 This repository studies how prediction-market platforms turn ostensibly shared future phenomena into different digitally tradable and institutionally resolvable claims. It separates **semantic determinacy** within a contract from **semantic divergence** between contracts and combines systematic Kalshi/Polymarket metadata with an audited counterfactual casebook.
 
-The clearest result is representational: an election call and an inauguration, a 12.5-basis-point move under different quantization conventions, an announced versus signed minerals agreement, undefined “suit” attire, and announcement versus actual departure can map the same world history to different settlements. Each claim is backed by archived official rule text and a witness state in which the payouts separate.
+The clearest result is representational: finishing first versus advancing, an election call versus inauguration, rounding a 12.5-basis-point move, announcing versus signing a minerals agreement, and individual departure versus being the first leader to leave can imply different settlements. Each case preserves archived official rules and an explicit hypothetical scenario. The separate “suit” case explains an unspecified clothing category whose interpretation is delegated to credible reporting.
 
-The corrected metadata sample contains 12,251 Kalshi and 7,249 Polymarket non-sports binary contracts. The preferred exposure/cohort-adjusted association between determinacy and standardized log volume is −0.115 (HC3 SE 0.009), but it is primarily a between-family pattern: within-family estimates are −0.035 (p=.597) on Kalshi and +0.031 (p=.262) on Polymarket. The association is detectable for quantitative-threshold contracts, not qualitative contracts, and changes sharply by platform and period. These diagnostics make the volume result an interesting secondary finding rather than evidence that ambiguity causes trading.
+The corrected metadata sample contains 12,251 Kalshi and 7,249 Polymarket non-sports binary contracts. Its most interesting descriptive contrast is a **composition reversal**: Kalshi has the higher overall determinacy proxy (.624 versus .610), while Polymarket scores higher within both threshold-flag groups (.575 versus .548 without the flag; .724 versus .640 with it). The flag appears in 82.1% of sampled Kalshi contracts and 23.7% of Polymarket contracts. Raw component profiles show more temporal and edge-clause detail on Polymarket and higher outcome-definition and discretion scores on Kalshi. These describe the sampled rule texts, not overall platform quality.
+
+The preferred exposure/cohort-adjusted association with standardized log volume is −0.129 (HC3 SE 0.009). Within-family estimates are −0.077 (p=.342) on Kalshi and +0.030 (p=.265) on Polymarket, using a different residual-score scale. The volume result remains secondary: it does not establish that ambiguity causes trading. Current numbers include the correction recognizing clock-context “ET” deadlines.
+
+Start with the generated [ICIS paper outline](output/PAPER_OUTLINE.md), [research summary](output/RESEARCH_SUMMARY.md), and [critic feedback and implemented revisions](docs/CRITIC_REVIEW.md).
 
 ## Reproduce the results
 
@@ -44,6 +48,17 @@ uv run python3 main.py all --retrieval-date 2026-09-10 \
 
 Raw API responses are date-stamped and immutable. Raw and processed data are Git-ignored; a fresh future run can differ as platform archives and rules evolve.
 
+For the critic-driven revision using locally cached snapshots, regenerate the affected stages without downloading new histories:
+
+```bash
+uv run python3 main.py preprocess --retrieval-date 2026-09-10
+uv run python3 main.py match
+uv run python3 main.py anecdotes --retrieval-date 2026-09-10
+uv run python3 main.py analyze
+```
+
+Use `uv run python` for these commands on Windows when `python3` selects the Store interpreter outside the project environment. In restricted sessions, `uv --cache-dir .uv-cache run ...` keeps the uv cache inside the workspace. No new dependencies or branches are required. `analyze` regenerates the profiles, figures, case-based research summary, and paper outline, screening cached price histories against current match eligibility.
+
 ## Design
 
 The construct architecture is documented in [docs/CONSTRUCTS.md](docs/CONSTRUCTS.md), with consequential choices in [docs/DECISIONS.md](docs/DECISIONS.md). In brief:
@@ -54,6 +69,8 @@ The construct architecture is documented in [docs/CONSTRUCTS.md](docs/CONSTRUCTS
 - a coded divergence requires a plausible witness state and implied settlement on both sides.
 
 The determinacy proxy averages source specificity, temporal specificity, operational definition, edge-case completeness, and discretion clarity. Calendar years are distinguished from substantive quantitative thresholds. Volume models include the original baseline, observed-exposure/opening-cohort adjustment, resolved-only estimates, qualitative/quantitative splits, leave-one-component-out checks, family clustering and aggregation, and estimates based only on within-family variation.
+
+**Semantic differentiation** names the process that creates the claims. The profile table reports raw component means and overall/threshold-stratified composite means, rather than comparing within-platform standardized scores. Threshold flags also enter the proxy, so stratification describes portfolio composition rather than independently validating the scale. Family statistics use Kalshi series and Polymarket events and retain that granularity distinction.
 
 Matching now has two stages: retrieval uses shared-phenomenon language without quantities, while claim-equivalence screening separately considers full wording, numeric overlap, predicates, and deadlines. This prevents divergent thresholds or dates from automatically removing an otherwise useful phenomenon candidate.
 
@@ -70,6 +87,8 @@ Polymarket sports rows are removed before its high-volume cap using official spo
 
 - [Research summary](output/RESEARCH_SUMMARY.md): current contribution, cases, estimates, interpretation, and paper storyline.
 - [Representation casebook](output/REPRESENTATION_CASEBOOK.md): plain-language explanations with exact archived rules.
+- [Conference paper outline](output/PAPER_OUTLINE.md): Introduction, Literature, Method, Results, and Discussion/Conclusion, linked to the current findings.
+- [Platform rule profile figure](output/figures/views-platform-rule-profiles.svg) and `output/tables/analysis-platform-profiles.csv`: component differences, contract mix, and conditional comparisons.
 - [Research status](output/RESEARCH_STATUS.md): concise handoff of current evidence and locked decisions.
 - `output/tables/representation-case-matrix.csv`: structured signatures, witness states, payouts, URLs, scope, and confidence.
 - `output/tables/analysis-market-models.csv`: all main and robustness estimates.
@@ -89,8 +108,8 @@ src/
   semantics.py           # determinacy and diagnostic divergence features
   matching.py            # phenomenon retrieval and claim screening
   panel.py               # diagnostic price-history alignment
-  analysis.py            # empirical models and robustness checks
-  reporting.py           # generated research documents
+  analysis.py            # platform profiles, empirical models, existing diagnostics
+  reporting.py           # generated research documents and ICIS paper outline
 docs/                    # constructs and persistent research decisions
 tests/                   # unit tests; no network or LLM calls
 data/raw/                # immutable local API snapshots (ignored)

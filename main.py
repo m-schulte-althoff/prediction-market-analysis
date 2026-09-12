@@ -14,6 +14,7 @@ from src.analysis import (
     determinacy_bins,
     market_level_models,
     matched_model,
+    platform_profiles,
     prepare_market_analysis,
     terminal_error_model,
 )
@@ -41,6 +42,7 @@ from src.preprocessing import build_contract_table
 from src.reporting import (
     coverage_table,
     semantic_examples,
+    write_paper_outline,
     write_research_log,
     write_research_status,
     write_research_summary,
@@ -51,6 +53,7 @@ from views import (
     determinacy_distribution,
     determinacy_volume_bins,
     divergence_disagreement,
+    platform_rule_profiles,
     price_trajectories,
 )
 
@@ -95,9 +98,7 @@ def _read_frame(path: Path, date_columns: tuple[str, ...] = ()) -> pd.DataFrame:
     frame = pd.read_csv(path, dtype=identifier_columns, low_memory=False)
     for column in date_columns:
         if column in frame:
-            frame[column] = pd.to_datetime(
-                frame[column], utc=True, errors="coerce", format="mixed"
-            )
+            frame[column] = pd.to_datetime(frame[column], utc=True, errors="coerce", format="mixed")
     return frame
 
 
@@ -223,13 +224,24 @@ def run_analysis() -> None:
     panel_summary = (
         _read_frame(PANEL_SUMMARY_PATH) if PANEL_SUMMARY_PATH.exists() else pd.DataFrame()
     )
+    eligible_pairs = matches.loc[
+        matches["match_label"].eq("high_confidence"), "underlying_event_id"
+    ]
+    if not panel.empty:
+        panel = panel.loc[panel["underlying_event_id"].isin(eligible_pairs)].copy()
+    if not panel_summary.empty:
+        panel_summary = panel_summary.loc[
+            panel_summary["underlying_event_id"].isin(eligible_pairs)
+        ].copy()
     cases = _read_frame(CASE_PATH) if CASE_PATH.exists() else pd.DataFrame()
     analysis_frame = prepare_market_analysis(contracts)
     models = market_level_models(analysis_frame)
     bins = determinacy_bins(analysis_frame)
     matched_models = matched_model(panel_summary)
     error_models = terminal_error_model(analysis_frame)
+    profiles = platform_profiles(analysis_frame)
 
+    write_csv(profiles, TABLE_DIR / "analysis-platform-profiles.csv", ["platform", "stratum"])
     write_csv(models, TABLE_DIR / "analysis-market-models.csv", ["model"])
     write_csv(
         bins,
@@ -239,6 +251,7 @@ def run_analysis() -> None:
     write_csv(matched_models, TABLE_DIR / "analysis-matched-model.csv")
     write_csv(error_models, TABLE_DIR / "analysis-terminal-error.csv")
     conceptual_schematic(FIGURE_DIR / "views-conceptual-schematic.svg")
+    platform_rule_profiles(profiles, FIGURE_DIR / "views-platform-rule-profiles.svg")
     determinacy_distribution(analysis_frame, FIGURE_DIR / "views-determinacy-distribution.svg")
     determinacy_volume_bins(bins, FIGURE_DIR / "views-determinacy-volume.svg")
     divergence_disagreement(panel_summary, FIGURE_DIR / "views-divergence-disagreement.svg")
@@ -255,8 +268,10 @@ def run_analysis() -> None:
         panel_summary,
         matched_models,
         cases,
+        profiles,
     )
-    write_research_status(OUTPUT_DIR / "RESEARCH_STATUS.md", contracts, models, cases)
+    write_research_status(OUTPUT_DIR / "RESEARCH_STATUS.md", contracts, models, cases, profiles)
+    write_paper_outline(OUTPUT_DIR / "PAPER_OUTLINE.md", contracts, models, cases, profiles)
     LOGGER.info("Analysis package written under %s", OUTPUT_DIR)
 
 

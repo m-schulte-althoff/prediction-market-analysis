@@ -64,9 +64,9 @@ def prepare_market_analysis(contracts: pd.DataFrame) -> pd.DataFrame:
     missing_family = frame["analysis_family"].isin(("", "nan", "None", "<NA>"))
     frame.loc[missing_family, "analysis_family"] = frame.loc[missing_family, "contract_id"]
     frame["family_id"] = frame["platform"] + ":" + frame["analysis_family"]
-    frame["family_contracts"] = frame.groupby("family_id", observed=True)[
-        "contract_id"
-    ].transform("size")
+    frame["family_contracts"] = frame.groupby("family_id", observed=True)["contract_id"].transform(
+        "size"
+    )
     family_mean = frame.groupby("family_id", observed=True)["determinacy_score"].transform("mean")
     frame["determinacy_within"] = frame["determinacy_score"] - family_mean
     frame["determinacy_between"] = family_mean
@@ -91,9 +91,7 @@ def prepare_market_analysis(contracts: pd.DataFrame) -> pd.DataFrame:
     return frame
 
 
-def _model_row(
-    name: str, model: Any, term: str, clusters: int | None = None
-) -> dict[str, object]:
+def _model_row(name: str, model: Any, term: str, clusters: int | None = None) -> dict[str, object]:
     """Extract the focal coefficient and fit statistics from an OLS result."""
 
     return {
@@ -108,6 +106,48 @@ def _model_row(
         "r_squared": float(model.rsquared),
         "clusters": clusters,
     }
+
+
+def platform_profiles(frame: pd.DataFrame) -> pd.DataFrame:
+    """Describe raw rule scores and family composition, overall and by threshold flag."""
+
+    records: list[dict[str, object]] = []
+    for platform, platform_frame in frame.groupby("platform", sort=True):
+        for stratum, group in (
+            ("all", platform_frame),
+            ("no_threshold_flag", platform_frame.loc[platform_frame.quantitative_threshold == 0]),
+            ("threshold_flag", platform_frame.loc[platform_frame.quantitative_threshold == 1]),
+        ):
+            if group.empty:
+                continue
+            families = group.groupby("family_id", sort=True)["determinacy_score"]
+            family_sizes = families.size()
+            varying = families.transform("nunique") > 1
+            total_ss = float(
+                (group.determinacy_score - group.determinacy_score.mean()).pow(2).sum()
+            )
+            within_ss = float((group.determinacy_score - families.transform("mean")).pow(2).sum())
+            record: dict[str, object] = {
+                "platform": platform,
+                "stratum": stratum,
+                "contracts": len(group),
+                "platform_contract_share": len(group) / len(platform_frame),
+                "threshold_flag_share": float(group.quantitative_threshold.mean()),
+                "mean_determinacy": float(group.determinacy_score.mean()),
+                "mean_text_words": float(group.rule_word_count.mean()),
+                "families": len(family_sizes),
+                "top_five_family_share": float(family_sizes.nlargest(5).sum() / len(group)),
+                "between_family_variance_share": (
+                    1.0 - within_ss / total_ss if total_ss > 0 else float("nan")
+                ),
+                "varying_families": int(group.loc[varying, "family_id"].nunique()),
+                "contracts_in_varying_families": int(varying.sum()),
+            }
+            record.update(
+                {component: float(group[component].mean()) for component in DETERMINACY_COMPONENTS}
+            )
+            records.append(record)
+    return pd.DataFrame.from_records(records)
 
 
 def market_level_models(frame: pd.DataFrame) -> pd.DataFrame:
@@ -286,9 +326,9 @@ def _aggregate_families(frame: pd.DataFrame) -> pd.DataFrame:
         .reset_index()
     )
     aggregated["log_volume"] = np.log1p(aggregated["total_volume"].clip(lower=0))
-    aggregated["volume_z"] = aggregated.groupby("platform", observed=True)[
-        "log_volume"
-    ].transform(_zscore)
+    aggregated["volume_z"] = aggregated.groupby("platform", observed=True)["log_volume"].transform(
+        _zscore
+    )
     aggregated["determinacy_z"] = aggregated.groupby("platform", observed=True)[
         "determinacy_score"
     ].transform(_zscore)
@@ -316,8 +356,7 @@ def terminal_error_model(frame: pd.DataFrame) -> pd.DataFrame:
     if len(sample) < 30 or sample["series"].nunique() < 10:
         return pd.DataFrame()
     model = smf.ols(
-        "terminal_abs_error ~ determinacy_z + log_rule_length + log_duration + "
-        "C(category_group)",
+        "terminal_abs_error ~ determinacy_z + log_rule_length + log_duration + C(category_group)",
         data=sample,
     ).fit(cov_type="cluster", cov_kwds={"groups": sample["series"]})
     return pd.DataFrame.from_records(

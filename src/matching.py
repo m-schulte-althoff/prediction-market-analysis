@@ -65,8 +65,8 @@ def _day_difference(left: object, right: object) -> float:
     return delta.total_seconds() / 86_400
 
 
-def _predicate_compatible(left: str, right: str) -> bool:
-    """Reject threshold-vs-winner candidates that share an event but not a claim."""
+def _predicate_difference(left: str, right: str) -> str:
+    """Explain obvious claim differences while retaining shared-phenomenon candidates."""
 
     threshold_terms = ("margin", "above", "below", "over ", "under ", "more than", "less than")
     winner_terms = (" win ", "winner", "nominee")
@@ -76,7 +76,23 @@ def _predicate_compatible(left: str, right: str) -> bool:
     right_threshold = any(term in right_padded for term in threshold_terms)
     left_winner = any(term in left_padded for term in winner_terms)
     right_winner = any(term in right_padded for term in winner_terms)
-    return not ((left_threshold and right_winner) or (right_threshold and left_winner))
+    if (left_threshold and right_winner) or (right_threshold and left_winner):
+        return "victory threshold versus election winner"
+    first_place = re.compile(r"\b(?:finish (?:1st|first)|first place|most votes)\b")
+    qualifying = re.compile(r"\b(?:advance|qualify|top two|top-two)\b")
+    if (first_place.search(left_padded) and qualifying.search(right_padded)) or (
+        first_place.search(right_padded) and qualifying.search(left_padded)
+    ):
+        return "first-place finish versus qualification for the next round"
+    first_departure = re.compile(
+        r"\b(?:next leader out|first individual who ceases|first (?:leader|to leave))\b"
+    )
+    departure = re.compile(r"\b(?:out before|leaves? office|departure|ceases to occupy)\b")
+    if (
+        bool(first_departure.search(left_padded)) != bool(first_departure.search(right_padded))
+    ) and departure.search(left_padded + right_padded):
+        return "individual departure versus first departure among listed leaders"
+    return ""
 
 
 def _label_match(
@@ -84,12 +100,7 @@ def _label_match(
 ) -> str:
     """Assign conservative review strata favoring precision over recall."""
 
-    if (
-        lexical >= 0.60
-        and number_overlap >= 0.50
-        and absolute_days <= 45
-        and predicate_compatible
-    ):
+    if lexical >= 0.60 and number_overlap >= 0.50 and absolute_days <= 45 and predicate_compatible:
         return "high_confidence"
     if lexical >= 0.44 and number_overlap >= 0.25 and absolute_days <= 180:
         return "probable"
@@ -136,7 +147,11 @@ def match_contracts(contracts: pd.DataFrame, neighbors: int = 3) -> pd.DataFrame
             number_overlap = _number_overlap(left["question"], right["question"])
             deadline_days = _day_difference(left["close_timestamp"], right["close_timestamp"])
             absolute_days = abs(deadline_days) if np.isfinite(deadline_days) else 9_999.0
-            predicate_compatible = _predicate_compatible(left["question"], right["question"])
+            predicate_difference = _predicate_difference(
+                str(left["question"]) + " " + str(left["rules"]),
+                str(right["question"]) + " " + str(right["rules"]),
+            )
+            predicate_compatible = not predicate_difference
             label = _label_match(lexical, number_overlap, absolute_days, predicate_compatible)
             left_rules = " ".join(
                 [str(left["question"]), str(left["rules"]), str(left["resolution_source"])]
@@ -178,6 +193,7 @@ def match_contracts(contracts: pd.DataFrame, neighbors: int = 3) -> pd.DataFrame
                     "lexical_similarity": lexical,
                     "number_overlap": number_overlap,
                     "predicate_compatible": predicate_compatible,
+                    "predicate_difference": predicate_difference,
                     "deadline_difference_days": deadline_days,
                     "match_confidence": 0.55 * lexical
                     + 0.15 * number_overlap

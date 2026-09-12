@@ -1,8 +1,41 @@
 """Tests for precision-oriented cross-platform event matching."""
 
 import pandas as pd
+import pytest
 
 from src.matching import match_contracts
+
+
+@pytest.mark.parametrize(
+    ("left_question", "right_question", "right_rule", "difference"),
+    [
+        (
+            "Will Tom Steyer finish 1st in the 2026 California primary?",
+            "Will Tom Steyer advance from the 2026 California primary?",
+            "The top two candidates advance.",
+            "first-place finish",
+        ),
+        (
+            "Will Donald Trump be out before 2027?",
+            "Will Donald Trump be out before 2027?",
+            "This resolves to the first individual who ceases to occupy their listed office.",
+            "first departure",
+        ),
+    ],
+)
+def test_different_success_conditions_remain_candidates(
+    left_question: str, right_question: str, right_rule: str, difference: str
+) -> None:
+    """Similar headlines must not hide rank or competing-leader payout conditions."""
+
+    left = _contract("kalshi:X", "Kalshi", left_question, "2026-12-31")
+    right = _contract("polymarket:X", "Polymarket", right_question, "2026-12-31")
+    right["rules"] = right_rule
+    result = match_contracts(pd.DataFrame([left, right]), neighbors=1)
+    assert len(result) == 1
+    assert not bool(result.iloc[0]["predicate_compatible"])
+    assert result.iloc[0]["match_label"] != "high_confidence"
+    assert difference in result.iloc[0]["predicate_difference"]
 
 
 def _contract(

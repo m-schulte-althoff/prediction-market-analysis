@@ -6,9 +6,63 @@ import pandas as pd
 from src.analysis import (
     determinacy_bins,
     market_level_models,
+    platform_profiles,
     prepare_market_analysis,
     terminal_error_model,
 )
+
+
+def test_platform_profiles_preserve_composition_reversal_and_family_variation() -> None:
+    """Unequal type mixes can reverse pooled rankings despite both conditional rankings."""
+
+    records = []
+    for platform, types in (
+        ("Kalshi", [(0, 1, 0.2), (1, 9, 0.7)]),
+        ("Polymarket", [(0, 9, 0.3), (1, 1, 0.8)]),
+    ):
+        for flag, count, score in types:
+            for _ in range(count):
+                records.append(
+                    {
+                        "platform": platform,
+                        "quantitative_threshold": flag,
+                        "determinacy_score": score,
+                        "family_id": f"{platform}-{flag}",
+                        "rule_word_count": 100,
+                        **{
+                            component: score
+                            for component in (
+                                "source_specificity",
+                                "temporal_specificity",
+                                "outcome_definition",
+                                "edge_completeness",
+                                "discretion_clarity",
+                            )
+                        },
+                    }
+                )
+    result = platform_profiles(pd.DataFrame(records)).set_index(["platform", "stratum"])
+    assert (
+        float(str(result.loc[("Kalshi", "all"), "mean_determinacy"]))
+        > float(str(result.loc[("Polymarket", "all"), "mean_determinacy"]))
+    )
+    for stratum in ("no_threshold_flag", "threshold_flag"):
+        assert (
+            float(str(result.loc[("Kalshi", stratum), "mean_determinacy"]))
+            < float(str(result.loc[("Polymarket", stratum), "mean_determinacy"]))
+        )
+    assert result.loc[("Kalshi", "all"), "between_family_variance_share"] == 1
+    assert result.loc[("Kalshi", "all"), "varying_families"] == 0
+    assert result.loc[("Kalshi", "all"), "threshold_flag_share"] == 0.9
+
+
+def test_platform_profiles_do_not_treat_constant_scores_as_explained_variance() -> None:
+    """A portfolio with no score variation has no defined variance decomposition."""
+
+    frame = prepare_market_analysis(_analysis_fixture())
+    frame["determinacy_score"] = 0.5
+    profiles = platform_profiles(frame)
+    assert profiles.between_family_variance_share.isna().all()
 
 
 def _analysis_fixture() -> pd.DataFrame:
@@ -22,9 +76,7 @@ def _analysis_fixture() -> pd.DataFrame:
             volume = float(np.exp(10 - 3 * determinacy + (index % 3) * 0.03))
             outcome = "yes" if index % 2 else "no"
             terminal_price = (
-                0.75 + 0.002 * (index % 5)
-                if outcome == "yes"
-                else 0.15 + 0.002 * (index % 5)
+                0.75 + 0.002 * (index % 5) if outcome == "yes" else 0.15 + 0.002 * (index % 5)
             )
             terminal_error = abs(terminal_price - (1.0 if outcome == "yes" else 0.0))
             records.append(
@@ -46,9 +98,7 @@ def _analysis_fixture() -> pd.DataFrame:
                     "market_duration_days": 30 + index,
                     "observed_exposure_days": 25 + index,
                     "open_timestamp": pd.Timestamp(f"202{index % 3}-01-01", tz="UTC"),
-                    "resolution_timestamp": pd.Timestamp(
-                        f"202{4 + index % 3}-12-31", tz="UTC"
-                    ),
+                    "resolution_timestamp": pd.Timestamp(f"202{4 + index % 3}-12-31", tz="UTC"),
                     "edge_completeness": determinacy,
                     "ambiguous_terms": float(index % 2),
                     "quantitative_threshold": float(index % 2),

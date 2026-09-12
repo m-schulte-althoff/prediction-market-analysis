@@ -17,7 +17,11 @@ DATE_PATTERN = re.compile(
     re.IGNORECASE,
 )
 TIME_PATTERN = re.compile(r"\b\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?)\b", re.I)
-TIMEZONE_PATTERN = re.compile(r"\b(?:utc|gmt|est|edt|cst|cdt|mst|mdt|pst|pdt)\b", re.I)
+TIMEZONE_PATTERN = re.compile(
+    r"\b(?:utc|gmt|est|edt|cst|cdt|mst|mdt|pst|pdt)\b|"
+    r"\b\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?)\s*(?:et|ct|mt|pt)\b",
+    re.I,
+)
 URL_PATTERN = re.compile(r"https?://[^\s)]+", re.I)
 NUMBER_PATTERN = re.compile(r"(?<![a-z])[-+]?\$?\d+(?:\.\d+)?%?", re.I)
 QUANTITATIVE_THRESHOLD_PATTERN = re.compile(
@@ -153,10 +157,7 @@ def semantic_features(question: str, rules: str, resolution_source: str = "") ->
     quantitative_threshold = bool(QUANTITATIVE_THRESHOLD_PATTERN.search(text))
     ambiguity_hits = _contains_count(text, AMBIGUOUS_TERMS)
     outcome_definition = _bounded(
-        0.25
-        + 0.35 * (definition_hits > 0)
-        + 0.30 * quantitative_threshold
-        - 0.12 * ambiguity_hits
+        0.25 + 0.35 * (definition_hits > 0) + 0.30 * quantitative_threshold - 0.12 * ambiguity_hits
     )
 
     edge_hits = _contains_count(text, EDGE_TERMS)

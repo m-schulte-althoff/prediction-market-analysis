@@ -3,6 +3,17 @@
 from src.semantics import pair_divergence, semantic_features
 
 
+def test_clock_context_recognizes_et_without_mistaking_et_al_for_timezone() -> None:
+    """Common platform deadline notation earns the same credit as EDT."""
+
+    question = "Will the deal be signed by June 30, 2026?"
+    eastern = semantic_features(question, "Deadline: 11:59 PM ET.")
+    daylight = semantic_features(question, "Deadline: 11:59 PM EDT.")
+    no_zone = semantic_features(question, "Deadline: 11:59 PM, according to Smith et al.")
+    assert eastern["temporal_specificity"] == daylight["temporal_specificity"]
+    assert eastern["temporal_specificity"] > no_zone["temporal_specificity"]
+
+
 def test_specific_rule_scores_above_ambiguous_rule() -> None:
     """A named source, deadline, threshold, and fallback increase determinacy."""
 

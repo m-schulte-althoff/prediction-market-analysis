@@ -2,6 +2,8 @@
 
 ## 2026-09-11
 
+- Incorporated independent empirical and theory critic feedback into an ICIS-focused pipeline: added sampled platform component/composition profiles and a generated paper outline, explained and refined the archived cases, and added the first-place-versus-advancement example.
+- Recognized clock-context timezone abbreviations, corrected rank and competing-leader claim matches, and screened cached price evidence against current eligibility so descriptive comparisons and case interpretations remain reproducible.
 - Recentered the study on platform-constituted claims, formally separated within-contract determinacy from between-contract divergence, and added an official-rule casebook whose divergences require counterfactual witness states and implied settlements.
 - Corrected Polymarket sports contamination and mixed timestamp parsing, added observed-exposure/cohort, market-type, temporal, leave-one-component-out, family-aggregated, and within-family diagnostics, and bounded the volume interpretation accordingly.
 - Split matching into shared-phenomenon retrieval and claim-equivalence screening, redesigned the conceptual figure, and added persistent construct, decision, and research-status documentation.

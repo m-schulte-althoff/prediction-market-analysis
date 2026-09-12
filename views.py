@@ -14,6 +14,65 @@ from matplotlib.figure import Figure
 PLATFORM_COLORS = {"Kalshi": "#335C81", "Polymarket": "#D1495B"}
 
 
+def platform_rule_profiles(profiles: pd.DataFrame, path: Path) -> None:
+    """Compare raw rule components and show how portfolio mix affects the composite."""
+
+    figure, axes = plt.subplots(1, 2, figsize=(12, 4.8))
+    components = [
+        "source_specificity",
+        "temporal_specificity",
+        "outcome_definition",
+        "edge_completeness",
+        "discretion_clarity",
+    ]
+    strata = ["all", "no_threshold_flag", "threshold_flag"]
+    for platform, group in profiles.groupby("platform", sort=True):
+        overall = group.loc[group.stratum == "all"].iloc[0]
+        axes[0].plot(
+            [overall[component] for component in components],
+            np.arange(5),
+            "o-",
+            label=platform,
+            color=PLATFORM_COLORS.get(str(platform)),
+        )
+        ordered = group.set_index("stratum").reindex(strata)
+        axes[1].plot(
+            np.arange(3),
+            ordered.mean_determinacy,
+            "o-",
+            label=platform,
+            color=PLATFORM_COLORS.get(str(platform)),
+        )
+    axes[0].set(
+        yticks=np.arange(5),
+        yticklabels=["Source", "Time", "Outcome definition", "Edge clauses", "Discretion"],
+        xlim=(0, 1.05),
+        xlabel="Mean component proxy (0–1)",
+        title="Different dimensions of rule specification",
+    )
+    axes[0].invert_yaxis()
+    axes[1].set(
+        xticks=np.arange(3),
+        xticklabels=["Overall", "No threshold\nflag", "Threshold\nflag"],
+        ylim=(0, 1),
+        ylabel="Mean determinacy proxy (0–1)",
+        title="Compare the composite within contract types",
+    )
+    for axis in axes:
+        axis.grid(alpha=0.2)
+        axis.legend(frameon=False)
+    figure.text(
+        0.5,
+        0.01,
+        "Purposive sampled portfolios; threshold flags are text proxies, "
+        "not validated contract types.",
+        ha="center",
+        fontsize=9,
+    )
+    figure.tight_layout(rect=(0, 0.05, 1, 1))
+    _finish(figure, path)
+
+
 def _finish(figure: Figure, path: Path) -> None:
     """Save a tightly bounded vector graphic and close its figure."""
 
@@ -132,6 +191,9 @@ def determinacy_volume_bins(bins: pd.DataFrame, path: Path) -> None:
 def divergence_disagreement(summary: pd.DataFrame, path: Path) -> None:
     """Plot near-close price disagreement against semantic divergence."""
 
+    if summary.empty:
+        path.unlink(missing_ok=True)
+        return
     sample = summary.dropna(subset=["semantic_divergence", "mean_disagreement_30d"])
     if len(sample) < 6 or sample["semantic_divergence"].nunique() < 3:
         if path.exists():
@@ -171,6 +233,7 @@ def price_trajectories(panel: pd.DataFrame, path: Path, maximum_events: int = 4)
     """Plot revealing paired price paths close to resolution."""
 
     if panel.empty:
+        path.unlink(missing_ok=True)
         return
     ranking = (
         panel.groupby("underlying_event_id", sort=True)
@@ -180,6 +243,7 @@ def price_trajectories(panel: pd.DataFrame, path: Path, maximum_events: int = 4)
         .head(maximum_events)
     )
     if ranking.empty:
+        path.unlink(missing_ok=True)
         return
     figure, axes = plt.subplots(len(ranking), 1, figsize=(9, 3.2 * len(ranking)), squeeze=False)
     for axis, event_id in zip(axes[:, 0], ranking.index, strict=True):
@@ -194,9 +258,7 @@ def _plot_pair(axis: Axes, group: pd.DataFrame) -> None:
     """Plot one aligned matched pair on an existing axis."""
 
     axis.plot(group["timestamp"], group["kalshi_price"], label="Kalshi", color="#335C81")
-    axis.plot(
-        group["timestamp"], group["polymarket_price"], label="Polymarket", color="#D1495B"
-    )
+    axis.plot(group["timestamp"], group["polymarket_price"], label="Polymarket", color="#D1495B")
     title = _wrap_question(str(group["kalshi_question"].iloc[0]))
     axis.set(title=title, ylabel="YES probability", ylim=(-0.03, 1.03))
     axis.grid(alpha=0.2)
