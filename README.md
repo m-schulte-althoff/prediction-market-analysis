@@ -10,6 +10,8 @@ The preferred exposure/cohort-adjusted association with standardized log volume 
 
 Start with the generated [ICIS paper outline](output/PAPER_OUTLINE.md), [research summary](output/RESEARCH_SUMMARY.md), and [critic feedback and implemented revisions](docs/CRITIC_REVIEW.md).
 
+The [claim-confidence overview](output/CLAIM_CONFIDENCE.md) assesses each current claim's magnitude, significance, robustness, alternative explanations, and strongest example. It is a dated interpretation of the existing evidence, separate from the generated analysis.
+
 ## Reproduce the results
 
 Install [uv](https://docs.astral.sh/uv/), then run:

@@ -1,5 +1,9 @@
 # Change Log
 
+## 2026-09-14
+
+- Added a claim-by-claim evidence overview distinguishing demonstrated rule mechanisms, descriptive portfolio patterns, exploratory activity associations, and untested behavioral implications to guide the paper's claims.
+
 ## 2026-09-11
 
 - Incorporated independent empirical and theory critic feedback into an ICIS-focused pipeline: added sampled platform component/composition profiles and a generated paper outline, explained and refined the archived cases, and added the first-place-versus-advancement example.
