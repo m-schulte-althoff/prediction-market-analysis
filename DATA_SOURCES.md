@@ -64,4 +64,8 @@ Retrieval date for the included empirical package: **2026-09-10**. All used sour
 
 ## Reproducibility and immutability
 
+The September 14 representation-aware extension uses the same empirical archives. Relation audits cover the full returned descriptions and are bound to contract-ID/rule fingerprints; additional hypothetical states establish overlap/non-nesting for election and minerals cases. The primary and leader clauses expose fractional exceptions. These audits add neither realized settlement data nor observed trader beliefs.
+
+The legacy panel resamples daily and forward-fills for up to seven days; it does not preserve original observation timestamps or verify trade freshness. The currently eligible subset has two pairs with nine daily rows each. `coherence-panel-readiness.csv` therefore marks both as insufficient evidence. Any future `data/processed/coherence-price-observations.csv` must separately document fresh synchronized, YES-oriented normalized observations and comparable conditions; no such observations are supplied in the current package.
+
 Raw responses are saved as date-stamped UTF-8 JSON under `data/raw/`; matched histories are additionally content-addressed by the selected match IDs and acquisition mode. Existing raw snapshots are loaded rather than overwritten. `data/` is Git-ignored because API responses can be large and are reproducible from the public sources. Derived CSV files are deterministically sorted before writing.

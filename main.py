@@ -19,10 +19,12 @@ from src.analysis import (
     terminal_error_model,
 )
 from src.anecdotes import (
+    add_claim_relations,
     build_representation_case_matrix,
     download_anecdote_sources,
     write_casebook,
 )
+from src.coherence import case_price_diagnostics, panel_coherence_readiness
 from src.config import (
     FIGURE_DIR,
     LOG_DIR,
@@ -234,6 +236,11 @@ def run_analysis() -> None:
             panel_summary["underlying_event_id"].isin(eligible_pairs)
         ].copy()
     cases = _read_frame(CASE_PATH) if CASE_PATH.exists() else pd.DataFrame()
+    if not cases.empty:
+        cases = add_claim_relations(cases)
+        write_csv(cases, CASE_PATH, ["case_id"])
+        write_casebook(OUTPUT_DIR / "REPRESENTATION_CASEBOOK.md", cases.fillna(""))
+    coherence = run_coherence(cases, panel)
     analysis_frame = prepare_market_analysis(contracts)
     models = market_level_models(analysis_frame)
     bins = determinacy_bins(analysis_frame)
@@ -269,10 +276,29 @@ def run_analysis() -> None:
         matched_models,
         cases,
         profiles,
+        coherence,
     )
-    write_research_status(OUTPUT_DIR / "RESEARCH_STATUS.md", contracts, models, cases, profiles)
+    write_research_status(
+        OUTPUT_DIR / "RESEARCH_STATUS.md", contracts, models, cases, profiles, coherence
+    )
     write_paper_outline(OUTPUT_DIR / "PAPER_OUTLINE.md", contracts, models, cases, profiles)
     LOGGER.info("Analysis package written under %s", OUTPUT_DIR)
+
+
+def run_coherence(cases: pd.DataFrame, panel: pd.DataFrame) -> pd.DataFrame:
+    """Export representation-aware diagnostics without treating daily fills as fresh quotes."""
+
+    observation_path = PROCESSED_DIR / "coherence-price-observations.csv"
+    observations = _read_frame(observation_path) if observation_path.exists() else pd.DataFrame()
+    diagnostics = case_price_diagnostics(cases, observations)
+    write_csv(diagnostics, TABLE_DIR / "coherence-case-diagnostics.csv")
+    write_csv(panel_coherence_readiness(panel), TABLE_DIR / "coherence-panel-readiness.csv")
+    LOGGER.info(
+        "Coherence: %d case/observation rows, %d estimable under explicit price assumptions",
+        len(diagnostics),
+        int(diagnostics.status.eq("estimated").sum()),
+    )
+    return diagnostics
 
 
 def run_all(config: SampleConfig) -> None:

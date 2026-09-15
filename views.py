@@ -77,7 +77,14 @@ def _finish(figure: Figure, path: Path) -> None:
     """Save a tightly bounded vector graphic and close its figure."""
 
     path.parent.mkdir(parents=True, exist_ok=True)
-    figure.savefig(path, format=path.suffix.removeprefix("."), bbox_inches="tight")
+    # Stable SVG identifiers and no wall-clock metadata make regenerated figures reproducible.
+    with plt.rc_context({"svg.hashsalt": path.name}):
+        figure.savefig(
+            path,
+            format=path.suffix.removeprefix("."),
+            bbox_inches="tight",
+            metadata={"Date": None} if path.suffix.lower() == ".svg" else None,
+        )
     plt.close(figure)
     if path.suffix.lower() == ".svg":
         lines = path.read_text(encoding="utf-8").splitlines()
@@ -86,20 +93,31 @@ def _finish(figure: Figure, path: Path) -> None:
 
 
 def conceptual_schematic(path: Path) -> None:
-    """Draw platform branching from one phenomenon to distinct digital claims."""
+    """Separate institutional claim definition, world-belief updating and market pricing."""
 
-    figure, axis = plt.subplots(figsize=(11, 4.6))
+    figure, axis = plt.subplots(figsize=(14, 5.3))
     axis.set_xlim(0, 1)
     axis.set_ylim(0, 1)
     axis.axis("off")
     nodes = [
-        (0.10, 0.54, "Public-world\nphenomenon", "#E7EEF5"),
-        (0.36, 0.76, "Kalshi resolution\narchitecture", "#DDEAF4"),
-        (0.36, 0.32, "Polymarket resolution\narchitecture", "#F5DFE2"),
-        (0.64, 0.76, "Digital claim A\n(determinacy $D_A$)", "#DDEAF4"),
-        (0.64, 0.32, "Digital claim B\n(determinacy $D_B$)", "#F5DFE2"),
-        (0.90, 0.76, "Beliefs and\nprice A", "#F3F0E8"),
-        (0.90, 0.32, "Beliefs and\nprice B", "#F3F0E8"),
+        (0.09, 0.78, "Possible world\nhistories $\\Omega$", "#E7EEF5"),
+        (0.30, 0.78, "Platform $c$\nresolution architecture", "#DDEAF4"),
+        (
+            0.54,
+            0.78,
+            "Settlement mapping $r_c$\nbinary event $Y_c$\nor incomplete $R_c$",
+            "#F5DFE2",
+        ),
+        (0.09, 0.30, "Trader evidence $e$", "#E7EEF5"),
+        (
+            0.30,
+            0.30,
+            "Bayesian updating\nover world histories\n$\\mu_e=P(\\cdot\\mid e)$",
+            "#DDEAF4",
+        ),
+        (0.54, 0.30, "Claim valuation\n$q_c=E_{\\mu_e}[r_c]$", "#F3F0E8"),
+        (0.76, 0.30, "Market\naggregation", "#F3F0E8"),
+        (0.94, 0.30, "Observed\nprice $p_c$", "#F3F0E8"),
     ]
     for x_value, y_value, label, color in nodes:
         axis.text(
@@ -112,12 +130,13 @@ def conceptual_schematic(path: Path) -> None:
             bbox={"boxstyle": "round,pad=0.65", "facecolor": color, "edgecolor": "#333333"},
         )
     arrows = [
-        ((0.18, 0.57), (0.28, 0.72)),
-        ((0.18, 0.51), (0.28, 0.36)),
-        ((0.45, 0.76), (0.55, 0.76)),
-        ((0.45, 0.32), (0.55, 0.32)),
-        ((0.73, 0.76), (0.82, 0.76)),
-        ((0.73, 0.32), (0.82, 0.32)),
+        ((0.16, 0.78), (0.21, 0.78)),
+        ((0.40, 0.78), (0.44, 0.78)),
+        ((0.17, 0.30), (0.21, 0.30)),
+        ((0.40, 0.30), (0.46, 0.30)),
+        ((0.54, 0.65), (0.54, 0.40)),
+        ((0.62, 0.30), (0.71, 0.30)),
+        ((0.82, 0.30), (0.90, 0.30)),
     ]
     for start, end in arrows:
         axis.annotate(
@@ -126,19 +145,24 @@ def conceptual_schematic(path: Path) -> None:
             xytext=start,
             arrowprops={"arrowstyle": "->", "color": "#555555", "lw": 1.5},
         )
-    axis.annotate(
-        "",
-        xy=(0.64, 0.41),
-        xytext=(0.64, 0.67),
-        arrowprops={"arrowstyle": "<->", "color": "#8B5A2B", "lw": 1.7},
+    axis.text(
+        0.80,
+        0.78,
+        "Same posterior over worlds\n+ different payoff events\n"
+        "can yield different claim probabilities",
+        ha="center",
+        va="center",
+        fontsize=10,
+        color="#7A3E00",
     )
     axis.text(
-        0.66,
-        0.54,
-        "Semantic divergence $\\Delta_{AB}$\n(witness state can settle differently)",
+        0.50,
+        0.02,
+        "A point claim valuation requires a sufficiently complete mapping. "
+        "Equating price with probability requires additional assumptions.",
         ha="center",
         fontsize=9,
-        color="#7A3E00",
+        color="#444444",
     )
     _finish(figure, path)
 

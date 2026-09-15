@@ -2,12 +2,15 @@
 
 from __future__ import annotations
 
+import hashlib
+import json
 import logging
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
 
+from src.coherence import ClaimRelation, probability_implication
 from src.config import KALSHI_BASE_URL, POLYMARKET_GAMMA_URL, SampleConfig, dated_raw_path
 from src.http_client import PublicApiClient
 from src.io_utils import read_json, write_immutable_json
@@ -22,6 +25,122 @@ POLYMARKET_EVENT_SLUGS = (
     "will-zelenskyy-wear-a-suit-before-july",
 )
 KALSHI_EVENT_TICKERS = ("KXPRESPERSON-28", "KXFEDDECISION-26SEP")
+
+# Manual audit of the complete archived descriptions, 2026-09-14. Fingerprints
+# bind judgments to contract IDs and text; revised rules require another review.
+# Overlap/non-nesting uses three existence witnesses, not an inclusion inference.
+CLAIM_AUDITS: dict[str, tuple[str, ClaimRelation, str, str]] = {
+    "election-call-vs-inauguration": (
+        "495624392be25d94d4b4a6d7d6b135036c43b79f91db3299769a39508de8dd81",
+        ClaimRelation.OVERLAP_NON_NESTED,
+        "determinate_binary",
+        "Under the archived binary reading: Rubio called by all three sources but never "
+        "inaugurated gives A=0,B=1. All three call another candidate, who is then unable to "
+        "take office, and Rubio is inaugurated for the 2029 term gives A=1,B=0. "
+        "Rubio called and inaugurated gives A=1,B=1. The inauguration fallback applies "
+        "only absent a unanimous call by January 20, 2029. These existence witnesses "
+        "establish overlap and both differences, not a marginal probability ordering.",
+    ),
+    "minerals-agreement-vs-signature": (
+        "3df86f5504429697b5e99d10fbfc61cd69ad260d906c1e0ebbe944b232f63fe7",
+        ClaimRelation.OVERLAP_NON_NESTED,
+        "determinate_binary",
+        "Both governments announce a rare-earth deal on March 31 but never formally adopt "
+        "any mineral deal through April 30: A=1,B=0. No deal by March 31, then an officially "
+        "documented rare-earth deal signed on April 15: A=0,B=1. A March 31 rare-earth "
+        "announcement followed by an April 15 signature: A=1,B=1. All times fall within "
+        "the respective ET windows, with official information and credible reporting in "
+        "agreement. Distinct windows, mineral scope and authorities prevent nesting; "
+        "these successive contracts are not a synchronized market pair.",
+    ),
+    "fed-quantization-convention": (
+        "598537ced8911a9cc5dca52c37a0af14ee1cc9b8c106d0398284304fb422ae31",
+        ClaimRelation.NON_EQUIVALENT_UNCLASSIFIED,
+        "binary_reading_unvalidated",
+        "The 12.5 bp witness proves non-equivalence conditional on literal Kalshi wording. "
+        "The September 16 criterion and cancellation-to-no-change clause differ from the "
+        "Polymarket upper-bound measurement, rounding and no-statement fallback through "
+        "the next meeting. No full-state binary mapping or global inclusion is validated.",
+    ),
+    "primary-first-vs-advance": (
+        "54523ae37ed1adfd215babef294214d8deb36ef0792903d28214eff69702c60f",
+        ClaimRelation.NON_EQUIVALENT_UNCLASSIFIED,
+        "non_binary_exceptions",
+        "Second place without a tie establishes payout divergence. Kalshi pays 1/n in "
+        "exact ties, ranks withdrawn/disqualified candidates remaining on the ballot, "
+        "and pays NO for cancellation/postponement beyond expiration. Polymarket asks "
+        "actual advancement, with a December 31 cutoff and official-results fallback. "
+        "The full Kalshi mapping is not binary; no binary subset restriction is imposed.",
+    ),
+    "leader-announcement-vs-departure": (
+        "cb88116959583f9e8a97fa1fbb1d329182fbb6a34ef0518350e9ab71c73ab319",
+        ClaimRelation.NON_EQUIVALENT_UNCLASSIFIED,
+        "non_binary_and_adjudicated_exceptions",
+        "Announcement and competing-departure witnesses establish payout divergence. "
+        "Kalshi's death-only clause uses the last traded price or committee fair allocation; "
+        "it is not a binary mapping over all histories. Polymarket requires first permanent "
+        "departure among the fixed leader list, excludes caretaker/temporary status, and "
+        "has a December 31 ET fallback. No global binary superset restriction is justified.",
+    ),
+    "suit-category-boundary": (
+        "0653fcaa29a5932e04efa060c459ca0b7f6e1b9743376a85d2292c3213753f33",
+        ClaimRelation.INDETERMINATE,
+        "adjudicatively_incomplete",
+        "Authenticity and May 22-June 30 image/release requirements fix evidence conditions, "
+        "not the garment category. For the borderline attire witness, the text alone does "
+        "not select a payout; credible-reporting adjudication completes the mapping. "
+        "This is a within-contract illustration, not a second market or proof that "
+        "an eventual institutional settlement is undefined.",
+    ),
+}
+
+
+def add_claim_relations(cases: pd.DataFrame) -> pd.DataFrame:
+    """Attach manual representation audits only to their verified archived rule versions."""
+
+    records: list[dict[str, object]] = []
+    for row in cases.to_dict(orient="records"):
+        payload = [
+            [str(row[f"{side}_contract_id"]), " ".join(str(row[f"{side}_rule"]).split())]
+            for side in ("a", "b")
+        ]
+        fingerprint = hashlib.sha256(json.dumps(payload, ensure_ascii=False).encode()).hexdigest()
+        audit = CLAIM_AUDITS.get(str(row["case_id"]))
+        validated = audit is not None and fingerprint == audit[0]
+        if audit is not None and validated:
+            _, relation, status, basis = audit
+            confidence = (
+                "conditional on literal archived wording"
+                if row["case_id"] == "fed-quantization-convention"
+                else "high within stated archived-rule model; not a probability"
+            )
+        else:
+            relation, status = ClaimRelation.UNCLASSIFIED, "unreviewed"
+            basis = "Contract IDs/rules differ from the audited archive; manual review required."
+            confidence = "unreviewed"
+        implication = probability_implication(relation)
+        applicable = (
+            validated and status == "determinate_binary" and implication.diagnostic_available
+        )
+        records.append(
+            {
+                **{str(key): value for key, value in row.items()},
+                "claim_relation": relation.value,
+                "claim_relation_validated": validated,
+                "claim_relation_confidence": confidence,
+                "claim_relation_basis": basis,
+                "representation_status": status,
+                "probability_coherence_implication": implication.probability_restriction,
+                "coherence_test_applicable": applicable,
+                "coherence_test_reason": (
+                    "Semantic gate only; independently validated synchronized prices "
+                    "still required."
+                    if applicable
+                    else f"{status}: {implication.reason} {basis}"
+                ),
+            }
+        )
+    return pd.DataFrame.from_records(records)
 
 
 def anecdote_snapshot_path(config: SampleConfig) -> Path:
@@ -352,7 +471,7 @@ def build_representation_case_matrix(
     if primary_case is not None:
         records.append(primary_case)
     return (
-        pd.DataFrame.from_records(records)
+        add_claim_relations(pd.DataFrame.from_records(records))
         .sort_values("case_id", kind="stable")
         .reset_index(drop=True)
     )
@@ -475,8 +594,7 @@ def _primary_advancement_case(
         truth_condition_divergent=True,
         determinacy_issue=False,
         explanation=(
-            "A runner-up can lose the contest for first place "
-            "and still qualify for the next round."
+            "A runner-up can lose the contest for first place and still qualify for the next round."
         ),
         audit_note=(
             "This is a hypothetical second-place scenario, not a claim about the observed "
@@ -496,6 +614,10 @@ def write_casebook(path: Path, cases: pd.DataFrame) -> None:
         "plausible witness state for which the represented payouts differ.",
         "The rules are archived observations; the witness scenarios are hypothetical. "
         "The suit case instead illustrates the limits of the written category definition.",
+        "A common posterior over world histories can value different payout claims differently. "
+        "The relation audit adds no price result: a witness does not prove nesting, "
+        "and fractional settlements fall outside a binary-event restriction. "
+        "See [constructs and source bridge](../docs/CONSTRUCTS.md).",
         "",
     ]
     for row in cases.to_dict(orient="records"):
@@ -511,6 +633,12 @@ def write_casebook(path: Path, cases: pd.DataFrame) -> None:
                 f"- Witness state: {row['witness_state']}",
                 f"- Implied settlements: A = {row['payout_a']}; B = {row['payout_b']}",
                 f"- Audit boundary: {row['audit_note']}",
+                f"- Claim relation: {row['claim_relation']}; "
+                f"representation: {row['representation_status']}",
+                f"- Relation confidence: {row['claim_relation_confidence']}",
+                f"- Complete-rule relation audit: {row['claim_relation_basis']}",
+                f"- Probability implication: {row['probability_coherence_implication']}; "
+                f"coherence test applicable (semantic gate): {row['coherence_test_applicable']}",
                 f"- Sources: [A: {row['a_platform']}]({row['a_url']})"
                 + (f"; [B: {row['b_platform']}]({row['b_url']})" if row["b_url"] else ""),
                 f"- Exact archived rules: {row['a_rule']} || {row['b_rule']}",

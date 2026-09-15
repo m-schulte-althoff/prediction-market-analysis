@@ -224,3 +224,4 @@ prompts/
 # and derived tables are reproducible from the public APIs.
 data/
 logs/
+input/

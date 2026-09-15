@@ -1,5 +1,13 @@
 # Research Decisions
 
+## 2026-09-14
+
+- Formalize claim constitution separately from updating: a common posterior over modeled histories values platform-defined mappings as `E[r_c | e]`, equal to an event probability only for determinate binary payouts. This is our IS extension to the representational prerequisite in Meehan and Zhang, not their own prediction-market argument; see [source audit](BAYES_SOURCE_AUDIT.md).
+- Keep epistemic uncertainty, semantic incompleteness and specified fractional payouts distinct. Do not infer a point probability from an unresolved garment category or treat a tie/death allocation as a binary event.
+- Bind manual relation audits to archived IDs/rules. Election and minerals support overlap/non-nesting via three existence witnesses; Fed, primary and leader cases warrant no global binary inclusion. No current case supplies a useful binary marginal restriction.
+- Generate explicit coherence readiness/diagnostic outputs. Daily forward-filled prices are insufficient; optional observations must separately document original synchronous timestamps, freshness, YES orientation and comparable pricing conditions. Do not gather a new dataset or force a price result.
+- Preserve audited cases → sampled profiles → exploratory volume → unestablished general price effects as the evidence hierarchy. No platform rationality ranking, trader-misunderstanding claim, causal determinacy effect or Hi-TEA test is added.
+
 ## 2026-09-11
 
 - Recenter the paper on platform-constituted claims and representational non-equivalence. Retain the determinacy–volume association as a secondary exploratory consequence.

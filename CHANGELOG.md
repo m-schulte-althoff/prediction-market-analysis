@@ -3,6 +3,7 @@
 ## 2026-09-14
 
 - Added a claim-by-claim evidence overview distinguishing demonstrated rule mechanisms, descriptive portfolio patterns, exploratory activity associations, and untested behavioral implications to guide the paper's claims.
+- Sharpened claim constitution with a representation-aware Bayesian formalization, version-bound case-relation audits and guarded coherence diagnostics; integrated the source-checked distinction between world uncertainty and incomplete settlement mappings into the research outputs while preserving the existing empirical scope.
 
 ## 2026-09-11
 

@@ -1,0 +1,7 @@
+case_id,claim_relation,probability_coherence_implication,observed_at_a,observed_at_b,price_a,price_b,comparison_basis,status,reason,excess,exceeds_tolerance
+election-call-vs-inauguration,overlap_non_nested,none,,,,,,not_estimable,No additional pairwise marginal restriction; useful restrictions need additional set structure or probability information. No separately validated synchronized price observations supplied.,,
+fed-quantization-convention,non_equivalent_unclassified,none,,,,,,not_estimable,Determinate binary payout mappings not validated. No separately validated synchronized price observations supplied.,,
+leader-announcement-vs-departure,non_equivalent_unclassified,none,,,,,,not_estimable,Determinate binary payout mappings not validated. No separately validated synchronized price observations supplied.,,
+minerals-agreement-vs-signature,overlap_non_nested,none,,,,,,not_estimable,No additional pairwise marginal restriction; useful restrictions need additional set structure or probability information. No separately validated synchronized price observations supplied.,,
+primary-first-vs-advance,non_equivalent_unclassified,none,,,,,,not_estimable,Determinate binary payout mappings not validated. No separately validated synchronized price observations supplied.,,
+suit-category-boundary,indeterminate,none,,,,,,not_estimable,Determinate binary payout mappings not validated. No separately validated synchronized price observations supplied.,,

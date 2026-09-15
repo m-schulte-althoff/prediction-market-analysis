@@ -1,0 +1,3 @@
+underlying_event_id,daily_rows,status,reason
+match:KXGOVFLNOMR-26-JCOL:704477,9,not_estimable,Automated metadata matching is not a complete-rule relation audit. Daily resampling with up to seven-day forward fill lacks original quote times and freshness/comparability validation. Supply separately audited observations.
+match:KXGOVFLNOMR-26-JFIS:704475,9,not_estimable,Automated metadata matching is not a complete-rule relation audit. Daily resampling with up to seven-day forward fill lacks original quote times and freshness/comparability validation. Supply separately audited observations.

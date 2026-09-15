@@ -4,6 +4,8 @@ This repository studies how prediction-market platforms turn ostensibly shared f
 
 The clearest result is representational: finishing first versus advancing, an election call versus inauguration, rounding a 12.5-basis-point move, announcing versus signing a minerals agreement, and individual departure versus being the first leader to leave can imply different settlements. Each case preserves archived official rules and an explicit hypothetical scenario. The separate “suit” case explains an unspecified clothing category whose interpretation is delegated to credible reporting.
 
+A focused representation-aware Bayesian layer sharpens this mechanism: the same posterior over world histories can assign different probabilities to different platform-defined payoff events. For a determinate binary mapping, `q_c(e) = E[r_c | e] = P(Y_c | e)`. An incomplete settlement category does not yet supply a unique event; specified fractional payouts require expected-payout rather than binary-event reasoning. This is our IS extension inspired by [Meehan and Zhang (2025)](https://doi.org/10.1215/00318108-11873775), with the transfer checked against the supplied PDF in the [source audit](docs/BAYES_SOURCE_AUDIT.md).
+
 The corrected metadata sample contains 12,251 Kalshi and 7,249 Polymarket non-sports binary contracts. Its most interesting descriptive contrast is a **composition reversal**: Kalshi has the higher overall determinacy proxy (.624 versus .610), while Polymarket scores higher within both threshold-flag groups (.575 versus .548 without the flag; .724 versus .640 with it). The flag appears in 82.1% of sampled Kalshi contracts and 23.7% of Polymarket contracts. Raw component profiles show more temporal and edge-clause detail on Polymarket and higher outcome-definition and discretion scores on Kalshi. These describe the sampled rule texts, not overall platform quality.
 
 The preferred exposure/cohort-adjusted association with standardized log volume is −0.129 (HC3 SE 0.009). Within-family estimates are −0.077 (p=.342) on Kalshi and +0.030 (p=.265) on Polymarket, using a different residual-score scale. The volume result remains secondary: it does not establish that ambiguity causes trading. Current numbers include the correction recognizing clock-context “ET” deadlines.
@@ -61,6 +63,10 @@ uv run python3 main.py analyze
 
 Use `uv run python` for these commands on Windows when `python3` selects the Store interpreter outside the project environment. In restricted sessions, `uv --cache-dir .uv-cache run ...` keeps the uv cache inside the workspace. No new dependencies or branches are required. `analyze` regenerates the profiles, figures, case-based research summary, and paper outline, screening cached price histories against current match eligibility.
 
+For the Bayesian extension, only `anecdotes --retrieval-date 2026-09-10` and `analyze` are needed with the existing processed contracts/matches/panel. No fresh download or new project dependency is required. `analyze` revalidates the case audit against archived ID/rule fingerprints and writes explicit coherence diagnostics. The manuscript in `input/` is a local theoretical source, not pipeline input.
+
+Optional future price observations go in `data/processed/coherence-price-observations.csv`, with columns `case_id,price_a,price_b,observed_at_a,observed_at_b,comparable_prices,comparison_basis`. A/B follow the case matrix. Use normalized YES prices, identical timezone-aware original observation timestamps and an explicit `True` flag; the basis must document freshness, common horizons and comparable conditions. A separately audited determinate binary relation must first support a marginal restriction. Do not populate this file with forward-filled daily panel rows: matching timestamps after resampling cannot certify freshness. Missing evidence produces `not_estimable`, not a zero excess. `excess` retains the raw inequality distance; the flag uses a numerical tolerance of `1e-9`, not an allowance for trading costs.
+
 ## Design
 
 The construct architecture is documented in [docs/CONSTRUCTS.md](docs/CONSTRUCTS.md), with consequential choices in [docs/DECISIONS.md](docs/DECISIONS.md). In brief:
@@ -93,9 +99,11 @@ Polymarket sports rows are removed before its high-volume cap using official spo
 - [Platform rule profile figure](output/figures/views-platform-rule-profiles.svg) and `output/tables/analysis-platform-profiles.csv`: component differences, contract mix, and conditional comparisons.
 - [Research status](output/RESEARCH_STATUS.md): concise handoff of current evidence and locked decisions.
 - `output/tables/representation-case-matrix.csv`: structured signatures, witness states, payouts, URLs, scope, and confidence.
+- `output/tables/coherence-case-diagnostics.csv`: relation-specific restrictions, observation eligibility and conditional price excess; currently all six cases are `not_estimable`.
+- `output/tables/coherence-panel-readiness.csv`: the two eligible legacy pairs have nine daily rows each, with insufficient semantic/synchronization validation.
 - `output/tables/analysis-market-models.csv`: all main and robustness estimates.
 - `output/tables/matching-representative-pairs.csv`: auditable automated candidates; divergence columns remain diagnostics.
-- `output/figures/views-conceptual-schematic.svg`: one phenomenon branching into platform-specific claims.
+- `output/figures/views-conceptual-schematic.svg`: claim constitution and Bayesian world-belief updating meet at claim valuation, followed by aggregation and price.
 - `output/figures/views-determinacy-volume.svg`: descriptive score–volume pattern.
 
 ## File structure
@@ -105,6 +113,7 @@ main.py                  # controller / command dispatch
 views.py                 # vector figures
 src/
   anecdotes.py           # official-rule archive and witness-state case matrix
+  coherence.py           # audited binary-relation implications and guarded price diagnostics
   taxonomy.py            # shared sports exclusion rules
   preprocessing.py       # normalized contract database and observed exposure
   semantics.py           # determinacy and diagnostic divergence features
@@ -124,3 +133,5 @@ logs/                    # timestamped pipeline logs (ignored)
 ## Limitations
 
 The samples are purposive and cumulative volume is not a direct measure of information aggregation. Sports exclusion uses a transparent but imperfect taxonomy. The determinacy measure is an auditable proxy rather than a validated scale. Relatively few repeated families vary internally in determinacy. The two currently aligned matched histories are too sparse and homogeneous for a divergence–price-wedge test. The strongest next steps are independent signature coding, fixed-window volume, common-horizon prices, and broader cross-platform history coverage.
+
+The relation audit does not force an inequality: election/minerals cases overlap without nesting; Fed remains unclassified beyond conditional non-equivalence; primary ties and leader death clauses allow fractional payouts; suit is adjudicatively incomplete. None currently yields a useful binary marginal restriction. Daily alignment uses up to seven-day forward fill and lacks original price-time provenance. No current coherence test, trader-irrationality conclusion, platform Bayesian ranking or causal divergence-price effect is claimed.

@@ -4,7 +4,7 @@
 
 How do prediction-market resolution architectures differentiate claims about the same public phenomenon, and how do determinacy and trading activity vary across the sampled market portfolios?
 
-The central contribution is upstream of aggregation: platform resolution architectures choose predicates, measurement conventions, temporal boundaries, evidence, exceptions, and fallback procedures. Markets with similar labels can therefore price non-equivalent digital claims. Apparent cross-market forecast disagreement can be rational disagreement about different state exposure.
+The central contribution is upstream of aggregation: platform resolution architectures choose predicates, measurement conventions, temporal boundaries, evidence, exceptions, and fallback procedures. Markets with similar labels can therefore price non-equivalent digital claims. Even identical posterior beliefs about world histories can imply different claim probabilities when the represented payoff sets differ.
 
 ## 2. Construct architecture
 
@@ -13,6 +13,14 @@ The central contribution is upstream of aggregation: platform resolution archite
 A contract is a possibly set-valued mapping from world histories to institutionally permissible settlements. **Semantic determinacy** is an intra-contract property: how uniquely a relevant world history maps to a settlement. **Semantic divergence** is an inter-contract property: whether two contracts about the same phenomenon map at least one plausible world history to different payouts or procedures.
 
 The constructs are orthogonal. Two precise contracts can diverge (network call versus inauguration); two identically vague contracts can have low determinacy but little between-contract divergence. Automated wording, number, source, stage, and deadline distances retrieve candidates but are not treated as validated semantic equivalence measures.
+
+Meehan and Zhang's [*Bayes Is Back* (2025)](https://doi.org/10.1215/00318108-11873775) studies updating within a given prior space `(S, π)` and a represented strongest evidence proposition. Non-contrastiveness holds the posterior fixed across learning situations with the same prior space and learned proposition; global evidential constancy also holds it fixed across states with that evidence. This invariance does not by itself single out conditionalization. Their distinction between accuracy in one learning situation and total expected accuracy across learning situations supports an argument about updating rules, not a test of platform design (supplied manuscript §§2, 4–5; [source audit](../docs/BAYES_SOURCE_AUDIT.md)).
+
+**Our IS extension:** let `Ω` be relevant possible world histories, `e` represented evidence with positive prior probability, and `μ_e = P(· | e)` the posterior over histories. The platform specifies a settlement mapping. For a determinate binary contract, `r_c: Ω → {0,1}` and `Y_c = {ω: r_c(ω)=1}`. Applying the posterior gives `q_c(e) = E_{μ_e}[r_c] = P(Y_c | e)`. The platform defines the claim; evidence updates beliefs about worlds; traders value that claim and markets aggregate valuations into prices. These are analytically distinct functions, not a claim that platforms do Bayesian updating or that rules must chronologically precede all learning.
+
+Thus `q_A − q_B = μ_e(Y_A \ Y_B) − μ_e(Y_B \ Y_A)`: identical world beliefs can justify different claim probabilities. Different sets need not have different probability mass; the claim is a possibility, not a necessary price gap. Validated equivalence, inclusion, disjointness and complementarity imply exact probability restrictions under a common distribution. A single witness establishes non-equivalence, not inclusion. Price analogues additionally assume a probability-price approximation and sufficiently comparable conditions.
+
+**Determinacy remains intra-contract:** a nonempty set-valued mapping `R_c(ω) ⊆ {0,1}` can leave both payouts permissible at a borderline state. Uncertainty about which world obtains is epistemic; an unresolved institutional mapping concerns what counts as a payout in that world. The suit text alone does not select a garment-level payoff mapping; credible-reporting adjudication completes it. A unique claim event, and hence a point probability derived from that event, cannot simply be assumed. Positive posterior mass on unresolved states can make expected payout depend on completion; zero mass need not. A model of adjudication would add assumptions. Fractional tie/death payouts instead require `r_c: Ω → [0,1]`: expected payout is then not generally a YES-event probability. A fractional but specified payout is not itself indeterminacy.
 
 ## 3. Audited mechanism cases
 
@@ -31,6 +39,10 @@ The archived rules are observed evidence; these scenarios are hypothetical, not 
 The reproducible official-API sample contains Kalshi: 12,251 contracts; Polymarket: 7,249 contracts. Openings begin 2020-10-09; the latest observed resolution is 2026-09-10. Polymarket sports contracts are excluded before its high-volume cap using official sports fields plus a conservative documented taxonomy. Volume remains cumulative and is standardized within platform; this purposive sample is not population-representative.
 
 The automated matcher retains 11 high-confidence metadata pairs, dominated by repeated families. Only 2 pairs have aligned histories, all too sparse and homogeneous to test whether divergence predicts price wedges.
+
+**Representation-aware coherence:** indeterminate: 1; non_equivalent_unclassified: 3; overlap_non_nested: 2. 0 cases supply a validated binary marginal restriction. Not estimable / insufficient evidence for an actual price-coherence test.
+
+Election and minerals rules support overlapping, non-nested events under the stated archived-rule model; this alone imposes no useful pairwise marginal restriction. Fed inclusion is unclassified. Primary ties and leader death allocations fall outside globally binary payouts; the suit case remains adjudicatively incomplete. These qualifications preserve the existing witness results. The legacy daily panel forward-fills prices for up to seven days and cannot certify synchronized fresh observations. See `tables/coherence-case-diagnostics.csv` and `tables/coherence-panel-readiness.csv` for explicit eligibility reasons. Numerical excess, where estimable, is a conditional price diagnostic; liquidity, fees, spreads, stale trading, risk preferences, market composition and limits to arbitrage prevent interpreting it as trader irrationality.
 
 ## 5. Measurement and method
 
@@ -86,6 +98,7 @@ Trading activity varies across portfolios of differently specified claims; the a
 - **Phenomenon:** nearly identical market labels can expose traders to different platform-defined claims.
 - **Puzzle:** aggregation accounts often treat the proposition being priced as fixed before it enters the information system.
 - **Mechanism:** resolution architectures partition world histories through predicate selection, operationalization, boundary rules, adjudication, and fallback.
+- **Formal bridge:** updating fixes a posterior over world histories; the platform's payout mapping determines which claim that posterior values. Same world beliefs need not mean the same claim probability.
 - **Evidence:** witness-state cases demonstrate non-equivalence; systematic metadata document determinacy variation; volume associations supply secondary exploratory consequences.
 - **Contribution:** collective-intelligence systems govern the referents of aggregation, not only information processing about those referents.
 - **Memorable finding:** a second-place finish can lose a first-place contract and win an advancement contract. Clear resolution rules can still define different claims.
@@ -93,6 +106,7 @@ Trading activity varies across portfolios of differently specified claims; the a
 ## 8. Best outputs
 
 - `tables/representation-case-matrix.csv`: exact rules, signatures, witness states, and implied settlements.
+- `tables/coherence-case-diagnostics.csv` and `tables/coherence-panel-readiness.csv`: audited relation implications and explicit price-evidence gates.
 - `REPRESENTATION_CASEBOOK.md`: plain-language explanations of the striking cases.
 - `PAPER_OUTLINE.md`: five-section ICIS paper outline, with current estimates and exhibits.
 - `tables/analysis-platform-profiles.csv` and `figures/views-platform-rule-profiles.svg`: component differences, contract mix, and conditional score comparisons.
@@ -102,7 +116,7 @@ Trading activity varies across portfolios of differently specified claims; the a
 
 ## 9. Candidate abstract
 
-Prediction markets aggregate beliefs about claims that their platforms first define. We distinguish semantic differentiation through contract design, determinacy within a contract, and divergence between contracts. Official Kalshi and Polymarket metadata reveal different profiles of rule specification and contract composition. Archived-rule cases show how finishing first versus advancing, media calls versus inauguration, numerical rounding, qualifying announcements, and competing departures can imply different payouts under the same hypothetical scenario. A separate clothing-category case illustrates interpretive latitude within a written rule. Exploratory volume associations describe activity across claim portfolios. The study explains how collective-intelligence systems govern what counts as the event being forecast, making explicit specification and cross-market comparability separate design concerns.
+Prediction markets perform two analytically distinct information functions: platforms constitute payoff-relevant claims over possible world histories, after which traders form and markets aggregate valuations of those claims. A representation-aware Bayesian benchmark shows why identical posterior beliefs about worlds can assign different probabilities to different payoff events. We distinguish divergence between claims from determinacy within a claim: an incomplete institutional mapping does not yet supply a unique target event. Archived Kalshi and Polymarket rules and counterfactual witness states demonstrate payout contrasts, while sampled rule profiles reveal systematic specification and composition differences. Volume associations remain exploratory. The sparse aligned-price evidence does not establish a realized divergence effect or support a current coherence test. The study explains how collective-intelligence systems constitute the object of aggregation as well as aggregate information about it.
 
 ## 10. Conference-paper scope
 

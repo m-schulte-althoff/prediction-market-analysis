@@ -1,10 +1,15 @@
 # Research Status
 
-Updated 2026-09-11.
+Updated 2026-09-14.
 
 ## Current core
 
 The strongest contribution is an audited account of how resolution architectures turn one public-world phenomenon into non-equivalent digital claims. The case matrix currently contains 6 mechanisms with exact rules and counterfactual witness states.
+Same posterior over world histories does not require equal probabilities for different payoff events: `q_c(e)=E_{μ_e}[r_c]`, equal to `P(Y_c|e)` for determinate binary contracts. Semantic indeterminacy leaves the written mapping incomplete; it is separate from uncertainty about worlds. This is our representation extension, not Meehan and Zhang's own market argument; see [source audit](../docs/BAYES_SOURCE_AUDIT.md).
+
+**Representation-aware coherence:** indeterminate: 1; non_equivalent_unclassified: 3; overlap_non_nested: 2. 0 cases supply a validated binary marginal restriction. Not estimable / insufficient evidence for an actual price-coherence test.
+
+Election and minerals rules support overlapping, non-nested events under the stated archived-rule model; this alone imposes no useful pairwise marginal restriction. Fed inclusion is unclassified. Primary ties and leader death allocations fall outside globally binary payouts; the suit case remains adjudicatively incomplete. These qualifications preserve the existing witness results. The legacy daily panel forward-fills prices for up to seven days and cannot certify synchronized fresh observations. See `tables/coherence-case-diagnostics.csv` and `tables/coherence-panel-readiness.csv` for explicit eligibility reasons. Numerical excess, where estimable, is a conditional price diagnostic; liquidity, fees, spreads, stale trading, risk preferences, market composition and limits to arbitrage prevent interpreting it as trader irrationality.
 
 ## Current empirical package
 
@@ -47,6 +52,7 @@ These volume results are exploratory consequences, not the theory’s sole suppo
 
 - Keep determinacy (within contract) separate from divergence (between contracts).
 - Require a witness state before labeling truth-condition divergence.
+- Require a complete-rule audit for a probability restriction; no inclusion inference from a headline or one witness. Neither platform is classified as more Bayesian or as violating global evidential constancy.
 - Keep automated text-distance scores as candidate diagnostics until validated coding exists.
 - Exclude sports before Polymarket’s high-volume cap and control cumulative-volume exposure/cohort.
 

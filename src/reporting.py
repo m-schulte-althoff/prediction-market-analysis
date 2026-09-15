@@ -8,6 +8,39 @@ from pathlib import Path
 import pandas as pd
 
 
+def representation_bridge_lines() -> list[str]:
+    """Separate the source's updating account from this study's claim-constitution extension."""
+
+    return [
+        "Meehan and Zhang's [*Bayes Is Back* (2025)](https://doi.org/10.1215/00318108-11873775) studies updating within a given prior space `(S, π)` and a represented strongest evidence proposition. Non-contrastiveness holds the posterior fixed across learning situations with the same prior space and learned proposition; global evidential constancy also holds it fixed across states with that evidence. This invariance does not by itself single out conditionalization. Their distinction between accuracy in one learning situation and total expected accuracy across learning situations supports an argument about updating rules, not a test of platform design (supplied manuscript §§2, 4–5; [source audit](../docs/BAYES_SOURCE_AUDIT.md)).",
+        "",
+        "**Our IS extension:** let `Ω` be relevant possible world histories, `e` represented evidence with positive prior probability, and `μ_e = P(· | e)` the posterior over histories. The platform specifies a settlement mapping. For a determinate binary contract, `r_c: Ω → {0,1}` and `Y_c = {ω: r_c(ω)=1}`. Applying the posterior gives `q_c(e) = E_{μ_e}[r_c] = P(Y_c | e)`. The platform defines the claim; evidence updates beliefs about worlds; traders value that claim and markets aggregate valuations into prices. These are analytically distinct functions, not a claim that platforms do Bayesian updating or that rules must chronologically precede all learning.",
+        "",
+        "Thus `q_A − q_B = μ_e(Y_A \\ Y_B) − μ_e(Y_B \\ Y_A)`: identical world beliefs can justify different claim probabilities. Different sets need not have different probability mass; the claim is a possibility, not a necessary price gap. Validated equivalence, inclusion, disjointness and complementarity imply exact probability restrictions under a common distribution. A single witness establishes non-equivalence, not inclusion. Price analogues additionally assume a probability-price approximation and sufficiently comparable conditions.",
+        "",
+        "**Determinacy remains intra-contract:** a nonempty set-valued mapping `R_c(ω) ⊆ {0,1}` can leave both payouts permissible at a borderline state. Uncertainty about which world obtains is epistemic; an unresolved institutional mapping concerns what counts as a payout in that world. The suit text alone does not select a garment-level payoff mapping; credible-reporting adjudication completes it. A unique claim event, and hence a point probability derived from that event, cannot simply be assumed. Positive posterior mass on unresolved states can make expected payout depend on completion; zero mass need not. A model of adjudication would add assumptions. Fractional tie/death payouts instead require `r_c: Ω → [0,1]`: expected payout is then not generally a YES-event probability. A fractional but specified payout is not itself indeterminacy.",
+    ]
+
+
+def coherence_status_lines(cases: pd.DataFrame, diagnostics: pd.DataFrame) -> list[str]:
+    """Report the actual semantic and observation gates, without fabricating price results."""
+
+    if cases.empty:
+        return ["Representation-aware coherence: not estimable; audited cases unavailable."]
+    counts = cases.claim_relation.value_counts().sort_index()
+    labels = "; ".join(f"{label}: {count}" for label, count in counts.items())
+    estimated = int(diagnostics.status.eq("estimated").sum()) if not diagnostics.empty else 0
+    status = (
+        "Not estimable / insufficient evidence for an actual price-coherence test."
+        if estimated == 0 else f"{estimated} conditional observation-level price diagnostics estimated."
+    )
+    return [
+        f"**Representation-aware coherence:** {labels}. {int(cases.coherence_test_applicable.sum())} cases supply a validated binary marginal restriction. {status}",
+        "",
+        "Election and minerals rules support overlapping, non-nested events under the stated archived-rule model; this alone imposes no useful pairwise marginal restriction. Fed inclusion is unclassified. Primary ties and leader death allocations fall outside globally binary payouts; the suit case remains adjudicatively incomplete. These qualifications preserve the existing witness results. The legacy daily panel forward-fills prices for up to seven days and cannot certify synchronized fresh observations. See `tables/coherence-case-diagnostics.csv` and `tables/coherence-panel-readiness.csv` for explicit eligibility reasons. Numerical excess, where estimable, is a conditional price diagnostic; liquidity, fees, spreads, stale trading, risk preferences, market composition and limits to arbitrage prevent interpreting it as trader irrationality.",
+    ]
+
+
 def _records(frame: pd.DataFrame) -> list[dict[str, object]]:
     """Convert pandas records to mappings with explicit string keys."""
 
@@ -222,6 +255,8 @@ def write_research_log(
             "",
             "- Recast semantic determinacy as an intra-contract property and divergence as an inter-contract property; neither is a substitute for the other.",
             "- Require a counterfactual witness state and implied settlement on each side before calling a pair truth-condition divergent. Automated text distances remain candidate diagnostics only.",
+            "- Added the representation-aware bridge: a common Bayesian posterior over histories can assign different probabilities to platform-defined payoff events. Keep rule constitution separate from updating and semantic indeterminacy separate from uncertainty over worlds.",
+            "- Audited full case descriptions for logical relations, including fractional tie/death payouts. Relation labels are bound to rule/ID fingerprints. Existing daily price fills are not synchronized quote evidence; coherence outputs report explicit eligibility gates without adding a general price-effect claim.",
             f"- Matching inventory: {int(counts.get('high_confidence', 0))} high-confidence, {int(counts.get('probable', 0))} probable, and {int(counts.get('rejected', 0))} rejected candidates retained for audit.",
         ]
     )
@@ -251,6 +286,7 @@ def write_research_summary(
     matched_models: pd.DataFrame,
     cases: pd.DataFrame,
     profiles: pd.DataFrame,
+    coherence: pd.DataFrame,
 ) -> None:
     """Write the paper-oriented summary with bounded, critic-audited claims."""
 
@@ -386,7 +422,7 @@ def write_research_summary(
         "",
         "How do prediction-market resolution architectures differentiate claims about the same public phenomenon, and how do determinacy and trading activity vary across the sampled market portfolios?",
         "",
-        "The central contribution is upstream of aggregation: platform resolution architectures choose predicates, measurement conventions, temporal boundaries, evidence, exceptions, and fallback procedures. Markets with similar labels can therefore price non-equivalent digital claims. Apparent cross-market forecast disagreement can be rational disagreement about different state exposure.",
+        "The central contribution is upstream of aggregation: platform resolution architectures choose predicates, measurement conventions, temporal boundaries, evidence, exceptions, and fallback procedures. Markets with similar labels can therefore price non-equivalent digital claims. Even identical posterior beliefs about world histories can imply different claim probabilities when the represented payoff sets differ.",
         "",
         "## 2. Construct architecture",
         "",
@@ -395,6 +431,8 @@ def write_research_summary(
         "A contract is a possibly set-valued mapping from world histories to institutionally permissible settlements. **Semantic determinacy** is an intra-contract property: how uniquely a relevant world history maps to a settlement. **Semantic divergence** is an inter-contract property: whether two contracts about the same phenomenon map at least one plausible world history to different payouts or procedures.",
         "",
         "The constructs are orthogonal. Two precise contracts can diverge (network call versus inauguration); two identically vague contracts can have low determinacy but little between-contract divergence. Automated wording, number, source, stage, and deadline distances retrieve candidates but are not treated as validated semantic equivalence measures.",
+        "",
+        *representation_bridge_lines(),
         "",
         "## 3. Audited mechanism cases",
         "",
@@ -407,6 +445,8 @@ def write_research_summary(
         f"The reproducible official-API sample contains {platform_descriptions}. Openings begin {first_open.date() if pd.notna(first_open) else 'unknown'}; the latest observed resolution is {last_resolution.date() if pd.notna(last_resolution) else 'unknown'}. Polymarket sports contracts are excluded before its high-volume cap using official sports fields plus a conservative documented taxonomy. Volume remains cumulative and is standardized within platform; this purposive sample is not population-representative.",
         "",
         f"The automated matcher retains {len(high_matches)} high-confidence metadata pairs, dominated by repeated families. Only {len(panel_summary)} pairs have aligned histories, all too sparse and homogeneous to test whether divergence predicts price wedges.",
+        "",
+        *coherence_status_lines(cases, coherence),
         "",
         "## 5. Measurement and method",
         "",
@@ -433,6 +473,7 @@ def write_research_summary(
         "- **Phenomenon:** nearly identical market labels can expose traders to different platform-defined claims.",
         "- **Puzzle:** aggregation accounts often treat the proposition being priced as fixed before it enters the information system.",
         "- **Mechanism:** resolution architectures partition world histories through predicate selection, operationalization, boundary rules, adjudication, and fallback.",
+        "- **Formal bridge:** updating fixes a posterior over world histories; the platform's payout mapping determines which claim that posterior values. Same world beliefs need not mean the same claim probability.",
         "- **Evidence:** witness-state cases demonstrate non-equivalence; systematic metadata document determinacy variation; volume associations supply secondary exploratory consequences.",
         "- **Contribution:** collective-intelligence systems govern the referents of aggregation, not only information processing about those referents.",
         "- **Memorable finding:** a second-place finish can lose a first-place contract and win an advancement contract. Clear resolution rules can still define different claims.",
@@ -440,6 +481,7 @@ def write_research_summary(
         "## 8. Best outputs",
         "",
         "- `tables/representation-case-matrix.csv`: exact rules, signatures, witness states, and implied settlements.",
+        "- `tables/coherence-case-diagnostics.csv` and `tables/coherence-panel-readiness.csv`: audited relation implications and explicit price-evidence gates.",
         "- `REPRESENTATION_CASEBOOK.md`: plain-language explanations of the striking cases.",
         "- `PAPER_OUTLINE.md`: five-section ICIS paper outline, with current estimates and exhibits.",
         "- `tables/analysis-platform-profiles.csv` and `figures/views-platform-rule-profiles.svg`: component differences, contract mix, and conditional score comparisons.",
@@ -449,7 +491,7 @@ def write_research_summary(
         "",
         "## 9. Candidate abstract",
         "",
-        "Prediction markets aggregate beliefs about claims that their platforms first define. We distinguish semantic differentiation through contract design, determinacy within a contract, and divergence between contracts. Official Kalshi and Polymarket metadata reveal different profiles of rule specification and contract composition. Archived-rule cases show how finishing first versus advancing, media calls versus inauguration, numerical rounding, qualifying announcements, and competing departures can imply different payouts under the same hypothetical scenario. A separate clothing-category case illustrates interpretive latitude within a written rule. Exploratory volume associations describe activity across claim portfolios. The study explains how collective-intelligence systems govern what counts as the event being forecast, making explicit specification and cross-market comparability separate design concerns.",
+        "Prediction markets perform two analytically distinct information functions: platforms constitute payoff-relevant claims over possible world histories, after which traders form and markets aggregate valuations of those claims. A representation-aware Bayesian benchmark shows why identical posterior beliefs about worlds can assign different probabilities to different payoff events. We distinguish divergence between claims from determinacy within a claim: an incomplete institutional mapping does not yet supply a unique target event. Archived Kalshi and Polymarket rules and counterfactual witness states demonstrate payout contrasts, while sampled rule profiles reveal systematic specification and composition differences. Volume associations remain exploratory. The sparse aligned-price evidence does not establish a realized divergence effect or support a current coherence test. The study explains how collective-intelligence systems constitute the object of aggregation as well as aggregate information about it.",
         "",
         "## 10. Conference-paper scope",
         "",
@@ -472,6 +514,7 @@ def write_research_status(
     models: pd.DataFrame,
     cases: pd.DataFrame,
     profiles: pd.DataFrame,
+    coherence: pd.DataFrame,
 ) -> None:
     """Write a one-page handoff of current evidence and decisions."""
 
@@ -486,6 +529,9 @@ def write_research_status(
         "## Current core",
         "",
         f"The strongest contribution is an audited account of how resolution architectures turn one public-world phenomenon into non-equivalent digital claims. The case matrix currently contains {len(cases)} mechanisms with exact rules and counterfactual witness states.",
+        "Same posterior over world histories does not require equal probabilities for different payoff events: `q_c(e)=E_{μ_e}[r_c]`, equal to `P(Y_c|e)` for determinate binary contracts. Semantic indeterminacy leaves the written mapping incomplete; it is separate from uncertainty about worlds. This is our representation extension, not Meehan and Zhang's own market argument; see [source audit](../docs/BAYES_SOURCE_AUDIT.md).",
+        "",
+        *coherence_status_lines(cases, coherence),
         "",
         "## Current empirical package",
         "",
@@ -529,6 +575,7 @@ def write_research_status(
             "",
             "- Keep determinacy (within contract) separate from divergence (between contracts).",
             "- Require a witness state before labeling truth-condition divergence.",
+            "- Require a complete-rule audit for a probability restriction; no inclusion inference from a headline or one witness. Neither platform is classified as more Bayesian or as violating global evidential constancy.",
             "- Keep automated text-distance scores as candidate diagnostics until validated coding exists.",
             "- Exclude sports before Polymarket’s high-volume cap and control cumulative-volume exposure/cohort.",
             "",
@@ -573,6 +620,9 @@ def write_paper_outline(
         "- **Platform governance and adjudication:** explain evidence authorities, time boundaries, exceptions, fallback procedures, and settlement methods as contract-design choices.",
         "- **Constructs:** differentiation selects what/when/whose evidence counts; determinacy concerns one contract's mapping from a scenario to settlement; divergence concerns differences between two such mappings. A procedural difference alone need not imply a payout difference.",
         "- **Core argument:** two precise contracts can disagree about what success means. Unclear category boundaries, such as ‘suit,’ present a separate interpretive problem.",
+        "",
+        *representation_bridge_lines(),
+        "",
         "- **Theoretical implication:** under shared beliefs and otherwise comparable pricing conditions, different payout mappings can have different expected payoffs. A price gap need not be a disagreement about the same event; the current study does not estimate that mechanism in prices.",
         "- **Exhibit:** conceptual schematic plus the compact determinacy/divergence matrix in `../docs/CONSTRUCTS.md`. These literature streams are an outline for a sourced literature section, not a completed literature review.",
         "",
@@ -583,6 +633,7 @@ def write_paper_outline(
         "- **Text measurement:** source, temporal, outcome-definition, edge-clause, and discretion proxies averaged on a 0–1 scale. Recognize ET in clock context. Scores describe archived textual specification, not a validated scale of all institutional determinacy.",
         "- **Platform comparisons:** report raw components, text length, threshold-flag composition, and composite means inside each flag group. Since the flag enters the score, these strata reveal composition rather than independently validate the measure.",
         "- **Case method:** preserve exact rules and links; specify a hypothetical scenario, the decisive qualifying condition, implied settlements, and the interpretation boundary. These cases show how divergence can occur, not its population frequency or realized financial impact.",
+        "- **Coherence method:** audit the entire archived mapping, including cancellation, ties and death allocation, before assigning a logical relation. Audits are fingerprint-bound to IDs and rule text. Overlap/non-nesting needs witnesses in both differences and the intersection; one separating state never proves inclusion. Separately validated fresh synchronized YES prices are required for any price diagnostic.",
         "- **Retrieval:** retrieve shared phenomena before screening claim compatibility. First-place/advancement and departure/first-departure pairs remain useful cases while being excluded from high-confidence claim candidates.",
         "- **Activity:** standardize log cumulative volume and determinacy within platform; control observed exposure, opening year, text length, category, and platform. Report the preferred association and one within-family diagnostic per platform; leave existing additional checks in supplementary tables.",
         "- **Scope:** sparse matched histories cannot support a divergence–price-wedge estimate. No extensive new robustness program is needed for the descriptive mechanism contribution.",
@@ -592,6 +643,7 @@ def write_paper_outline(
         "- **4.1 Different portfolios of claims:** compare the component profiles and contract-type mix. Explain the conditional composite comparison using the table below; avoid a global platform-quality ranking.",
         "- **4.2 Same recognizable issue, different payable claim:** use the primary and election cases as entry points, followed by Fed rounding, the minerals milestone, and the competing-leader departure condition.",
         "- **4.3 What counts as a suit?:** separate within-contract category interpretation from between-contract differentiation. Authentic images and explicit dates need not define the clothing category.",
+        "- **Representation-aware implications:** the election and minerals cases support overlap without nesting; neither yields an extra marginal restriction. Fed nesting is unclassified; primary ties and leader death allocations prevent a globally binary reading. The suit mapping requires institutional completion. Current coherence tests are not estimable: the legacy panel supplies neither manual relation validation nor fresh synchronized quote evidence.",
         "- **4.4 Trading activity across claim portfolios:** report the preferred volume association, contract-type estimates, and the within-family boundary. The evidence does not establish that ambiguity causes participation.",
         "",
         *platform_profile_lines(profiles),
@@ -652,7 +704,7 @@ def write_paper_outline(
             "- **Empirical contribution:** auditable ordinary scenarios connect the conceptual distinction to platform rules; component and composition profiles extend beyond isolated anecdotes; volume estimates show an associated portfolio pattern.",
             "- **Design implications:** show ‘what must happen to pay Yes,’ relevant deadlines, measurement conventions, and evidence rules beside similar headlines. Flag first-place versus advancement and individual versus first departure when comparing probabilities. These are proposed implications, not evaluated interventions.",
             "- **Boundaries:** purposive samples, API family granularity, a text proxy, hypothetical rule-based cases, and cumulative activity constrain generalization and causal claims. Keep this concise and tied to what the paper actually claims.",
-            "- **Focused extension:** manually verify a phenomenon-diverse pair sample with common-horizon prices to test when payout differences explain apparent forecast disagreement.",
+            "- **Focused extension:** the implemented coherence module makes tests on validated binary equivalence, nesting, disjointness or complementarity possible once fresh synchronized prices and comparable market conditions exist. Numerical excess is conditional on a probability-price approximation, not proof of Bayesian irrationality or a causal divergence effect.",
             "- **Closing message:** before asking whose forecast is right, establish what would have to happen for each contract to pay.",
         ]
     )
