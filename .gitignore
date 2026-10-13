@@ -225,3 +225,5 @@ prompts/
 data/
 logs/
 input/
+paper-revision/
+output/legacy/
