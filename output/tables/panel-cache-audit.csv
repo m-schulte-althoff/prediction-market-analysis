@@ -1,0 +1,3 @@
+history_source,history_pairs,pairs_with_joint_observations,repaired_rows,original_reproduced_rows,removed_rows,kalshi_forward_filled,polymarket_forward_filled,unique_pair_timestamps,rows_in_recorded_bounds,synchronized_test_eligible_rows
+matched-price-histories-2026-09-10-bad72f8883-interval-max.json,12,2,14,18,4,0,0,True,True,0
+matched-price-histories-2026-09-10-627b27c83f-interval-max.json,11,3,24,30,6,0,0,True,True,0

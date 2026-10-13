@@ -1,4 +1,4 @@
-"""Transparent semantic-determinacy and divergence measures."""
+"""Literal rule-text features and exploratory contract-comparison measures."""
 
 from __future__ import annotations
 
@@ -33,6 +33,12 @@ QUANTITATIVE_THRESHOLD_PATTERN = re.compile(
     r"dollars?|votes?|points?|seats?|degrees?)\b)",
     re.IGNORECASE,
 )
+PERCENT_THRESHOLD_PATTERN = re.compile(r"[-+]?\$?\d+(?:\.\d+)?\s*%(?!\w)")
+QUOTED_YES_PATTERN = re.compile(
+    r'''\bresolve(?:s)?\s+to\s+(?:"yes"|'yes'|“yes”|‘yes’)\s+if\b''', re.I
+)
+TIE_PATTERN = re.compile(r"\btie(?:s|d)?\b", re.I)
+DEADLINE_PATTERN = re.compile(r"\b(?:by|before)\s|\bdeadline\b", re.I)
 
 AUTHORITIES = (
     "associated press",
@@ -131,39 +137,51 @@ def _bounded(value: float) -> float:
 
 
 def semantic_features(question: str, rules: str, resolution_source: str = "") -> dict[str, float]:
-    """Compute interpretable, pre-specified determinacy components for one contract."""
+    """Compute literal text components; missing operative rules leave the index unknown."""
 
     text = " ".join(part for part in (question, rules, resolution_source) if part)
     lowered = text.lower()
     words = re.findall(r"\b[\w'-]+\b", text)
     explicit_sources = len(URL_PATTERN.findall(text)) + _contains_count(text, AUTHORITIES)
     vague_source = _contains_count(text, DISCRETION_TERMS)
+    source_information = bool(resolution_source.strip()) or explicit_sources > 0
     source_specificity = _bounded(
         0.75 * (explicit_sources > 0)
-        + 0.25 * bool(resolution_source.strip())
+        + 0.25 * source_information
         - 0.25 * (vague_source > 0)
     )
 
     has_date = bool(DATE_PATTERN.search(text))
     has_time = bool(TIME_PATTERN.search(text))
     has_timezone = bool(TIMEZONE_PATTERN.search(text))
-    deadline_language = any(term in lowered for term in ("by ", "before ", "at ", "deadline"))
+    deadline_language = bool(DEADLINE_PATTERN.search(text)) or bool(
+        re.search(r"\bat\s", lowered) and has_time
+    )
     temporal_specificity = _bounded(
         0.55 * has_date + 0.15 * has_time + 0.15 * has_timezone + 0.15 * deadline_language
     )
 
-    definition_hits = _contains_count(text, DEFINITION_TERMS)
+    definition_present = bool(_contains_count(text, DEFINITION_TERMS)) or bool(
+        QUOTED_YES_PATTERN.search(text)
+    )
     numeric_mention = bool(NUMBER_PATTERN.search(text))
-    quantitative_threshold = bool(QUANTITATIVE_THRESHOLD_PATTERN.search(text))
+    quantitative_threshold = bool(
+        QUANTITATIVE_THRESHOLD_PATTERN.search(text) or PERCENT_THRESHOLD_PATTERN.search(text)
+    )
     ambiguity_hits = _contains_count(text, AMBIGUOUS_TERMS)
     outcome_definition = _bounded(
-        0.25 + 0.35 * (definition_hits > 0) + 0.30 * quantitative_threshold - 0.12 * ambiguity_hits
+        0.25 + 0.35 * definition_present + 0.30 * quantitative_threshold - 0.12 * ambiguity_hits
     )
 
-    edge_hits = _contains_count(text, EDGE_TERMS)
+    edge_hits = _contains_count(text, (term for term in EDGE_TERMS if term != "tie")) + bool(
+        TIE_PATTERN.search(text)
+    )
     conditional_count = len(re.findall(r"\b(?:if|unless|otherwise|except)\b", lowered))
     edge_completeness = _bounded(0.12 * min(edge_hits + conditional_count, 6))
-    discretion_clarity = _bounded(1.0 - 0.25 * vague_source)
+    rule_text_missing = not bool(rules.strip())
+    discretion_clarity = (
+        float("nan") if rule_text_missing else _bounded(1.0 - 0.25 * vague_source)
+    )
 
     conditional_clauses = len(
         re.findall(r"\b(?:if|unless|except|provided that|otherwise)\b", lowered)
@@ -192,14 +210,19 @@ def semantic_features(question: str, rules: str, resolution_source: str = "") ->
         "explicit_sources": float(explicit_sources),
         "numeric_mention": float(numeric_mention),
         "quantitative_threshold": float(quantitative_threshold),
+        "rule_text_missing": float(rule_text_missing),
     }
 
 
 def add_semantic_features(contracts: pd.DataFrame) -> pd.DataFrame:
-    """Attach semantic components to every contract row."""
+    """Attach text components, preserving null fields as missing rather than literal nan."""
 
     rows = [
-        semantic_features(str(row.question), str(row.rules), str(row.resolution_source))
+        semantic_features(
+            "" if pd.isna(row.question) else str(row.question),
+            "" if pd.isna(row.rules) else str(row.rules),
+            "" if pd.isna(row.resolution_source) else str(row.resolution_source),
+        )
         for row in contracts.itertuples(index=False)
     ]
     features = pd.DataFrame.from_records(rows, index=contracts.index)

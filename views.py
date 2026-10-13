@@ -45,18 +45,21 @@ def platform_rule_profiles(profiles: pd.DataFrame, path: Path) -> None:
         )
     axes[0].set(
         yticks=np.arange(5),
-        yticklabels=["Source", "Time", "Outcome definition", "Edge clauses", "Discretion"],
+        yticklabels=[
+            "Authority/source cues", "Date/time cues", "Definition/threshold cues",
+            "Edge-clause cues", "No discretion flags",
+        ],
         xlim=(0, 1.05),
-        xlabel="Mean component proxy (0–1)",
-        title="Different dimensions of rule specification",
+        xlabel="Mean literal text component (0–1)",
+        title="Different literal rule-text cues",
     )
     axes[0].invert_yaxis()
     axes[1].set(
         xticks=np.arange(3),
         xticklabels=["Overall", "No threshold\nflag", "Threshold\nflag"],
         ylim=(0, 1),
-        ylabel="Mean determinacy proxy (0–1)",
-        title="Compare the composite within contract types",
+        ylabel="Exploratory text specificity index (0–1)",
+        title="Composite within threshold-flag strata",
     )
     for axis in axes:
         axis.grid(alpha=0.2)
@@ -105,17 +108,17 @@ def conceptual_schematic(path: Path) -> None:
         (
             0.54,
             0.78,
-            "Settlement mapping $r_c$\nbinary event $Y_c$\nor incomplete $R_c$",
+            "Payout mapping $r_c$\namounts and exceptions\nwritten interpretation $R_c$",
             "#F5DFE2",
         ),
         (0.09, 0.30, "Trader evidence $e$", "#E7EEF5"),
         (
             0.30,
             0.30,
-            "Bayesian updating\nover world histories\n$\\mu_e=P(\\cdot\\mid e)$",
+            "Beliefs over relevant\nworld and adjudication\nhistories $\\mu$",
             "#DDEAF4",
         ),
-        (0.54, 0.30, "Claim valuation\n$q_c=E_{\\mu_e}[r_c]$", "#F3F0E8"),
+        (0.54, 0.30, "Expected payout\n$q_c=E_{\\mu}[r_c]$", "#F3F0E8"),
         (0.76, 0.30, "Market\naggregation", "#F3F0E8"),
         (0.94, 0.30, "Observed\nprice $p_c$", "#F3F0E8"),
     ]
@@ -148,8 +151,8 @@ def conceptual_schematic(path: Path) -> None:
     axis.text(
         0.80,
         0.78,
-        "Same posterior over worlds\n+ different payoff events\n"
-        "can yield different claim probabilities",
+        "Same beliefs over histories\n+ different payout mappings\n"
+        "can yield different expected payouts",
         ha="center",
         va="center",
         fontsize=10,
@@ -181,7 +184,7 @@ def determinacy_distribution(contracts: pd.DataFrame, path: Path) -> None:
             label=f"{platform} (n={len(group):,})",
             color=PLATFORM_COLORS.get(str(platform)),
         )
-    axis.set(xlabel="Semantic determinacy score", ylabel="Density")
+    axis.set(xlabel="Exploratory rule-text specificity index", ylabel="Density")
     axis.legend(frameon=False)
     axis.grid(axis="y", alpha=0.2)
     _finish(figure, path)
@@ -203,8 +206,8 @@ def determinacy_volume_bins(bins: pd.DataFrame, path: Path) -> None:
         )
     axis.axhline(0, color="#777777", linewidth=0.8)
     axis.set(
-        xlabel="Tie-preserving determinacy quantile group (within platform)",
-        ylabel="Mean standardized log volume (95% CI)",
+        xlabel="Tie-preserving text-index group (within platform)",
+        ylabel="Mean standardized log volume (unclustered 95% interval)",
         xticks=range(1, int(bins["determinacy_group"].max()) + 1),
     )
     axis.legend(frameon=False)

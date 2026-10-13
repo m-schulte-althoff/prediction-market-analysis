@@ -181,6 +181,9 @@ def match_contracts(contracts: pd.DataFrame, neighbors: int = 3) -> pd.DataFrame
                     "polymarket_open_timestamp": right["open_timestamp"],
                     "kalshi_close_timestamp": left["close_timestamp"],
                     "polymarket_close_timestamp": right["close_timestamp"],
+                    "kalshi_resolution_timestamp": left.get("resolution_timestamp", pd.NaT),
+                    "polymarket_resolution_timestamp": right.get("resolution_timestamp", pd.NaT),
+                    "comparison_status": "metadata_candidate_requires_rule_audit",
                     "candidate_rank": rank,
                     "phenomenon_similarity": phenomenon_similarity,
                     "phenomenon_match_label": (

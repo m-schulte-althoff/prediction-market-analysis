@@ -11,24 +11,14 @@ This market will close early following the first person to be sworn in as govern
 If the results of the election are not confirmed by July 31, 2026, this market will resolve to ""Other"".
 
 The resolution source for this market is the Associated Press, Fox News, and NBC. This market will resolve once all three sources call the race for the same candidate. If all three sources haven’t called the race in this state for the same candidate, this market will resolve based on official certification.",numeric/date conditions differ; named resolution sources differ; required event stage differs,0.7183123539206941,strong_candidate,0.7777777777777778,0.633007217326466,0.8196971020456872
-Will the Fed cut rates 0 times?,"If the Fed does exactly 0 cuts of 25 basis points in 2024, the market resolves to Yes.
-To be clear, 25bp of cuts is equal to one cut (so 25bp cut is 1, 50bp cut is 2, 75bp cut is 3, and so on). Note: the original filing had a typographical error that referred to a 25bp cut as an ""increase"" in the federal funds rate. This has been changed.",Will Fed cut interest rates 0 times in 2024?,"The FED interest rates are defined in this market by the upper bound of the target federal funds range. The decisions on the target federal fund range are made by the Federal Open Market Committee (FOMC) meetings.
+Will the Fed cut rates 5 times?,"If the Fed does exactly 5 cuts of 25 basis points in 2024, the market resolves to Yes.
+To be clear, 25bp of cuts is equal to one cut (so 25bp cut is 1, 50bp cut is 2, 75bp cut is 3, and so on). Note: the original filing had a typographical error that referred to a 25bp cut as an ""increase"" in the federal funds rate. This has been changed.",Will Fed cut interest rates 5 times in 2024?,"The FED interest rates are defined in this market by the upper bound of the target federal funds range. The decisions on the target federal fund range are made by the Federal Open Market Committee (FOMC) meetings.
 
-This market will resolve to “Yes” if the there no rate cuts by the Fed's December meeting (including the Dec meeting). Otherwise, this market will resolve to “No.”
+This market will resolve to “Yes” if the there is exactly 5 cuts of 25 basis points by the Fed's December meeting (including any cuts made during Dec meeting). Otherwise, this market will resolve to “No.”
 
-This market may resolve to ""Yes"" immediately after the statement from the Fed's December 2024 meeting has been released if there has been no rate cuts by then.
+This market may resolve to ""Yes"" immediately after the statement from the Fed's December 2024 meeting has been released if there has been exactly 5 rate cuts by then.
 
-If there is a rate cut at any time within 2024, before the statement following the December FOMC meeting is released, this market may immediately resolve to ""No"".
-
-The resolution source for this market will be FOMC statements after meetings scheduled in 2024 according to the official calendar: https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm. The level and change of the target federal funds rate is also published at the official website of the Federal Reserve at https://www.federalreserve.gov/monetarypolicy/openmarket.htm.",one contract records a rule correction; numeric/date conditions differ; named resolution sources differ; required event stage differs,0.6878291969818248,strong_candidate,0.7142857142857143,0.5766555886243386,0.7044742939819029
-Will the Fed cut rates 4 times?,"If the Fed does exactly 4 cuts of 25 basis points in 2024, the market resolves to Yes.
-To be clear, 25bp of cuts is equal to one cut (so 25bp cut is 1, 50bp cut is 2, 75bp cut is 3, and so on). Note: the original filing had a typographical error that referred to a 25bp cut as an ""increase"" in the federal funds rate. This has been changed.",Will Fed cut interest rates 4 times in 2024?,"The FED interest rates are defined in this market by the upper bound of the target federal funds range. The decisions on the target federal fund range are made by the Federal Open Market Committee (FOMC) meetings.
-
-This market will resolve to “Yes” if the there is exactly 4 cuts of 25 basis points by the Fed's December meeting (including any cuts made during Dec meeting). Otherwise, this market will resolve to “No.”
-
-This market may resolve to ""Yes"" immediately after the statement from the Fed's December 2024 meeting has been released if there has been exactly 4 rate cuts by then.
-
-For example, if the FED cuts rates by 50 bps after a meeting, it would be considered 2 cuts (of 25 bps each). If there are 5 or more rate cuts at any point before this market's resolution date, this market will resolve to ""No"".
+For example, if the FED cuts rates by 50 bps after a meeting, it would be considered 2 cuts (of 25 bps each). If there are 6 or more rate cuts at any point before this market's resolution date, this market will resolve to ""No"".
 
 The resolution source for this market will be FOMC statements after meetings scheduled in 2024 according to the official calendar: https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm. The level and change of the target federal funds rate is also published at the official website of the Federal Reserve at https://www.federalreserve.gov/monetarypolicy/openmarket.htm.",one contract records a rule correction; numeric/date conditions differ; named resolution sources differ; required event stage differs,0.6878291969818248,strong_candidate,0.7142857142857143,0.5155444775132275,0.7044742939819029
 Will the Fed cut rates 2 times?,"If the Fed does exactly 2 cuts of 25 basis points in 2024, the market resolves to Yes.
@@ -70,6 +60,14 @@ This market will close after Byron Donalds wins the party's nomination.",Will By
 If no 2026 Florida Republican Gubernatorial Primary takes place, this market will resolve to “Other.”
 
 The resolution source for this market will be the first official announcement of the results from the Florida Republican Party; however, an overwhelming consensus of credible reporting may suffice.",numeric/date conditions differ; required event stage differs,0.7690219156592132,strong_candidate,1.0,0.3016755594135803,0.953245863327316
+Will the Fed cut rates 6 times?,"If the Fed does exactly 6 cuts of 25 basis points in 2024, the market resolves to Yes.
+To be clear, 25bp of cuts is equal to one cut (so 25bp cut is 1, 50bp cut is 2, 75bp cut is 3, and so on). Note: the original filing had a typographical error that referred to a 25bp cut as an ""increase"" in the federal funds rate. This has been changed.",Will Fed cut interest rates 6+ times in 2024?,"The FED interest rates are defined in this market by the upper bound of the target federal funds range. The decisions on the target federal fund range are made by the Federal Open Market Committee (FOMC) meetings.
+
+This market will resolve to “Yes” if the there are 6 or more cuts of 25 basis points by the Fed's December meeting (including any cuts made during Dec meeting). Otherwise, this market will resolve to “No.”
+
+For example, if the FED cuts rates by 50 bps after a meeting, it would be considered 2 cuts (of 25 bps each).
+
+The resolution source for this market will be FOMC statements after meetings scheduled in 2024 according to the official calendar: https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm. The level and change of the target federal funds rate is also published at the official website of the Federal Reserve at https://www.federalreserve.gov/monetarypolicy/openmarket.htm.",one contract records a rule correction; numeric/date conditions differ; named resolution sources differ,0.6878291969818248,strong_candidate,0.7142857142857143,0.30165558862433867,0.7044742939819029
 Will Jasmine Crockett be the Democratic nominee for the Senate in Texas?,"If Jasmine Crockett wins the nomination for the Democratic Party to contest the 2026 Class II Texas Senate seat, then the market resolves to Yes.
 This market will close after Jasmine Crockett wins the party's nomination.",Will Jasmine Crockett be the Democratic nominee for Senate in Texas?,"This market will resolve according to the winner of the Democratic Primary for United States Senator from Texas.
 

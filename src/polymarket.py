@@ -6,10 +6,17 @@ import logging
 from pathlib import Path
 from typing import Any
 
-from src.config import POLYMARKET_GAMMA_URL, SampleConfig, dated_raw_path
+from src.config import (
+    POLYMARKET_GAMMA_URL,
+    SampleConfig,
+    acquisition_metadata,
+    dated_raw_path,
+    require_current_acquisition_date,
+    validate_snapshot_date,
+)
 from src.http_client import PublicApiClient
 from src.io_utils import read_json, write_immutable_json
-from src.taxonomy import is_polymarket_sports
+from src.taxonomy import SPORTS_FILTER_VERSION, is_polymarket_sports
 
 LOGGER = logging.getLogger(__name__)
 
@@ -22,6 +29,34 @@ def polymarket_snapshot_path(config: SampleConfig) -> Path:
     )
 
 
+def validate_polymarket_snapshot(payload: dict[str, Any], config: SampleConfig) -> None:
+    """Validate cached selection settings without rewriting legacy filter metadata."""
+
+    validate_snapshot_date(payload, config.retrieval_date, "Polymarket")
+    selection = payload.get("selection")
+    expected: dict[str, object] = {
+        "closed": True,
+        "sports_excluded_before_volume_cap": True,
+        "order": "volumeNum descending",
+        "limit": config.polymarket_limit,
+    }
+    if not isinstance(selection, dict):
+        raise ValueError("Polymarket snapshot does not record its sampling parameters")
+    # Original archives omit page size and filter version. They remain readable;
+    # missing provenance is not inferred from the currently installed code.
+    if "page_size" in selection:
+        expected["page_size"] = config.polymarket_page_size
+    if "sports_filter_version" in selection:
+        expected["sports_filter_version"] = SPORTS_FILTER_VERSION
+    for parameter, value in expected.items():
+        if selection.get(parameter) != value:
+            raise ValueError(
+                f"Polymarket cached sampling parameter {parameter!r} is "
+                f"{selection.get(parameter)!r}; requested {value!r}. "
+                "The immutable snapshot cannot serve this sample configuration."
+            )
+
+
 def download_polymarket(config: SampleConfig, client: PublicApiClient) -> dict[str, Any]:
     """Download or load a date-stamped high-volume Polymarket snapshot."""
 
@@ -31,8 +66,10 @@ def download_polymarket(config: SampleConfig, client: PublicApiClient) -> dict[s
         payload = read_json(path)
         if not isinstance(payload, dict):
             raise TypeError("Polymarket snapshot must contain a JSON object")
+        validate_polymarket_snapshot(payload, config)
         return payload
 
+    require_current_acquisition_date(path, config.retrieval_date)
     markets: list[dict[str, Any]] = []
     scanned = 0
     cursor = ""
@@ -65,12 +102,14 @@ def download_polymarket(config: SampleConfig, client: PublicApiClient) -> dict[s
     selected = markets[: config.polymarket_limit]
     by_id = {str(row["id"]): row for row in selected}
     payload = {
-        "retrieved_at_date": config.retrieval_date.isoformat(),
+        **acquisition_metadata(config.retrieval_date),
         "selection": {
             "closed": True,
             "sports_excluded_before_volume_cap": True,
             "order": "volumeNum descending",
             "limit": config.polymarket_limit,
+            "page_size": config.polymarket_page_size,
+            "sports_filter_version": SPORTS_FILTER_VERSION,
             "raw_rows_scanned": scanned,
         },
         "markets": [by_id[key] for key in sorted(by_id, key=lambda value: int(value))],

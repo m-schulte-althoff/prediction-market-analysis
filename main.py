@@ -22,6 +22,7 @@ from src.anecdotes import (
     add_claim_relations,
     build_representation_case_matrix,
     download_anecdote_sources,
+    load_case_evidence,
     write_casebook,
 )
 from src.coherence import case_price_diagnostics, panel_coherence_readiness
@@ -36,18 +37,28 @@ from src.config import (
 )
 from src.http_client import PublicApiClient
 from src.io_utils import read_json, write_csv
-from src.kalshi import download_kalshi, kalshi_snapshot_path
+from src.kalshi import download_kalshi, kalshi_snapshot_path, validate_kalshi_snapshot
 from src.matching import match_contracts
 from src.panel import build_matched_panel, download_matched_histories, summarize_matched_panel
-from src.polymarket import download_polymarket, polymarket_snapshot_path
-from src.preprocessing import build_contract_table
+from src.polymarket import (
+    download_polymarket,
+    polymarket_snapshot_path,
+    validate_polymarket_snapshot,
+)
+from src.preprocessing import (
+    build_contract_table,
+    exposure_ledger,
+    normalization_ledger,
+    outcome_ledger,
+)
 from src.reporting import (
     coverage_table,
     semantic_examples,
+    write_claim_confidence,
     write_paper_outline,
-    write_research_log,
     write_research_status,
     write_research_summary,
+    write_supplementary_results,
 )
 from src.semantics import add_semantic_features
 from views import (
@@ -128,8 +139,24 @@ def run_preprocess(config: SampleConfig) -> pd.DataFrame:
     polymarket_payload = read_json(polymarket_path)
     if not isinstance(kalshi_payload, dict) or not isinstance(polymarket_payload, dict):
         raise TypeError("Raw platform snapshots must contain JSON objects")
+    validate_kalshi_snapshot(kalshi_payload, config)
+    validate_polymarket_snapshot(polymarket_payload, config)
     contracts = add_semantic_features(build_contract_table(kalshi_payload, polymarket_payload))
     write_csv(contracts, CONTRACT_PATH, ["platform", "contract_id"])
+    ledger = pd.concat(
+        [
+            normalization_ledger(kalshi_payload, "Kalshi"),
+            normalization_ledger(polymarket_payload, "Polymarket"),
+        ],
+        ignore_index=True,
+    )
+    write_csv(
+        ledger,
+        TABLE_DIR / "preprocessing-normalization-ledger.csv",
+        ["platform", "raw_row_position"],
+    )
+    write_csv(outcome_ledger(contracts), TABLE_DIR / "preprocessing-outcome-ledger.csv")
+    write_csv(exposure_ledger(contracts), TABLE_DIR / "preprocessing-exposure-ledger.csv")
     write_csv(coverage_table(contracts), TABLE_DIR / "preprocessing-coverage.csv", ["platform"])
     write_csv(
         semantic_examples(contracts),
@@ -175,20 +202,23 @@ def run_match() -> pd.DataFrame:
     return matches
 
 
-def run_anecdotes(config: SampleConfig) -> pd.DataFrame:
+def run_anecdotes(config: SampleConfig, case_evidence_path: Path | None = None) -> pd.DataFrame:
     """Archive exact cited rules and build the witness-state casebook."""
 
     client = PublicApiClient(timeout_seconds=config.request_timeout_seconds)
     payload = download_anecdote_sources(config, client)
     matches = _read_frame(MATCH_PATH) if MATCH_PATH.exists() else None
-    cases = build_representation_case_matrix(payload, matches)
+    evidence = load_case_evidence(case_evidence_path) if case_evidence_path is not None else None
+    cases = build_representation_case_matrix(payload, matches, evidence)
     write_csv(cases, CASE_PATH, ["case_id"])
     write_casebook(OUTPUT_DIR / "REPRESENTATION_CASEBOOK.md", cases)
     LOGGER.info("Built %d audited representation cases", len(cases))
     return cases
 
 
-def run_panel(config: SampleConfig) -> tuple[pd.DataFrame, pd.DataFrame]:
+def run_panel(
+    config: SampleConfig, history_snapshot: Path | None = None
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Acquire and construct the cross-platform daily price panel."""
 
     matches = _read_frame(
@@ -201,7 +231,7 @@ def run_panel(config: SampleConfig) -> tuple[pd.DataFrame, pd.DataFrame]:
         ),
     )
     client = PublicApiClient(timeout_seconds=config.request_timeout_seconds)
-    payload = download_matched_histories(matches, config, client)
+    payload = download_matched_histories(matches, config, client, snapshot_path=history_snapshot)
     panel = build_matched_panel(payload)
     summary = summarize_matched_panel(panel)
     write_csv(panel, PANEL_PATH, ["underlying_event_id", "timestamp"] if not panel.empty else None)
@@ -263,9 +293,14 @@ def run_analysis() -> None:
     determinacy_volume_bins(bins, FIGURE_DIR / "views-determinacy-volume.svg")
     divergence_disagreement(panel_summary, FIGURE_DIR / "views-divergence-disagreement.svg")
     price_trajectories(panel, FIGURE_DIR / "views-matched-trajectories.svg")
-    write_research_log(
-        OUTPUT_DIR / "research-log.md", models, error_models, matches, matched_models
+    write_supplementary_results(
+        OUTPUT_DIR / "SUPPLEMENTARY_ANALYSIS.md",
+        models,
+        error_models,
+        panel_summary,
+        matched_models,
     )
+    write_claim_confidence(OUTPUT_DIR / "CLAIM_CONFIDENCE.md", models, cases, profiles)
     write_research_summary(
         OUTPUT_DIR / "RESEARCH_SUMMARY.md",
         contracts,
@@ -301,14 +336,18 @@ def run_coherence(cases: pd.DataFrame, panel: pd.DataFrame) -> pd.DataFrame:
     return diagnostics
 
 
-def run_all(config: SampleConfig) -> None:
+def run_all(
+    config: SampleConfig,
+    case_evidence_path: Path | None = None,
+    history_snapshot: Path | None = None,
+) -> None:
     """Execute the complete cached pipeline."""
 
     run_download(config)
     run_preprocess(config)
     run_match()
-    run_anecdotes(config)
-    run_panel(config)
+    run_anecdotes(config, case_evidence_path)
+    run_panel(config, history_snapshot)
     run_analysis()
 
 
@@ -333,6 +372,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--kalshi-series-limit", type=int, default=120)
     parser.add_argument("--polymarket-limit", type=int, default=8_000)
     parser.add_argument("--matched-panel-limit", type=int, default=12)
+    parser.add_argument("--case-evidence", type=Path)
+    parser.add_argument("--history-snapshot", type=Path)
     return parser.parse_args()
 
 
@@ -356,13 +397,13 @@ def main() -> None:
     elif arguments.command == "match":
         run_match()
     elif arguments.command == "anecdotes":
-        run_anecdotes(config)
+        run_anecdotes(config, arguments.case_evidence)
     elif arguments.command == "panel":
-        run_panel(config)
+        run_panel(config, arguments.history_snapshot)
     elif arguments.command == "analyze":
         run_analysis()
     else:
-        run_all(config)
+        run_all(config, arguments.case_evidence, arguments.history_snapshot)
 
 
 if __name__ == "__main__":

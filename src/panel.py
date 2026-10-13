@@ -10,7 +10,15 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-from src.config import KALSHI_BASE_URL, POLYMARKET_CLOB_URL, RAW_DIR, SampleConfig
+from src.config import (
+    KALSHI_BASE_URL,
+    POLYMARKET_CLOB_URL,
+    RAW_DIR,
+    SampleConfig,
+    acquisition_metadata,
+    require_current_acquisition_date,
+    validate_snapshot_date,
+)
 from src.http_client import PublicApiClient
 from src.io_utils import read_json, write_immutable_json
 
@@ -65,17 +73,23 @@ def download_matched_histories(
     matches: pd.DataFrame,
     config: SampleConfig,
     client: PublicApiClient,
+    *,
+    snapshot_path: Path | None = None,
 ) -> dict[str, Any]:
-    """Download or load daily price histories for selected accepted pairs."""
+    """Load an explicitly selected archive or acquire current selected histories."""
 
     selected = select_panel_matches(matches, config.matched_panel_limit)
-    path = _snapshot_path(selected, config)
+    path = snapshot_path if snapshot_path is not None else _snapshot_path(selected, config)
     if path.exists():
         payload = read_json(path)
         if not isinstance(payload, dict):
             raise TypeError("Matched-history snapshot must contain a JSON object")
+        validate_snapshot_date(payload, config.retrieval_date, "Matched histories")
         LOGGER.info("Using cached matched histories: %s", path)
-        return payload
+        return {**payload, "history_snapshot_path": str(path)}
+    if snapshot_path is not None:
+        raise FileNotFoundError(f"Explicit matched-history archive does not exist: {path}")
+    require_current_acquisition_date(path, config.retrieval_date)
 
     cutoff_payload = client.get_json(f"{KALSHI_BASE_URL}/historical/cutoff")
     cutoff = pd.Timestamp(cutoff_payload["market_settled_ts"])
@@ -91,7 +105,8 @@ def download_matched_histories(
         )
         if pd.isna(start) or pd.isna(end) or start >= end:
             continue
-        archived = pd.Timestamp(str(row.kalshi_close_timestamp)) < cutoff
+        settlement = getattr(row, "kalshi_resolution_timestamp", None)
+        archived = _uses_historical_endpoint(settlement, cutoff)
         if archived:
             kalshi_url = f"{KALSHI_BASE_URL}/historical/markets/{row.kalshi_ticker}/candlesticks"
         else:
@@ -132,13 +147,20 @@ def download_matched_histories(
             }
         )
     payload = {
-        "retrieved_at_date": config.retrieval_date.isoformat(),
+        **acquisition_metadata(config.retrieval_date),
         "historical_cutoff": cutoff_payload,
         "pairs": pairs,
     }
     write_immutable_json(path, payload)
     LOGGER.info("Saved histories for %d matched pairs to %s", len(pairs), path)
-    return payload
+    return {**payload, "history_snapshot_path": str(path)}
+
+
+def _uses_historical_endpoint(settlement: object, cutoff: pd.Timestamp) -> bool:
+    """Route only recorded settlements before the API's settlement cutoff as historical."""
+
+    timestamp = pd.to_datetime(str(settlement), utc=True, errors="coerce")
+    return bool(pd.notna(timestamp) and timestamp < cutoff)
 
 
 def _kalshi_history(payload: dict[str, Any]) -> pd.DataFrame:
@@ -183,7 +205,7 @@ def _polymarket_history(payload: dict[str, Any]) -> pd.DataFrame:
 
 
 def build_matched_panel(payload: dict[str, Any]) -> pd.DataFrame:
-    """Align both platforms to daily observations using only prior prices."""
+    """Build diagnostic daily buckets from clipped original observations and show their age."""
 
     panels: list[pd.DataFrame] = []
     for pair in payload.get("pairs", []):
@@ -191,6 +213,17 @@ def build_matched_panel(payload: dict[str, Any]) -> pd.DataFrame:
         polymarket = _polymarket_history(pair["polymarket"])
         if kalshi.empty or polymarket.empty:
             continue
+        metadata = pair["match"]
+        start = pd.Timestamp(metadata.get("aligned_start") or max(
+            kalshi["timestamp"].min(), polymarket["timestamp"].min()
+        ))
+        end = pd.Timestamp(str(metadata["aligned_end"]))
+        kalshi = kalshi.loc[kalshi["timestamp"].between(start, end)].copy()
+        polymarket = polymarket.loc[polymarket["timestamp"].between(start, end)].copy()
+        if kalshi.empty or polymarket.empty:
+            continue
+        kalshi["kalshi_source_timestamp"] = kalshi["timestamp"]
+        polymarket["polymarket_source_timestamp"] = polymarket["timestamp"]
         kalshi = kalshi.set_index("timestamp").sort_index().resample("1D").last()
         polymarket = polymarket.set_index("timestamp").sort_index().resample("1D").last()
         aligned = kalshi.join(polymarket, how="outer").sort_index().ffill(limit=7)
@@ -201,7 +234,28 @@ def build_matched_panel(payload: dict[str, Any]) -> pd.DataFrame:
         ].copy()
         if aligned.empty:
             continue
-        metadata = pair["match"]
+        # A daily bucket's as-of time is its end (bounded by the contract window).
+        # Keep the bucket and original source times rather than calling midnight
+        # labels synchronized quotes observed at that instant.
+        aligned["daily_bucket_start"] = aligned.index
+        as_of = pd.Series(aligned.index + pd.Timedelta(days=1), index=aligned.index)
+        aligned["timestamp"] = as_of.where(as_of <= end, end)
+        aligned = aligned.loc[aligned["timestamp"].between(start, end)].copy()
+        # An exact midnight endpoint may share its as-of time with the preceding
+        # full bucket; keep its later original observations once, without double weight.
+        aligned = aligned.drop_duplicates("timestamp", keep="last")
+        for platform in ("kalshi", "polymarket"):
+            source = aligned[f"{platform}_source_timestamp"]
+            aligned[f"{platform}_fill_age_hours"] = (
+                aligned["timestamp"] - source
+            ).dt.total_seconds() / 3_600
+            aligned[f"{platform}_forward_filled"] = source.dt.floor("D") < aligned.index
+        aligned["observation_kind"] = "daily_bucket_end_with_original_source_timestamps"
+        aligned["synchronized_price_test_eligible"] = False
+        aligned["aligned_start"] = start
+        aligned["aligned_end"] = end
+        aligned["history_snapshot_path"] = payload.get("history_snapshot_path", "unspecified")
+        aligned["history_acquired_at_utc"] = payload.get("acquired_at_utc")
         aligned["underlying_event_id"] = metadata["underlying_event_id"]
         aligned["kalshi_question"] = metadata["kalshi_question"]
         aligned["polymarket_question"] = metadata["polymarket_question"]
@@ -210,12 +264,10 @@ def build_matched_panel(payload: dict[str, Any]) -> pd.DataFrame:
         aligned["disagreement"] = (
             aligned["kalshi_price"] - aligned["polymarket_price"]
         ).abs()
-        aligned_index = pd.DatetimeIndex(aligned.index)
-        timestamp_series = pd.Series(aligned_index, index=aligned.index)
         aligned["days_to_close"] = (
-            pd.Timestamp(str(metadata["aligned_end"])) - timestamp_series
+            end - aligned["timestamp"]
         ).dt.total_seconds() / 86_400
-        panels.append(aligned.reset_index())
+        panels.append(aligned.reset_index(drop=True))
     if not panels:
         return pd.DataFrame()
     return pd.concat(panels, ignore_index=True).sort_values(

@@ -1,0 +1,6 @@
+platform,negative_exposure_reason,contracts,positive_volume,zero_volume,zero_clipped_exposure
+Kalshi,,12186,11654,532,9
+Kalshi,scheduled_after_snapshot_day,38,0,38,38
+Kalshi,within_snapshot_day,27,27,0,27
+Polymarket,,7197,7197,0,0
+Polymarket,close_before_open,52,52,0,52

@@ -1,5 +1,11 @@
 # Change Log
 
+## 2026-10-13
+
+- Implemented approved P1–P7 with immutable historical-cache safeguards, auditable sample/outcome/timing ledgers and corrected text extraction; preserved the fixed historical sample and withdrew its composition-reversal claim.
+- Recentered the paper on verified ordinary and fractional settlement contrasts and documented adjudication, narrowed the theory, and moved activity estimates to supplementary material with exact preferred-model family-clustered uncertainty.
+- Archived pre-revision papers and related outputs/sources, made case assertions fail closed on changed operative inputs, corrected dormant-panel time boundaries, and preserved research history during regeneration.
+
 ## 2026-09-14
 
 - Added a claim-by-claim evidence overview distinguishing demonstrated rule mechanisms, descriptive portfolio patterns, exploratory activity associations, and untested behavioral implications to guide the paper's claims.

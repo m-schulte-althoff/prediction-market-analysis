@@ -1,134 +1,134 @@
 # Same Future, Different Claim
 
-## 1. Research question and contribution
+Steve Hilton finished second in California's June 2, 2026 gubernatorial primary and advanced under the top-two rule. The archived first-place Kalshi contract settled NO/$0; the Polymarket advancement contract recorded resolved YES. The result concerns one election, yet the contracts reward different achievements.
 
-How do prediction-market resolution architectures differentiate claims about the same public phenomenon, and how do determinacy and trading activity vary across the sampled market portfolios?
+## Question and evidence
 
-The central contribution is upstream of aggregation: platform resolution architectures choose predicates, measurement conventions, temporal boundaries, evidence, exceptions, and fallback procedures. Markets with similar labels can therefore price non-equivalent digital claims. Even identical posterior beliefs about world histories can imply different claim probabilities when the represented payoff sets differ.
+When do apparently similar market questions expose traders to different settlements, and when does written text leave a scenario to later interpretation? The main evidence joins realized settlements, documented adjudication and exact rule comparisons. It establishes case-level distinctions; it does not estimate their prevalence or effects on prices.
 
-## 2. Construct architecture
+### Steve Hilton: first place versus advancing in the California primary
 
-**Semantic differentiation** is the process of selecting what counts, when it counts, and whose evidence counts. **Divergence** describes differences between the resulting claims; **determinacy** describes clarity within one claim. More explicit contracts need not be equivalent contracts.
+- **Evidence:** observed event and recorded final settlement contrast
+- **Scenario:** Steve Hilton finished second in the June 2, 2026 California primary and advanced to the general election. Certified results place Becerra first (28.0%), Hilton second (24.6%) and Steyer third (22.8%).
+- **Qualifying condition:** A — first place in the primary; proportional payout for exact ties; B — advance to the general election; the top two candidates qualify.
+- **Settlement:** A — NO; recorded normalized settlement $0; B — resolved YES; normalized payout $1.
+- **Implication:** Finishing second loses the first-place contract and wins advancement.
+- **Boundary:** Both records are in the September-labelled sample and match the preserved October follow-up on operative fields. They have different cutoff/fallback conditions; exact ties make Kalshi's full payout mapping fractional. This realized contrast establishes no price error or trader misunderstanding.
+- **Contracts:** [KXCAGOVPRIMARY1ST-26JUN02-1ST-SHIL](https://kalshi.com/markets/kxcagovprimary1st-26jun02-1st-shil); [825460](https://polymarket.com/event/will-steve-hilton-get-the-first-or-second-most-votes-in-the-2026-california-governor-primary-election).
+- **Chronology:** June 2, 2026: primary; June 10 20:05:30 UTC: Polymarket closure record; July 11 00:39:59.561815 UTC: Kalshi settlement timestamp.
+- **Independent event evidence:** [June 2, 2026 primary: Becerra 28.0%, Hilton 24.6%, Steyer 22.8%; Hilton second.](https://elections.cdn.sos.ca.gov/sov/2026-primary/sov/06-sov-summary.pdf).
 
-A contract is a possibly set-valued mapping from world histories to institutionally permissible settlements. **Semantic determinacy** is an intra-contract property: how uniquely a relevant world history maps to a settlement. **Semantic divergence** is an inter-contract property: whether two contracts about the same phenomenon map at least one plausible world history to different payouts or procedures.
+### Ali Khamenei departure: price-based death allocation versus YES
 
-The constructs are orthogonal. Two precise contracts can diverge (network call versus inauguration); two identically vague contracts can have low determinacy but little between-contract divergence. Automated wording, number, source, stage, and deadline distances retrieve candidates but are not treated as validated semantic equivalence measures.
+- **Evidence:** observed departure episode and recorded final settlement contrast
+- **Scenario:** Following the February 28, 2026 attack, contemporaneous March 1 reporting recorded Iranian state media confirming Khamenei's death. The compared contracts recorded scalar 45-cent and resolved-YES settlements.
+- **Qualifying condition:** A — departure before July 1, 2026; qualifying announcement also covered; death-only departure uses a pre-death price or committee fair allocation; B — loss of position or ability to perform duties by June 30, 2026, 11:59 PM ET.
+- **Settlement:** A — scalar; recorded normalized settlement $0.45; B — resolved YES; normalized payout $1.
+- **Implication:** Forecasting departure is insufficient to value a contract whose death clause can pay a fraction of the unit payout.
+- **Boundary:** The deadlines and exceptions differ, so this is not a controlled clause effect. Full Kalshi mapping includes announcement, ordinary departure, price-based death allocation and binding committee discretion. The exact reference-price selection was not audited. Reported reimbursements can make account receipts differ from contract settlement; original linked social posts were inaccessible. No binary-event restriction applies.
+- **Contracts:** [KXKHAMENEIOUT-AKHA-26JUL01](https://kalshi.com/markets/kxkhameneiout-akha-26jul01); [661699](https://polymarket.com/event/khamenei-out-as-supreme-leader-of-iran-by-june-30-747).
+- **Chronology:** February 28, 2026: attack; March 1: contemporaneous confirmation report; March 1 00:02:17 UTC: Polymarket closure record; March 1 03:19:27.389859 UTC: Kalshi scalar-settlement timestamp.
+- **Independent event evidence:** [Iranian state media confirmed Khamenei's death following the February 28 attack.](https://apnews.com/article/5b13b69b708c4ed38e8f95f5fb41a597).
+- **Independent event evidence:** [Reported price-based death settlement and fee/entry-cost reimbursements; original linked social posts returned 403.](https://cointelegraph.com/news/kalshi-founder-khamenei-market-carveout).
 
-Meehan and Zhang's [*Bayes Is Back* (2025)](https://doi.org/10.1215/00318108-11873775) studies updating within a given prior space `(S, π)` and a represented strongest evidence proposition. Non-contrastiveness holds the posterior fixed across learning situations with the same prior space and learned proposition; global evidential constancy also holds it fixed across states with that evidence. This invariance does not by itself single out conditionalization. Their distinction between accuracy in one learning situation and total expected accuracy across learning situations supports an argument about updating rules, not a test of platform design (supplied manuscript §§2, 4–5; [source audit](../docs/BAYES_SOURCE_AUDIT.md)).
+### Zelenskyy's clothing: appearance, proposals and final adjudication
 
-**Our IS extension:** let `Ω` be relevant possible world histories, `e` represented evidence with positive prior probability, and `μ_e = P(· | e)` the posterior over histories. The platform specifies a settlement mapping. For a determinate binary contract, `r_c: Ω → {0,1}` and `Y_c = {ω: r_c(ω)=1}`. Applying the posterior gives `q_c(e) = E_{μ_e}[r_c] = P(Y_c | e)`. The platform defines the claim; evidence updates beliefs about worlds; traders value that claim and markets aggregate valuations into prices. These are analytically distinct functions, not a claim that platforms do Bayesian updating or that rules must chronologically precede all learning.
+- **Evidence:** observed appearance, documented proposal/dispute sequence and final NO
+- **Scenario:** Zelenskyy appeared in the Netherlands on June 24, 2025, documented by the Ukrainian presidency and its photograph. The official market record preserves repeated proposal/dispute states and a final NO.
+- **Qualifying condition:** A — authentic images/video taken and released May 22–June 30, 2025 ET; wearing a suit; no garment-level definition; B — credible-reporting consensus supplies the deciding interpretation.
+- **Settlement:** A — resolved NO; normalized payout $0; B — N/A; this is one contract and its adjudication procedure.
+- **Implication:** The rules fix timing and image authenticity, while the deciding procedure supplies the interpretation of the clothing category.
+- **Boundary:** The appearance source does not independently classify the clothing. A dispute shows adjudication mattered; it establishes no manipulation, trader consensus or causal ambiguity effect. Final institutional payout is recorded despite incomplete written garment criteria. Closure is not independently verified on-chain finality.
+- **Contracts:** [546814](https://polymarket.com/event/will-zelenskyy-wear-a-suit-before-july).
+- **Chronology:** June 24, 2025: photographed appearance; June 30: rule window ends; archived status history alternates proposed/disputed five times (individual timestamps unavailable); July 9 00:30:39 UTC: closure record with current resolved status and NO outcome.
+- **Independent event evidence:** [Zelenskyy appeared in the Netherlands on June 24, 2025; no independent clothing classification is supplied.](https://www.president.gov.ua/en/news/vidbulasya-audiyenciya-prezidenta-ukrayini-v-korolya-niderla-98637).
 
-Thus `q_A − q_B = μ_e(Y_A \ Y_B) − μ_e(Y_B \ Y_A)`: identical world beliefs can justify different claim probabilities. Different sets need not have different probability mass; the claim is a possibility, not a necessary price gap. Validated equivalence, inclusion, disjointness and complementarity imply exact probability restrictions under a common distribution. A single witness establishes non-equivalence, not inclusion. Price analogues additionally assume a probability-price approximation and sufficiently comparable conditions.
+### U.S.–Ukraine minerals agreement: two YES resolutions across milestones
 
-**Determinacy remains intra-contract:** a nonempty set-valued mapping `R_c(ω) ⊆ {0,1}` can leave both payouts permissible at a borderline state. Uncertainty about which world obtains is epistemic; an unresolved institutional mapping concerns what counts as a payout in that world. The suit text alone does not select a garment-level payoff mapping; credible-reporting adjudication completes it. A unique claim event, and hence a point probability derived from that event, cannot simply be assumed. Positive posterior mass on unresolved states can make expected payout depend on completion; zero mass need not. A model of adjudication would add assumptions. Fractional tie/death payouts instead require `r_c: Ω → [0,1]`: expected payout is then not generally a YES-event probability. A fractional but specified payout is not itself indeterminacy.
+- **Evidence:** observed chronology and two recorded YES outcomes; no realized split
+- **Scenario:** The March agreement contract records YES and March 25 closure. The U.S. Treasury and Ukrainian ministry record an April 30, 2025 signing; the later signed-deal contract records YES and May 4 closure.
+- **Qualifying condition:** A — rare-earth agreement by March 31; public announcement qualifies; B — minerals agreement signed or formally adopted by April 30; announcement alone fails.
+- **Settlement:** A — resolved YES; normalized payout $1; B — resolved YES; normalized payout $1.
+- **Implication:** An agreement announcement and a signature are distinct milestones, and both successive contracts can ultimately pay YES.
+- **Boundary:** Different windows, rare-earth/mineral scope and evidence authorities prevent a controlled milestone comparison. The YES/YES chronology does not instantiate the supplementary hypothetical YES/NO witness and establishes no manipulation or erroneous March outcome.
+- **Contracts:** [521607](https://polymarket.com/event/ukraine-agrees-to-give-trump-rare-earth-metals-before-april); [532897](https://polymarket.com/event/trump-x-ukraine-mineral-deal-signed-before-may).
+- **Chronology:** March 25, 2025 00:21:27 UTC: agreement-contract closure record; April 30: official signing announcement; May 4 01:10:41 UTC: signed-deal-contract closure record.
+- **Independent event evidence:** [Reconstruction investment fund agreement signed April 30, 2025.](https://home.treasury.gov/news/press-releases/sb0126).
+- **Independent event evidence:** [Independently records the April 30, 2025 signing date.](https://me.gov.ua/News/Detail/91af98f8-9ae6-49ba-99ae-adb847fe493a?lang=en-GB).
 
-## 3. Audited mechanism cases
+Full operative text, source versions, outcome evidence and chronology: [casebook](REPRESENTATION_CASEBOOK.md) and [case matrix](tables/representation-case-matrix.csv).
 
-- **2028 U.S. presidential winner — predicate-stage and temporal divergence.** Winning the news call and actually taking office are different milestones. Scope: cross-platform. Hypothetical witness: All three networks call Rubio, but he dies or is disqualified before inauguration. Implied settlements: Kalshi = NO; Polymarket = YES.
-- **September 2026 Federal Reserve decision — measurement-bucket divergence (rounding).** Even numerical markets need a rule for assigning an unusual measurement to an answer bucket. Scope: cross-platform. Hypothetical witness: The target-range upper bound falls by an unusual 12.5 bp. Implied settlements: Kalshi = NO under the literal exact-25-bp rule; Polymarket = YES because 12.5 bp rounds up to the 25-bp bucket.
-- **Donald Trump leaving office versus being the next leader out — departure-stage and competing-leader divergence.** Leaving office at some point and being the first listed leader to leave are different bets. Scope: cross-platform. Hypothetical witness: Before the deadline, Trump announces a non-term-limit resignation within the next year but stays in office through 2026. No listed leader leaves by December 31, 2026, 11:59 PM ET. Implied settlements: Kalshi = YES; Polymarket = NO.
-  Additional witness: Another listed leader permanently leaves first; Trump subsequently resigns and permanently leaves before 2027, without dying. A = YES; B = NO.
-- **U.S.–Ukraine minerals agreement — milestone-stage divergence.** Saying 'we have a deal' and signing the deal are different milestones. Scope: within-platform across successive contracts. Hypothetical witness: On March 31, 2025 before 11:59 PM ET, both governments announce a deal explicitly involving Ukrainian rare earths. No qualifying mineral deal is signed, enacted, or formally adopted through April 30, 2025, 11:59 PM ET. Implied settlements: Polymarket = YES; Polymarket = NO.
-- **Tom Steyer finishing first versus advancing in the California primary — rank versus qualification divergence.** A runner-up can lose the contest for first place and still qualify for the next round. Scope: cross-platform; retrieved from systematic sample. Hypothetical witness: Steyer finishes second without a tie in the June 2, 2026 primary and advances to the general election. Implied settlements: Kalshi = NO; Polymarket = YES.
-- **Zelenskyy wearing a suit — category-boundary indeterminacy.** People can see the same clothing and still disagree about whether it counts as a suit. Scope: within-contract. Hypothetical witness: During May 22–June 30, 2025, authentic images are taken and released showing Zelenskyy in a blazer and nonmatching trousers, without a tie. Credible reports differ on whether this counts as a suit. Implied settlements: Polymarket = not fixed by garment criteria alone; depends on the credible-reporting adjudication; Hypothetical world state = N/A—witness to within-contract indeterminacy.
+## Concepts and compact payout explanation
 
-The archived rules are observed evidence; these scenarios are hypothetical, not records of realized settlements. Payout-divergence cases specify outcomes on both sides. The suit case illustrates an unspecified category boundary with an adjudication procedure. Exact rules, source links, and case-specific audit boundaries are in `tables/representation-case-matrix.csv` and `REPRESENTATION_CASEBOOK.md`.
+**Payoff divergence** occurs when two contracts pay differently in an explicitly specified relevant scenario. **Written-rule determinacy** concerns whether a specified rule version and stated information determine one payout. Different procedures require a separating payout scenario before they establish divergence. Adjudication can supply the later institutional decision.
 
-## 4. Data and sample correction
+The rules define which outcomes pay. Traders use evidence to assess those outcomes, and trading produces market prices. These functions can develop together over time.
 
-The reproducible official-API sample contains Kalshi: 12,251 contracts; Polymarket: 7,249 contracts. Openings begin 2020-10-09; the latest observed resolution is 2026-09-10. Polymarket sports contracts are excluded before its high-volume cap using official sports fields plus a conservative documented taxonomy. Volume remains cumulative and is standardized within platform; this purposive sample is not population-representative.
+With a common distribution `μ` over relevant histories, the value of a specified normalized payout is `q_c = E_μ[r_c]`. Thus `q_A − q_B = E_μ[r_A − r_B]`. The identity holds for any common probability distribution. Different payout mappings can have different expected values, although non-equivalence alone does not guarantee a value difference.
 
-The automated matcher retains 11 high-confidence metadata pairs, dominated by repeated families. Only 2 pairs have aligned histories, all too sparse and homogeneous to test whether divergence predicts price wedges.
+For binary payouts, expected payout equals the probability of the paying event. Fractional settlement requires the payout amount: a 20% chance of a full dollar and a 30% chance of 50 cents give an expected payout of 35 cents. This is a synthetic illustration.
 
-**Representation-aware coherence:** indeterminate: 1; non_equivalent_unclassified: 3; overlap_non_nested: 2. 0 cases supply a validated binary marginal restriction. Not estimable / insufficient evidence for an actual price-coherence test.
+Where rules delegate interpretation, valuation can include expectations about how a later decision will be made. A rule may leave a clothing category unspecified while the institution ultimately records a definite settlement. Price-based clauses require past-price inputs in the modeled history. The formal qualifications and binary-event restrictions are in [constructs](../docs/CONSTRUCTS.md).
 
-Election and minerals rules support overlapping, non-nested events under the stated archived-rule model; this alone imposes no useful pairwise marginal restriction. Fed inclusion is unclassified. Primary ties and leader death allocations fall outside globally binary payouts; the suit case remains adjudicatively incomplete. These qualifications preserve the existing witness results. The legacy daily panel forward-fills prices for up to seven days and cannot certify synchronized fresh observations. See `tables/coherence-case-diagnostics.csv` and `tables/coherence-panel-readiness.csv` for explicit eligibility reasons. Numerical excess, where estimable, is a conditional price diagnostic; liquidity, fees, spreads, stale trading, risk preferences, market composition and limits to arbitrage prevent interpreting it as trader irrationality.
+## Position in the literature
 
-## 5. Measurement and method
+[Wolfers and Zitzewitz (2004)](https://doi.org/10.1257/0895330041371321) already discuss payoff design, clear specification and adjudication. [Wand and Weber (1993)](https://doi.org/10.1111/j.1365-2575.1993.tb00127.x) relate representational clarity to interpretation mappings. [Eriksson and Öhlund (2024)](https://doi.org/10.17705/1jais.00845) show how constitutive rules create digitally represented institutional entities and rights. Here the observable objects are contract clauses and settlements; published text does not identify designers' motives.
 
-The transparent determinacy proxy averages source specificity, temporal specificity, operational definition, edge-case completeness, and discretion clarity. Calendar years no longer count as quantitative thresholds. Leave-one-component-out models, direct ambiguity counts, and qualitative/quantitative splits expose score dependence.
+[Gebele and Matthes (2026)](https://arxiv.org/abs/2601.01706) directly study resolution semantics, payoff regions and cross-platform comparison. [Capponi, Gliozzo and Zhu (2025)](https://arxiv.org/abs/2512.02436) develop automated relationship discovery. Their preprints supply close comparisons; their empirical performance is not independently replicated here. This paper's diagnostic contribution is the joined audit of separating scenarios, fractional settlement and delegated interpretation. It makes no priority claim for payoff mappings or event-equivalence checks.
 
-Volume models compare the original baseline with a preferred retrieval-capped exposure/opening-cohort specification, resolved-only samples, family-clustered uncertainty, family aggregation, and within-family demeaning. The within-family estimates remove stable Kalshi-series or Polymarket-event popularity but are supported by relatively few families with internal semantic variation.
+[Wang (2026)](https://doi.org/10.1016/j.econlet.2026.113176) examines event occurrence versus pending adjudication; the review accessed an abstract, highlights and section passages, rather than the complete paywalled article. [Nechepurenko (2026)](https://arxiv.org/abs/2609.15368) distinguishes proposals, disputes, oracle settlement and adapter completion in a recent preprint. These distinctions guide the case chronology and prevent treating closure timestamps as a full settlement history. The Rezaei Sanjabi working paper remains an abstract-only lead; its empirical findings are not adopted.
 
-## 6. Empirical results
+## Sampled text context
 
-### Sampled platform rule profiles
+The fixed historical sample contains 19,500 contracts (Kalshi: 12,251; Polymarket: 7,249). Raw normalization reconciles 12,253 Kalshi rows minus two missing titles and 8,000 retained Polymarket rows minus 751 unsupported outcome-label rows. Raw snapshots remain unchanged.
 
-| Sampled rule-text measure | Kalshi | Polymarket |
+Kalshi coverage selects 120 high-volume series and caps each acquisition tier. Polymarket coverage selects high-volume closed markets using a flawed historical sports filter. `gameStartTime` wrongly flagged named minerals and suit markets as sports. The classifier is repaired for future acquisition; omitted historical records are not restored by that repair. The 23,700 scanned minus 8,000 retained difference is 15,700, with no established sports/overflow split. These portfolios are purposive, use different category/family schemes, and support no population ranking.
+
+September 10 is the legacy snapshot label, not a verified HTTP acquisition timestamp. Three Polymarket source updates fall on September 11; the discrepancy remains unresolved. Missing historical caches now fail before network access. Date-only retrieval boundaries and metadata elapsed time are exposure proxies. The audit separates scheduled future openings, positive-volume same-day openings and close-before-open records; neither clipping nor alternate date conventions establishes that rules preceded trading.
+
+Outcome provenance separates Kalshi recorded binary results and scalar settlements from Polymarket final-status endpoint prices and unresolved price inference. Fifteen proposed-status and 38 missing-status endpoint records are qualified separately; two `settled` statuses count as recorded final status. Six Kalshi scalar settlements and ten Polymarket intermediate-price cases remain separate categories. See [data sources](../DATA_SOURCES.md) and the sample audit tables for the exact ledger.
+
+| Sampled text feature | Kalshi | Polymarket |
 |---|---:|---:|
 | Contracts | 12,251 | 7,249 |
-| Mean determinacy proxy | 0.624 | 0.610 |
-| Source specificity | 0.550 | 0.518 |
-| Temporal specificity | 0.619 | 0.812 |
-| Outcome definition | 0.678 | 0.501 |
-| Edge-clause completeness | 0.273 | 0.409 |
-| Discretion clarity | 0.997 | 0.811 |
-| Threshold-flag share | 82.1% | 23.7% |
+| Exploratory rule-text specificity index | 0.621 | 0.657 |
+| Authority/source cues | 0.550 | 0.653 |
+| Date/time cues | 0.605 | 0.798 |
+| Definition/threshold cues | 0.679 | 0.617 |
+| Edge-clause cues | 0.272 | 0.404 |
+| Absence of flagged discretion terms | 0.997 | 0.811 |
+| Threshold-flag share | 82.2% | 24.7% |
 | Mean analyzed text length (words) | 100.5 | 157.8 |
 
-| Determinacy proxy within text strata | Kalshi | Polymarket |
-|---|---:|---:|
-| No threshold flag | 0.548 (n=2,191) | 0.575 (n=5,534) |
-| Threshold flag | 0.640 (n=10,060) | 0.724 (n=1,715) |
+Literal cues describe the retained portfolios. The legacy column `determinacy_score` stores an exploratory text index; it has no independent human construct validation. The threshold flag contributes to that index, so stratification is descriptive. Corrected parsing eliminates the previously reported composition reversal. Final field-placement invariance is documented separately from the frozen four-repair diagnostic in the measurement note.
 
-These are raw proxy means in purposive sampled portfolios. Threshold flags come from the text measure and also enter its outcome-definition component; the strata describe composition rather than supply an independent validation or causal adjustment. Longer text and a higher component score do not establish better forecasting or more equivalent claims.
+- Kalshi: 120 API families; top five contain 46.2% of rows; 43 families (6,345 rows) vary internally in the index.
+- Polymarket: 2,634 API families; top five contain 2.6% of rows; 85 families (519 rows) vary internally in the index.
+Kalshi series and Polymarket events have different granularity. Their family counts and concentration do not rank platform diversity.
 
-**Composition reversal:** Kalshi has the higher overall composite mean, while Polymarket has the higher mean in both threshold-flag strata. The overall ranking depends on the mix of contracts; it is not a general ranking of platform clarity.
+Automated matching retains 11 high-confidence candidates, 368 probable candidates and 36374 rejected rows. The manually audited candidate predicates/windows are documented separately; retrieval confidence alone does not establish complete-rule equivalence.
 
-- **Kalshi family structure:** 120 families; the five largest account for 46.2% of sampled contracts. Between-family differences account for 95.8% of the score sum of squares; 48 families (6,443 contracts) vary internally.
-- **Polymarket family structure:** 2,634 families; the five largest account for 2.6% of sampled contracts. Between-family differences account for 99.1% of the score sum of squares; 145 families (1,048 contracts) vary internally.
-Family units follow the APIs: Kalshi series and Polymarket events. Their different granularity means concentration and variance shares describe each sample; they do not rank platform diversity.
+## Supplementary empirical checks
 
-### Secondary trading-activity evidence
+| Specification | Coefficient | 95% interval | Uncertainty | n |
+|---|---:|---:|---|---:|
+| cohort_exposure_adjusted | -0.1243 | [-0.2048, -0.0438] | cluster; SE 0.0411 | 19,500 |
+| cohort_exposure_adjusted_hc3 | -0.1243 | [-0.1426, -0.1060] | HC3; SE 0.0093 | 19,500 |
+| within_family_kalshi | -0.0753 | [-0.2366, 0.0861] | cluster; SE 0.0823 | 6,345 |
+| within_family_polymarket | -0.0445 | [-0.1218, 0.0327] | cluster; SE 0.0394 | 519 |
 
-- **Preferred cohort/exposure specification:** replacing scheduled duration with observed exposure and adding opening-year controls gives -0.129 (HC3 SE 0.009, p=2.49e-44, n=19,500).
-- **Within-family Kalshi:** -0.077 (family-clustered SE 0.082, p=0.342, n=6,443). This estimand uses only families whose determinacy varies internally.
-- **Within-family Polymarket:** 0.030 (family-clustered SE 0.027, p=0.265, n=1,048). This estimand uses only families whose determinacy varies internally.
-- **Contract-type estimates:** no threshold flag -0.032 (SE 0.017, p=0.0625, n=7,725); threshold flag -0.068 (SE 0.014, p=1.81e-06, n=11,775).
+The preferred pooled coefficient uses one within-platform SD of the text index and standardized log cumulative volume. Its family clusters are qualified by platform. HC3 uses the same formula and rows as a covariance comparison. Within-family models use internally varying families and a different residual-score SD; their magnitudes are not directly comparable to the pooled coefficient.
 
-- **Contract-type interpretation:** the threshold-flag estimate is negative and distinguishable from zero; the no-flag estimate is not. These separate significance tests do not establish that the two coefficients differ.
-- **Lexicon interpretation:** the coefficient for words such as ‘deal’ and ‘agreement’ is nonpositive. These are text flags, not observations of traders interpreting a contract differently.
-- **Family interpretation:** neither platform has a detectable within-family coefficient. Read the pooled association alongside the strong concentration of score variation between families. Within-family coefficients use one SD of the varying-family residual score and are not directly comparable in magnitude to the pooled coefficient.
-- **Platform-time diagnostic:** the period-specific estimates vary. These exploratory splits do not isolate a change in platform governance or establish a difference by comparing significance levels.
+Volume selection, retrospective rules, family concentration and incomplete exposure metadata limit interpretation to these selected portfolios. Subgroup significance differences do not test heterogeneity. The frozen review's top-five families contribute 69.48% of focal sandwich variance; its bounded largest-family deletion remains negative. Those checks concern the archived and frozen repaired specifications, rather than certifying the final field-invariant index. No new deletion grid was run.
 
-Trading activity varies across portfolios of differently specified claims; the available associations do not isolate an effect of ambiguity itself. The paper's central result is the documented difference in what contracts require for a payout.
+The case inventory contains 9 exhibits; 0 supply a validated binary marginal restriction. 0 observation-level price diagnostics are estimable.
 
-## 7. Information Systems storyline
+The saved price histories are a dormant diagnostic panel. Original observations are clipped to the supported window before aggregation, and source timestamps and fill ages are retained. Daily labels and forward fills do not certify fresh synchronized quotes. No general divergence–price effect, trader misunderstanding, or forecast-accuracy advantage is established. Missing excess values mean insufficient evidence.
 
-- **Phenomenon:** nearly identical market labels can expose traders to different platform-defined claims.
-- **Puzzle:** aggregation accounts often treat the proposition being priced as fixed before it enters the information system.
-- **Mechanism:** resolution architectures partition world histories through predicate selection, operationalization, boundary rules, adjudication, and fallback.
-- **Formal bridge:** updating fixes a posterior over world histories; the platform's payout mapping determines which claim that posterior values. Same world beliefs need not mean the same claim probability.
-- **Evidence:** witness-state cases demonstrate non-equivalence; systematic metadata document determinacy variation; volume associations supply secondary exploratory consequences.
-- **Contribution:** collective-intelligence systems govern the referents of aggregation, not only information processing about those referents.
-- **Memorable finding:** a second-place finish can lose a first-place contract and win an advancement contract. Clear resolution rules can still define different claims.
+Activity estimates, terminal-error diagnostics and dormant panel details: [supplementary analysis](SUPPLEMENTARY_ANALYSIS.md).
 
-## 8. Best outputs
+## Implications and limits
 
-- `tables/representation-case-matrix.csv`: exact rules, signatures, witness states, and implied settlements.
-- `tables/coherence-case-diagnostics.csv` and `tables/coherence-panel-readiness.csv`: audited relation implications and explicit price-evidence gates.
-- `REPRESENTATION_CASEBOOK.md`: plain-language explanations of the striking cases.
-- `PAPER_OUTLINE.md`: five-section ICIS paper outline, with current estimates and exhibits.
-- `tables/analysis-platform-profiles.csv` and `figures/views-platform-rule-profiles.svg`: component differences, contract mix, and conditional score comparisons.
-- `figures/views-conceptual-schematic.svg`: platform-specific resolution architectures and distinct claims.
-- `tables/analysis-market-models.csv`: baseline, cohort/exposure, market-type, leave-one-out, and within-family estimates.
-- `figures/views-determinacy-volume.svg`: descriptive score–volume pattern; not a causal figure.
+Contract comparison and offsetting positions require the same paying condition and amount. Forecast evaluation must identify the milestone being predicted. Interfaces could show those conditions beside prices; that intervention remains untested. Account cash returns can include reimbursements, so the Khamenei contract settlement is distinguished from trader-level receipts. The suit dispute shows that adjudication matters without proving manipulation or a causal ambiguity effect.
 
-## 9. Candidate abstract
-
-Prediction markets perform two analytically distinct information functions: platforms constitute payoff-relevant claims over possible world histories, after which traders form and markets aggregate valuations of those claims. A representation-aware Bayesian benchmark shows why identical posterior beliefs about worlds can assign different probabilities to different payoff events. We distinguish divergence between claims from determinacy within a claim: an incomplete institutional mapping does not yet supply a unique target event. Archived Kalshi and Polymarket rules and counterfactual witness states demonstrate payout contrasts, while sampled rule profiles reveal systematic specification and composition differences. Volume associations remain exploratory. The sparse aligned-price evidence does not establish a realized divergence effect or support a current coherence test. The study explains how collective-intelligence systems constitute the object of aggregation as well as aggregate information about it.
-
-## 10. Conference-paper scope
-
-- Lead with understandable rule contrasts, the multidimensional platform profiles, and contract-composition patterns.
-- Use the preferred volume association and within-family diagnostic as secondary evidence; keep remaining checks in the tables and research log.
-- Audit the quoted case clauses when preparing the submission. Independent coding is a useful extension, not a reason to suspend the current mechanism paper.
-- Reserve common-horizon prices on manually checked claims for a subsequent test of the price-wedge implication.
-
-## 11. Supplementary diagnostics
-
-- **Baseline association:** one within-platform SD more measured determinacy corresponds to -0.178 (HC3 SE 0.009, p=1.22e-82, n=19,500) SD in log volume.
-- **Resolved contracts only:** -0.122 (HC3 SE 0.009, p=2.02e-38, n=18,312).
-- **Direct ambiguity lexicon check:** one SD more flagged ambiguity terms corresponds to -0.024 (SE 0.011, p=0.0372, n=19,500) SD in log volume.
-- **Temporal replication split (July 1, 2025):** early kalshi -0.187 (SE 0.023, p=1.36e-15, n=3,295); early polymarket -0.044 (SE 0.034, p=0.187, n=2,189); late kalshi -0.079 (SE 0.011, p=3.54e-12, n=7,784); late polymarket -0.129 (SE 0.019, p=2.21e-11, n=5,060). This is a stability diagnostic, not a preregistered holdout test.
-- **Forecast-error diagnostic:** 0.013 (series-clustered SE 0.009, p=0.137, n=10,400). The coefficient is not a fixed-horizon accuracy comparison and a null is not evidence of equivalence.
+The incremental contribution is an empirical diagnostic of comparability, extending established attention to contract specification with linked payout and chronology evidence. The composite platform-ranking and composition-reversal claims are withdrawn. Case evidence survives this correction.

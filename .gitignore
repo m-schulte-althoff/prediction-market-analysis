@@ -227,3 +227,6 @@ logs/
 input/
 paper-revision/
 output/legacy/
+output/paper-revision/
+
+work/

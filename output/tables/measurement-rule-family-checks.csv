@@ -1,0 +1,96 @@
+contract_id,platform,question,rules,resolution_source,family_id,source_specificity_departure,temporal_specificity_departure,outcome_definition_departure,edge_completeness_departure,discretion_clarity_departure,index_departure,source_credit_retained_weights,source_field_empty,named_authority_or_url_present,check_outcome
+polymarket:896088,Polymarket,"Will the price of Bitcoin be above $86,000 on December 15?","This market will resolve to ""Yes"" if the Binance 1 minute candle for BTC/USDT 12:00 in the ET timezone (noon) on the date specified in the title has a final ""Close"" price higher than the price specified in the title. Otherwise, this market will resolve to ""No"".
+
+The resolution source for this market is Binance, specifically the BTC/USDT ""Close"" prices currently available at https://www.binance.com/en/trade/BTC_USDT with ""1m"" and ""Candles"" selected on the top bar.
+
+Please note that this market is about the price according to Binance BTC/USDT, not according to other sources or spot markets.
+
+Price precision is determined by the number of decimal places in the source.",,Polymarket:100082,0.25,0.0,0.0,0.0,0.0,0.05,1.0,True,True,"Confirmed literal named-authority/URL cue and empty source field; +0.25 source component, +0.05 index; other components unchanged."
+polymarket:500105,Polymarket,Will a Democrat win Nevada US Senate Election?,"United States general elections are scheduled to take place on November 5, 2024. Regular senatorial elections are presently scheduled for 33 states.
+
+This market will resolve to “Yes” if the candidate who wins the 2024 Nevada US Senate election is a Democrat. Otherwise, this market will resolve to ""No"".
+
+A candidate shall be considered to represent a party in the event that he or she is the nominee, or has a ballot-listed or otherwise identifiable party preference, of the party in question.
+
+The resolution source for this market is the Associated Press, Fox News, and NBC. This market will resolve once all three sources call the race for the same candidate. If all three sources haven’t called the race in this state for the same candidate, this market will resolve based on the official certification.",,Polymarket:10018,0.25,0.0,0.0,0.0,0.0,0.05,1.0,True,True,"Confirmed literal named-authority/URL cue and empty source field; +0.25 source component, +0.05 index; other components unchanged."
+polymarket:500108,Polymarket,Will a Democrat win Pennsylvania US Senate Election?,"United States general elections are scheduled to take place on November 5, 2024. Regular senate elections are presently scheduled for 33 states.
+
+This market will resolve to “Yes” if the candidate who wins the 2024 US Pennsylvania US Senate election is a Democrat. Otherwise, this market will resolve to ""No"".
+
+A candidate shall be considered to represent a party in the event that he or she is the nominee, or has a ballot-listed or otherwise identifiable party preference, of the party in question.
+
+The resolution source for this market is the Associated Press, Fox News, and NBC. This market will resolve once all three sources call the race for the same candidate. If all three sources haven’t called the race in this state for the same candidate, this market will resolve based on the official certification.",,Polymarket:10019,0.25,0.0,0.0,0.0,0.0,0.05,1.0,True,True,"Confirmed literal named-authority/URL cue and empty source field; +0.25 source component, +0.05 index; other components unchanged."
+polymarket:500114,Polymarket,Will a Democrat win Montana US Senate Election?,"United States general elections are scheduled to take place on November 5, 2024. Regular senate elections are presently scheduled for 33 states.
+
+This market will resolve to “Yes” if the candidate who wins the 2024 Montana US Senate election is a Democrat. Otherwise, this market will resolve to ""No"".
+
+A candidate shall be considered to represent a party in the event that he or she is the nominee, or has a ballot-listed or otherwise identifiable party preference, of the party in question.
+
+The resolution source for this market is the Associated Press, Fox News, and NBC. This market will resolve once all three sources call the race for the same candidate. If all three sources haven’t called the race in this state for the same candidate, this market will resolve based on the official certification.",,Polymarket:10021,0.25,0.0,0.0,0.0,0.0,0.05,1.0,True,True,"Confirmed literal named-authority/URL cue and empty source field; +0.25 source component, +0.05 index; other components unchanged."
+polymarket:500117,Polymarket,Will a Democrat win Ohio US Senate Election?,"United States general elections are scheduled to take place on November 5, 2024. Regular senate elections are presently scheduled for 33 states.
+
+This market will resolve to “Yes” if the candidate who wins the 2024 Ohio US Senate election is a Democrat. Otherwise, this market will resolve to ""No"".
+
+A candidate shall be considered to represent a party in the event that he or she is the nominee, or has a ballot-listed or otherwise identifiable party preference, of the party in question.
+
+The resolution source for this market is the Associated Press, Fox News, and NBC. This market will resolve once all three sources call the race for the same candidate. If all three sources haven’t called the race in this state for the same candidate, this market will resolve based on the official certification.",,Polymarket:10022,0.25,0.0,0.0,0.0,0.0,0.05,1.0,True,True,"Confirmed literal named-authority/URL cue and empty source field; +0.25 source component, +0.05 index; other components unchanged."
+polymarket:898158,Polymarket,"Will Donald Trump announce a new nominee for Chair of the Federal Reserve by January 31, 2026?","This market will resolve to “Yes” if the Trump administration announces a new nominee for Chair of the Federal Reserve by the listed date, 11:59 PM ET. Otherwise, this market will resolve to “No”.
+
+An announcement within this market’s timeframe from Donald Trump or the Trump administration stating their intent to nominate a specific individual for Chair of the Federal Reserve will suffice to resolve this market, regardless of whether a formal nomination actually occurs.
+
+Qualifying announcements must explicitly present the relevant individual as the nominee or future nominee for Chair of the Federal Reserve. Announcements of acting or interim appointments, or announcements which merely reveal potential candidates, will not qualify. Media reports, speculation, or other unofficial information will not qualify.
+
+A formal presidential nomination of an individual to be Chair of the Federal Reserve, made before the listed date, 11:59 PM ET, will immediately resolve this market to “Yes”. Formal nominations are defined as the submission of a nomination message to the U.S. Senate.
+
+The resolution sources for this market will be official announcements from Donald Trump or the Trump administration and official information from the U.S. Senate.",,Polymarket:100339,0.25,0.0,0.0,0.0,0.0,0.05,1.0,True,True,"Federal Reserve is the event subject, while operative sources are presidential/Senate announcements. Literal cue qualifies but does not validate source authority specificity; +0.25 source component, +0.05 index."
+polymarket:898663,Polymarket,Will Williams be the 2026 F1 Constructors' Champion?,"This market will resolve according to the winner of the Constructors’ Championship for the 2026 F1 season.
+
+This market will resolve as soon as the official results of the final scheduled race of the 2026 F1 season are known.
+
+In the case of a tie between multiple teams, this market will resolve according to the tiebreak procedure used by F1 to determine the 2026 F1 Constructors’ champion.
+
+If at any point it becomes impossible for a listed team to win the 2026 F1 Constructors’ Championship based on the rules of F1 (e.g., they are mathematically eliminated from contention), the corresponding market will resolve to “No.”
+
+If the F1 season is permanently canceled or has not been completed by March 31, 2027, 11:59 PM ET, this market will resolve to “Other”.
+
+The resolution source for this market will be information from F1.",,Polymarket:100394,0.25,0.0,0.0,0.0,0.0,0.05,1.0,True,True,"Confirmed literal named-authority/URL cue and empty source field; +0.25 source component, +0.05 index; other components unchanged."
+polymarket:902632,Polymarket,"Will the price of Bitcoin be above $88,000 on December 16?","This market will resolve to ""Yes"" if the Binance 1 minute candle for BTC/USDT 12:00 in the ET timezone (noon) on the date specified in the title has a final ""Close"" price higher than the price specified in the title. Otherwise, this market will resolve to ""No"".
+
+The resolution source for this market is Binance, specifically the BTC/USDT ""Close"" prices currently available at https://www.binance.com/en/trade/BTC_USDT with ""1m"" and ""Candles"" selected on the top bar.
+
+Please note that this market is about the price according to Binance BTC/USDT, not according to other sources or spot markets.
+
+Price precision is determined by the number of decimal places in the source.",,Polymarket:101058,0.25,0.0,0.0,0.0,0.0,0.05,1.0,True,True,"Confirmed literal named-authority/URL cue and empty source field; +0.25 source component, +0.05 index; other components unchanged."
+polymarket:903243,Polymarket,Will MrBeast's next video get between 30 and 35 million views on day 1?,"This market will resolve to according to the number of views the next YouTube video posted by MrBeast gets in the first 24hrs after being posted. This market may not resolve until the 24 hours are complete, regardless of if a strike is reached earlier.
+
+If MrBeast does not post a YouTube video by March 31, 2026, 11:59 PM ET, this market will resolve to the lowest range bracket.
+
+If the reported value falls exactly between two brackets, then this market will resolve to the higher range bracket.
+
+The resolution source for this market is MrBeast's YouTube channel (https://www.youtube.com/@MrBeast), specifically the 'views' counter for the described video.
+
+Note: This market refers to MrBeast's next video posted. Shorts, previews, or other videos released other than the referenced video will not be considered.",,Polymarket:101116,0.25,0.0,0.0,0.0,0.0,0.05,1.0,True,True,"Confirmed literal named-authority/URL cue and empty source field; +0.25 source component, +0.05 index; other components unchanged."
+polymarket:903803,Polymarket,Will Time 2025 Person of the Year be leaked?,"This market will resolve to ""Yes"" if a ""Yes"" option within the ""Time 2025 Person of the Year"" market (https://polymarket.com/event/time-2025-person-of-the-year?) is priced over 90 cents for a majority of minutes during any one-hour period ending at least 4 hours before the same option is officially revealed to be the Time person of the Year. Otherwise, this market will resolve to “No”.
+
+If the Time 2025 Person of the Year is officially revealed before the above-stated requirement has been met, this market will immediately resolve to ""No"".
+
+If, for any reason, this market is not resolved and the 2025 TIME's Person of the Year is not announced by January 31, 2026, 11:59 PM ET, this market will resolve ""No"".
+
+The resolution source will be the underlying minute-level price data for the “Time 2025 Person of the Year” market. This data may be viewed through the linked bar-chart interfaces below or via the “Resolution” tabs with the time window set to the specified one-hour period. Both interfaces reflect the same underlying dataset. Additional tracking links will be provided if necessary.
+
+Other: https://derivative.polymarket.com/index/will-time-2025-person-of-the-year-be-leaked-other
+AI: https://derivative.polymarket.com/index/will-time-2025-person-of-the-year-be-leaked-artificial-intelligence
+Jensen Huang: https://derivative.polymarket.com/index/will-time-2025-person-of-the-year-be-leaked-jensen-huang
+Sam Altman: https://derivative.polymarket.com/index/will-time-2025-person-of-the-year-be-leaked-sam-altman
+Pope Leo XIV: https://derivative.polymarket.com/index/will-time-2025-person-of-the-year-be-leaked-pope-leo-xiv
+Donald Trump: https://derivative.polymarket.com/index/will-time-2025-person-of-the-year-be-leaked-donald-trump
+
+Note: This market will resolve according to the price scoring methodology of derivative.polymarket.com.",,Polymarket:101179,0.25,0.0,0.0,0.0,0.0,0.05,1.0,True,True,"Confirmed literal named-authority/URL cue and empty source field; +0.25 source component, +0.05 index; other components unchanged."
+polymarket:500444,Polymarket,Will Putin remain President of Russia through 2024?,"This market will resolve to “Yes” if Vladimir Putin remains the President of Russia without interruption from March 25, 2024 through December 31, 2024, 11:59 PM ET. Otherwise, this market will resolve to “No”.
+
+The resolution source for this market will be the CIA World Factbook page for Russia, currently available at https://www.cia.gov/the-world-factbook/countries/russia/#government. A consensus of credible reporting will also suffice.",,Polymarket:10140,0.25,0.0,0.0,0.0,0.0,0.05,0.75,True,True,"Confirmed literal named-authority/URL cue and empty source field; +0.25 source component, +0.05 index; other components unchanged."
+polymarket:500511,Polymarket,Will a Democrat win New Mexico Presidential Election?,"This market will resolve to ""Yes"" if a Democratic candidate wins the popular vote in New Mexico in the 2024 US presidential election. Otherwise, this market will resolve to ""No"".
+
+A candidate shall be considered to represent a party in the event that he or she is the nominee, or has a ballot-listed or otherwise identifiable party preference, of the party in question.
+
+The resolution source for this market is the Associated Press, Fox News, and NBC. This market will resolve once all three sources call the race for the same candidate. If all three sources haven’t called the race in this state for the same candidate, this market will resolve based on the official certification.",,Polymarket:10169,0.25,0.0,0.0,0.0,0.0,0.0499999999999999,1.0,True,True,"Confirmed literal named-authority/URL cue and empty source field; +0.25 source component, +0.05 index; other components unchanged."

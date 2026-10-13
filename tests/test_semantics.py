@@ -1,6 +1,11 @@
-"""Tests for auditable semantic measurement."""
+"""Tests for auditable literal rule-text measurement."""
 
-from src.semantics import pair_divergence, semantic_features
+import math
+
+import pandas as pd
+import pytest
+
+from src.semantics import add_semantic_features, pair_divergence, semantic_features
 
 
 def test_clock_context_recognizes_et_without_mistaking_et_al_for_timezone() -> None:
@@ -89,3 +94,70 @@ def test_announcement_qualification_difference_is_human_readable() -> None:
     )
 
     assert "announcement can qualify on Kalshi" in str(result["identified_semantic_difference"])
+
+
+@pytest.mark.parametrize("quote", ['"Yes"', "'YES'", "“Yes”", "‘Yes’"])
+def test_quoted_yes_preserves_definition_credit(quote: str) -> None:
+    """Harmless quote punctuation and phrase spacing preserve definition credit."""
+
+    quoted = semantic_features("Result", f"This market resolves  to {quote}   if Alice wins.")
+    unquoted = semantic_features("Result", "This market resolves to Yes if Alice wins.")
+    assert quoted["outcome_definition"] == unquoted["outcome_definition"]
+    no_if = semantic_features("Result", f"A proposal resolves to {quote}.")
+    assert no_if["outcome_definition"] < quoted["outcome_definition"]
+
+
+@pytest.mark.parametrize("threshold", ["5%", "5%.", "5 %.", "5 percent."])
+def test_percent_unit_credit_is_insensitive_to_formatting(threshold: str) -> None:
+    """A percent threshold remains recognized at punctuation and end of text."""
+
+    measured = semantic_features("Result", f"The threshold is {threshold}")
+    assert measured["quantitative_threshold"] == 1.0
+    assert semantic_features("Result", "There were 5 participants.")["quantitative_threshold"] == 0
+
+
+def test_tie_tokens_and_intended_stems_have_distinct_controls() -> None:
+    """Unrelated substrings lose tie credit while real tokens and other stems remain."""
+
+    unrelated = semantic_features("Result", "The parties and committees report.")
+    assert unrelated["edge_completeness"] == 0
+    for word in ("tie", "ties", "tied", "postponement", "cancellation", "inauguration"):
+        assert semantic_features("Result", f"A {word} is recorded.")["edge_completeness"] == 0.12
+
+
+def test_threshold_and_clock_language_do_not_share_deadline_credit() -> None:
+    """At least is quantitative language; at a detected time receives clock credit."""
+
+    threshold = semantic_features("Result", "At least 5 votes are required.")
+    assert threshold["temporal_specificity"] == 0.0
+    assert threshold["quantitative_threshold"] == 1.0
+    assert semantic_features("Result", "At 5 pm.")["temporal_specificity"] == 0.30
+    assert semantic_features("Result", "The habitat is established.")["temporal_specificity"] == 0
+
+
+def test_repeated_named_authority_does_not_depend_on_field_placement() -> None:
+    """Identical authority information receives the same component weights across fields."""
+
+    direct = semantic_features("Result", "Reuters")
+    moved = semantic_features("Result", "", "Reuters")
+    repeated = semantic_features("Result", "Reuters", "Reuters")
+    assert direct["source_specificity"] == moved["source_specificity"] == 1.0
+    assert direct["source_specificity"] == repeated["source_specificity"]
+    assert direct["determinacy_score"] == repeated["determinacy_score"]
+
+
+def test_missing_rules_do_not_mean_no_discretion() -> None:
+    """An absent rule field remains unknown even when a source or question is present."""
+
+    absent = semantic_features("Will Alice win?", "", "Reuters")
+    present = semantic_features("Will Alice win?", "Alice must win.", "Reuters")
+    assert absent["rule_text_missing"] == 1.0
+    assert math.isnan(absent["discretion_clarity"])
+    assert math.isnan(absent["determinacy_score"])
+    assert present["discretion_clarity"] == 1.0
+    frame = pd.DataFrame(
+        [{"question": "Will Alice win?", "rules": None, "resolution_source": None}]
+    )
+    measured = add_semantic_features(frame)
+    assert measured.loc[0, "rule_text_missing"] == 1
+    assert measured.loc[0, "rule_word_count"] == 3

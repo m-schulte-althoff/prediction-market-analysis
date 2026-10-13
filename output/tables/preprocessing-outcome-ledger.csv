@@ -1,0 +1,13 @@
+platform,outcome_category,outcome_evidence,resolution_status,contracts,binary_outcomes,price_inferred_outcomes,resolution_timestamps
+Kalshi,no_recorded_outcome,none,active,1016,0,0,0
+Kalshi,no_recorded_outcome,none,closed,46,0,0,0
+Kalshi,no_recorded_outcome,none,inactive,76,0,0,0
+Kalshi,no_recorded_outcome,none,initialized,34,0,0,0
+Kalshi,recorded_binary,platform_result,finalized,11073,11073,0,11073
+Kalshi,scalar_settlement,platform_result,finalized,6,0,0,6
+Polymarket,intermediate_price,intermediate_price_missing_status,,1,0,0,1
+Polymarket,intermediate_price,intermediate_price_resolved,resolved,9,0,0,9
+Polymarket,price_inferred_binary,price_inferred_missing_status,,38,0,38,38
+Polymarket,price_inferred_binary,price_inferred_proposed,proposed,15,0,15,15
+Polymarket,price_inferred_binary,price_inferred_resolved,resolved,7184,7184,7184,7184
+Polymarket,price_inferred_binary,price_inferred_settled,settled,2,2,2,2

@@ -1,4 +1,16 @@
-# Source-to-extension audit — 2026-09-14
+# Bayesian source audit: current scope and historical note
+
+## Approved revision update — 2026-10-13
+
+The approved P6 revision removes the claim that this paper extends Meehan and Zhang's Bayesian theory. Its claim-comparison argument uses the ordinary expected-payout identity `q_A − q_B = E_mu[r_A − r_B]`, valid for any common probability distribution over the stated histories. No learning rule, evidence intervention, global evidential constancy or Hi-TEA prediction is tested. The philosophical source is therefore research history, rather than the paper's main theoretical foundation. Current definitions and complete-rule qualifications are in [CONSTRUCTS.md](CONSTRUCTS.md).
+
+**Restored source provenance:** `data/processed/bayes-source-text.txt` contains a 43-page extraction titled *Bayes Is Back* and marked forthcoming. The original `input/` PDF remains unavailable. The restored extraction has explicit `PDF PAGE` markers and the prior-space, global-constancy, Fact 5 and accuracy passages cited in the historical table below. Reading that extraction supports the narrow description of the updating framework; it does not certify identity with the missing PDF or the published version. The retained [theory review](../output/paper-revision/2026-10-12-01/THEORY_REVIEW.md), source E4, separately reports inspection of the 66-page published article from an academic mirror. This revision reuses that review and the restored extraction; it does not claim a fresh retrieval or new theory review.
+
+**Interpretation update:** a rule can delegate a later decision while defining a unique payout once that decision is included in the history. The suit evidence supports interpretation dependent on adjudication given clothing and timing, rather than proof of an incomplete eventual institutional mapping. Fractional payout clauses require expected amounts rather than binary-event probabilities. Neither observation is an application of the source's rational-updating theorem.
+
+The September 14 note below is preserved as the project's earlier source-reading record. Its then-current statements that the supplied PDF was checked directly and that the paper offered an “IS extension” describe that recorded stage. They are not claims of present PDF access or the revised contribution; the update above supersedes those claims. Its original missing-file link is retained for historical traceability.
+
+## Historical source-to-extension audit — 2026-09-14
 
 The supplied [Meehan and Zhang manuscript](../input/Meehan%20%26%20Zhang%20-%202025%20-%20Bayes%20Is%20Back_PhilRev.pdf) is a 43-page version marked “Forthcoming.” Page references below are **manuscript/PDF pages**, not the published journal's pagination. Publication: Alexander Meehan and Snow Zhang (2025), [*Bayes Is Back*, *The Philosophical Review*](https://doi.org/10.1215/00318108-11873775). The [author's publication page](https://alexandermeehan.weebly.com/publications.html) confirms the publication and provides the publisher link. No `GPT-Input-BayesExtension-14.09.2026.odt` was present in the supplied workspace; implementation follows the task prompt and checks the transfer against the PDF directly.
 

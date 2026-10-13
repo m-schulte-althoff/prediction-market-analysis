@@ -2,8 +2,10 @@
 
 import numpy as np
 import pandas as pd
+import statsmodels.formula.api as smf
 
 from src.analysis import (
+    PREFERRED_VOLUME_FORMULA,
     determinacy_bins,
     market_level_models,
     platform_profiles,
@@ -12,7 +14,7 @@ from src.analysis import (
 )
 
 
-def test_platform_profiles_preserve_composition_reversal_and_family_variation() -> None:
+def test_platform_profiles_describe_given_type_mix_and_family_variation() -> None:
     """Unequal type mixes can reverse pooled rankings despite both conditional rankings."""
 
     records = []
@@ -127,6 +129,36 @@ def test_market_models_include_dependence_robust_specifications() -> None:
         "within_family_polymarket",
     }.issubset(set(models["model"]))
     assert models.loc[models["model"] == "main_composite", "coefficient"].iloc[0] < 0
+
+
+def test_preferred_family_clustering_changes_only_covariance() -> None:
+    """The preferred interval clusters the exact exposure/cohort model on qualified IDs."""
+
+    fixture = _analysis_fixture()
+    fixture["series"] = fixture["series"].str.replace(r"^(Kalshi|Polymarket)-", "", regex=True)
+    fixture["platform_event_id"] = fixture["series"]
+    prepared = prepare_market_analysis(fixture)
+    assert prepared["family_id"].nunique() == 50
+    assert set(prepared["family_id"].str.split(":").str[0]) == {"Kalshi", "Polymarket"}
+    models = market_level_models(prepared).set_index("model")
+    preferred = models.loc["cohort_exposure_adjusted"]
+    comparison = models.loc["cohort_exposure_adjusted_hc3"]
+    assert preferred["covariance"] == "cluster"
+    assert comparison["covariance"] == "HC3"
+    assert preferred["formula"] == comparison["formula"] == PREFERRED_VOLUME_FORMULA
+    assert preferred["coefficient"] == comparison["coefficient"]
+    assert preferred["n"] == comparison["n"] == len(prepared)
+    expected = smf.ols(PREFERRED_VOLUME_FORMULA, data=prepared, missing="raise").fit(
+        cov_type="cluster", cov_kwds={"groups": prepared["family_id"]}
+    )
+    np.testing.assert_allclose(
+        preferred[["coefficient", "std_error", "ci_lower", "ci_upper"]].to_numpy(float),
+        [
+            expected.params["determinacy_z"],
+            expected.bse["determinacy_z"],
+            *expected.conf_int().loc["determinacy_z"],
+        ],
+    )
 
 
 def test_terminal_error_model_runs_on_resolved_kalshi_rows() -> None:

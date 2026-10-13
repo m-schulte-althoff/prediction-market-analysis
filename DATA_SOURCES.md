@@ -1,6 +1,6 @@
 # Data Sources
 
-Retrieval date for the included empirical package: **2026-09-10**. All used sources are official, public, and unauthenticated. No third-party dataset enters the reported results.
+Legacy snapshot date label for the included metadata package: **2026-09-10**. Original HTTP acquisition timestamps are unavailable. Three Polymarket source updates fall on September 11; this date inconsistency is unresolved. Metadata and price archives use official public unauthenticated APIs. Named cases additionally use certified election results and independent event reporting preserved during review.
 
 ## Kalshi
 
@@ -43,9 +43,9 @@ Retrieval date for the included empirical package: **2026-09-10**. All used sour
 - Documentation: <https://docs.polymarket.com/api-reference/markets/list-markets-keyset-pagination>
 - Endpoint: `GET https://gamma-api.polymarket.com/markets/keyset`.
 - Query: `closed=true`, ordered by `volumeNum` descending, with opaque cursor pagination.
-- Fields used: market/condition/event identifiers; question; description; resolution source; opening/end/closure timestamps; outcomes and outcome prices; `volumeNum`; `liquidityNum`; CLOB token IDs; official `sportsMarketType` and `gameStartTime` flags.
-- Selection: scan the descending-volume archive, exclude sports using official flags plus a conservative documented text taxonomy, and only then retain the first 8,000 non-sports rows. The included snapshot scanned 23,700 raw rows; binary `Yes`/`No` validation yields 7,249 usable contracts.
-- Observed coverage: 7,249 usable non-sports binary contracts opened from 2020-10-09 onward; latest observed resolution 2026-09-10.
+- Fields used: market/condition/event identifiers; question; description; resolution source; opening/end/closure timestamps; outcomes and outcome prices; `volumeNum`; `liquidityNum`; CLOB token IDs; official `sportsMarketType`, `gameStartTime`, and available category/tag fields.
+- Selection: historically scan the descending-volume archive and retain 8,000 rows after a flawed sports filter. That filter wrongly used `gameStartTime` alone, excluding identifiable non-sports minerals (521607) and suit (546814) records. The wrapper reports 23,700 scanned rows, but the rejected/overflow ledger is absent. The 15,700 arithmetic difference is not an established sports count. Exactly two supported `Yes`/`No` outcomes yield 7,249 rows. The corrected substantive classifier is used for future acquisition and preserves the current retained IDs; alternate snapshots are not silently unioned into the primary sample.
+- Observed coverage: 7,249 usable supported-binary-label contracts from the historically filtered portfolio opened from 2020-10-09 onward; latest observed resolution 2026-09-10.
 - Limitations: archived category/tag labels are absent for almost all rows, so analysis categories use a fixed question/rule keyword taxonomy. Sports detection is transparent but imperfect. `lastTradePrice` is not consistently YES-oriented for legacy AMM records and is deliberately excluded from forecast-error analysis. Sampling on volume makes the Polymarket portion unsuitable for population volume estimates.
 
 ### Audited representation cases
@@ -62,10 +62,33 @@ Retrieval date for the included empirical package: **2026-09-10**. All used sour
 - Fields used: Unix timestamp `t` and YES-token price `p`.
 - Limitation: explicit long start/end windows were rejected by the live API, so the supported compressed full-history mode is used. Only 3 of 11 accepted cross-platform pairs returned histories on both platforms. This sparse coverage is reported as a limitation, not silently dropped.
 
-## Reproducibility and immutability
+## Approved revision: evidence and provenance
 
-The September 14 representation-aware extension uses the same empirical archives. Relation audits cover the full returned descriptions and are bound to contract-ID/rule fingerprints; additional hypothetical states establish overlap/non-nesting for election and minerals cases. The primary and leader clauses expose fractional exceptions. These audits add neither realized settlement data nor observed trader beliefs.
+The metadata normalization ledger reconciles 12,253 Kalshi rows to 12,251 (two missing titles) and 8,000 Polymarket rows to 7,249 (751 unsupported outcome-label rows). Acquisition exclusions and normalization attrition are distinct. The full rejected scan and tier overflow records cannot be reconstructed.
 
-The legacy panel resamples daily and forward-fills for up to seven days; it does not preserve original observation timestamps or verify trade freshness. The currently eligible subset has two pairs with nine daily rows each. `coherence-panel-readiness.csv` therefore marks both as insufficient evidence. Any future `data/processed/coherence-price-observations.csv` must separately document fresh synchronized, YES-oriented normalized observations and comparable conditions; no such observations are supplied in the current package.
+Outcome fields distinguish evidence. Kalshi has recorded YES/NO outcomes and six scalar settlements. Polymarket endpoint prices remain price-inferred labels: 15 have `proposed` status, 38 lack status, and two have `settled` status. Only supported endpoints with `resolved`/`settled` status enter the qualified binary outcome field; 53 nonfinal/missing-status endpoints remain in `price_inferred_outcome`. Ten intermediate-price cases remain separate. A final-status endpoint vector does not substitute for a recorded payout field, token-redemption audit or account receipts. YES-token IDs follow exact supported outcome ordering; malformed vectors are explicit missing evidence.
 
-Raw responses are saved as date-stamped UTF-8 JSON under `data/raw/`; matched histories are additionally content-addressed by the selected match IDs and acquisition mode. Existing raw snapshots are loaded rather than overwritten. `data/` is Git-ignored because API responses can be large and are reproducible from the public sources. Derived CSV files are deterministically sorted before writing.
+Exposure is metadata elapsed time to the minimum of close, resolution and snapshot-label midnight, with clipping reported rather than concealed. The audit records 65 negative pre-clipping Kalshi intervals: 38 scheduled future openings with zero volume and 27 same-day openings with positive volume. All 52 Polymarket close-before-open intervals have positive volume. An end-of-day convention would change 1,115 Kalshi and three Polymarket exposures; the retained convention remains an explicitly labelled proxy. No evidence establishes that all archived rule versions preceded trading.
+
+### Versioned real cases
+
+The review-cycle `case-evidence/case-source-bundle.json` preserves the bounded observed-case inputs and source roles. Original September-labelled records and separately acquired October checks remain distinct; no missing HTTP timestamp is invented.
+
+- **Hilton:** Kalshi `KXCAGOVPRIMARY1ST-26JUN02-1ST-SHIL` and Gamma `825460` record NO/$0 versus resolved YES. Full operative rules match restored metadata and dated follow-up records. The [certified California result](https://elections.cdn.sos.ca.gov/sov/2026-primary/sov/06-sov-summary.pdf) records second place and top-two advancement. No redemption transaction or pre-trading rule-version audit was performed.
+- **Khamenei:** Kalshi `KXKHAMENEIOUT-AKHA-26JUL01` records scalar settlement `0.4500`; Gamma `661699` records resolved YES. Full operative fields match archived/current versions. Different deadlines and the Kalshi price-based death allocation prevent a controlled clause-effect interpretation. [AP death reporting](https://apnews.com/article/5b13b69b708c4ed38e8f95f5fb41a597) and [contemporaneous reporting on the carve-out/reimbursements](https://cointelegraph.com/news/kalshi-founder-khamenei-market-carveout) are independent episode sources. Original linked social posts were inaccessible. Reimbursements can affect account cash returns independently of recorded contract settlement.
+- **Suit:** Gamma `546814` and the preserved market-page sequence show proposals, disputes and final NO. A [dated Ukrainian presidency account](https://www.president.gov.ua/en/news/vidbulasya-audiyenciya-prezidenta-ukrayini-v-korolya-niderla-98637) records the June 24, 2025 appearance. The audit does not independently classify the clothing, infer manipulation or reconstruct an on-chain finality trail.
+- **Minerals:** Gamma `521607` and `532897` ultimately record YES/YES, with March 25 and May 4 closure fields around the [April 30 signing announcement](https://home.treasury.gov/news/press-releases/sb0126). Closure is a lifecycle record, not a complete settlement timestamp. The distinct announcement-versus-signature YES/NO scenario remains hypothetical; the observed chronology does not instantiate it.
+
+Case assertions and logical-relation labels are bound to complete operative inputs, including questions, source fields, rules, windows and exceptions. Mutation fails closed pending re-audit. Exhibits and mechanisms are counted separately. Fractional payout mappings cannot enter binary-event coherence restrictions.
+
+### Dormant panel
+
+The explicitly retained version is `matched-price-histories-2026-09-10-bad72f8883-interval-max.json`. The alternate `627b27c83f-interval-max` version has a third pair that remains candidate-eligible; prior three-to-two differences are version differences, not current eligibility attrition. Current selected-ID cache `03e62f0936` is absent and must not trigger a fresh historical download.
+
+Original intraday observations are clipped to the supported aligned window before aggregation. Daily bucket as-of times, source timestamps and fill ages are preserved, and all rows remain ineligible for synchronized-price tests. The old panel included August 19 rows beyond its August 18 cutoff and after-midnight source observations on the cutoff day. The corrected output no longer includes out-of-window sources. Candidate predicate/window checks and cutoff routing are documented in the approved cycle's audit outputs.
+
+### Immutable caches and safe regeneration
+
+Raw JSON snapshots are never rewritten. New current-date acquisitions record actual UTC `acquired_at_utc` plus requested date and selection metadata. Reuse validates recorded parameters, including the Kalshi per-tier cap. Compatible legacy caches remain readable without invented fields. A missing historical/future-date cache fails before any network call, for metadata, anecdotes and histories alike. An explicit absent history archive also fails clearly. Derived CSV files are deterministically sorted.
+
+The approved old manuscripts, tables, figures, memory and source code are copied under `output/paper-revision/2026-10-12-01/pre-revision/`; `IMPLEMENTATION_BASELINE.json` records SHA-256 hashes. `analyze` updates generated summaries but preserves `output/research-log.md`. Original alternate source archives and unsuccessful analyses remain available. Literature access levels and the missing original Bayesian PDF are documented separately in the preserved theory review and updated source audit.

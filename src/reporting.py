@@ -1,44 +1,14 @@
-"""Generate concise research documentation from completed analyses."""
+"""Generate the approved case-led manuscript and bounded supplementary evidence."""
 
 from __future__ import annotations
 
+import json
 from datetime import date
 from pathlib import Path
 
 import pandas as pd
 
-
-def representation_bridge_lines() -> list[str]:
-    """Separate the source's updating account from this study's claim-constitution extension."""
-
-    return [
-        "Meehan and Zhang's [*Bayes Is Back* (2025)](https://doi.org/10.1215/00318108-11873775) studies updating within a given prior space `(S, π)` and a represented strongest evidence proposition. Non-contrastiveness holds the posterior fixed across learning situations with the same prior space and learned proposition; global evidential constancy also holds it fixed across states with that evidence. This invariance does not by itself single out conditionalization. Their distinction between accuracy in one learning situation and total expected accuracy across learning situations supports an argument about updating rules, not a test of platform design (supplied manuscript §§2, 4–5; [source audit](../docs/BAYES_SOURCE_AUDIT.md)).",
-        "",
-        "**Our IS extension:** let `Ω` be relevant possible world histories, `e` represented evidence with positive prior probability, and `μ_e = P(· | e)` the posterior over histories. The platform specifies a settlement mapping. For a determinate binary contract, `r_c: Ω → {0,1}` and `Y_c = {ω: r_c(ω)=1}`. Applying the posterior gives `q_c(e) = E_{μ_e}[r_c] = P(Y_c | e)`. The platform defines the claim; evidence updates beliefs about worlds; traders value that claim and markets aggregate valuations into prices. These are analytically distinct functions, not a claim that platforms do Bayesian updating or that rules must chronologically precede all learning.",
-        "",
-        "Thus `q_A − q_B = μ_e(Y_A \\ Y_B) − μ_e(Y_B \\ Y_A)`: identical world beliefs can justify different claim probabilities. Different sets need not have different probability mass; the claim is a possibility, not a necessary price gap. Validated equivalence, inclusion, disjointness and complementarity imply exact probability restrictions under a common distribution. A single witness establishes non-equivalence, not inclusion. Price analogues additionally assume a probability-price approximation and sufficiently comparable conditions.",
-        "",
-        "**Determinacy remains intra-contract:** a nonempty set-valued mapping `R_c(ω) ⊆ {0,1}` can leave both payouts permissible at a borderline state. Uncertainty about which world obtains is epistemic; an unresolved institutional mapping concerns what counts as a payout in that world. The suit text alone does not select a garment-level payoff mapping; credible-reporting adjudication completes it. A unique claim event, and hence a point probability derived from that event, cannot simply be assumed. Positive posterior mass on unresolved states can make expected payout depend on completion; zero mass need not. A model of adjudication would add assumptions. Fractional tie/death payouts instead require `r_c: Ω → [0,1]`: expected payout is then not generally a YES-event probability. A fractional but specified payout is not itself indeterminacy.",
-    ]
-
-
-def coherence_status_lines(cases: pd.DataFrame, diagnostics: pd.DataFrame) -> list[str]:
-    """Report the actual semantic and observation gates, without fabricating price results."""
-
-    if cases.empty:
-        return ["Representation-aware coherence: not estimable; audited cases unavailable."]
-    counts = cases.claim_relation.value_counts().sort_index()
-    labels = "; ".join(f"{label}: {count}" for label, count in counts.items())
-    estimated = int(diagnostics.status.eq("estimated").sum()) if not diagnostics.empty else 0
-    status = (
-        "Not estimable / insufficient evidence for an actual price-coherence test."
-        if estimated == 0 else f"{estimated} conditional observation-level price diagnostics estimated."
-    )
-    return [
-        f"**Representation-aware coherence:** {labels}. {int(cases.coherence_test_applicable.sum())} cases supply a validated binary marginal restriction. {status}",
-        "",
-        "Election and minerals rules support overlapping, non-nested events under the stated archived-rule model; this alone imposes no useful pairwise marginal restriction. Fed inclusion is unclassified. Primary ties and leader death allocations fall outside globally binary payouts; the suit case remains adjudicatively incomplete. These qualifications preserve the existing witness results. The legacy daily panel forward-fills prices for up to seven days and cannot certify synchronized fresh observations. See `tables/coherence-case-diagnostics.csv` and `tables/coherence-panel-readiness.csv` for explicit eligibility reasons. Numerical excess, where estimable, is a conditional price diagnostic; liquidity, fees, spreads, stale trading, risk preferences, market composition and limits to arbitrage prevent interpreting it as trader irrationality.",
-    ]
+from src.anecdotes import add_claim_relations
 
 
 def _records(frame: pd.DataFrame) -> list[dict[str, object]]:
@@ -115,598 +85,256 @@ def _estimate(record: dict[str, object], uncertainty: str = "SE") -> str:
     )
 
 
+def _write_lines(path: Path, lines: list[str]) -> None:
+    """Write a deterministic UTF-8 research document."""
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def representation_bridge_lines() -> list[str]:
+    """Explain normalized expected payout without claiming a new updating theory."""
+
+    return [
+        "The rules define which outcomes pay. Traders use evidence to assess those outcomes, and trading produces market prices. These functions can develop together over time.",
+        "",
+        "With a common distribution `μ` over relevant histories, the value of a specified normalized payout is `q_c = E_μ[r_c]`. Thus `q_A − q_B = E_μ[r_A − r_B]`. The identity holds for any common probability distribution. Different payout mappings can have different expected values, although non-equivalence alone does not guarantee a value difference.",
+        "",
+        "For binary payouts, expected payout equals the probability of the paying event. Fractional settlement requires the payout amount: a 20% chance of a full dollar and a 30% chance of 50 cents give an expected payout of 35 cents. This is a synthetic illustration.",
+        "",
+        "Where rules delegate interpretation, valuation can include expectations about how a later decision will be made. A rule may leave a clothing category unspecified while the institution ultimately records a definite settlement. Price-based clauses require past-price inputs in the modeled history. The formal qualifications and binary-event restrictions are in [constructs](../docs/CONSTRUCTS.md).",
+    ]
+
+
+def coherence_status_lines(cases: pd.DataFrame, diagnostics: pd.DataFrame) -> list[str]:
+    """Report semantic and observation eligibility separately from realized cases."""
+
+    applicable = int(cases.coherence_test_applicable.sum()) if not cases.empty else 0
+    estimated = int(diagnostics.status.eq("estimated").sum()) if not diagnostics.empty else 0
+    return [
+        f"The case inventory contains {len(cases)} exhibits; {applicable} supply a validated binary marginal restriction. {estimated} observation-level price diagnostics are estimable.",
+        "",
+        "The saved price histories are a dormant diagnostic panel. Original observations are clipped to the supported window before aggregation, and source timestamps and fill ages are retained. Daily labels and forward fills do not certify fresh synchronized quotes. No general divergence–price effect, trader misunderstanding, or forecast-accuracy advantage is established. Missing excess values mean insufficient evidence.",
+    ]
+
+
 def platform_profile_lines(profiles: pd.DataFrame) -> list[str]:
-    """Render reproducible sample comparisons without treating proxies as platform quality."""
+    """Render literal text components as descriptions of selected portfolios."""
 
     if profiles.empty:
-        return ["Platform rule profiles are unavailable for this run."]
-    overall = profiles.loc[profiles.stratum == "all"].set_index("platform")
+        return ["Platform text profiles unavailable."]
+    overall = profiles.loc[profiles.stratum.eq("all")].set_index("platform")
     platforms = sorted(overall.index.astype(str))
     lines = [
-        "| Sampled rule-text measure | " + " | ".join(platforms) + " |",
+        "| Sampled text feature | " + " | ".join(platforms) + " |",
         "|---|" + "---:|" * len(platforms),
     ]
-    for label, column, format_spec in (
+    for label, column, fmt in (
         ("Contracts", "contracts", ",.0f"),
-        ("Mean determinacy proxy", "mean_determinacy", ".3f"),
-        ("Source specificity", "source_specificity", ".3f"),
-        ("Temporal specificity", "temporal_specificity", ".3f"),
-        ("Outcome definition", "outcome_definition", ".3f"),
-        ("Edge-clause completeness", "edge_completeness", ".3f"),
-        ("Discretion clarity", "discretion_clarity", ".3f"),
+        ("Exploratory rule-text specificity index", "mean_determinacy", ".3f"),
+        ("Authority/source cues", "source_specificity", ".3f"),
+        ("Date/time cues", "temporal_specificity", ".3f"),
+        ("Definition/threshold cues", "outcome_definition", ".3f"),
+        ("Edge-clause cues", "edge_completeness", ".3f"),
+        ("Absence of flagged discretion terms", "discretion_clarity", ".3f"),
         ("Threshold-flag share", "threshold_flag_share", ".1%"),
         ("Mean analyzed text length (words)", "mean_text_words", ".1f"),
     ):
-        cells = [
-            format(float(overall.loc[platform, column]), format_spec) for platform in platforms
-        ]
+        cells = [format(float(overall.loc[platform, column]), fmt) for platform in platforms]
         lines.append(f"| {label} | " + " | ".join(cells) + " |")
-    lines.extend(
-        [
-            "",
-            "| Determinacy proxy within text strata | " + " | ".join(platforms) + " |",
-            "|---|" + "---:|" * len(platforms),
-        ]
-    )
-    by_type = profiles.set_index(["platform", "stratum"])
-    for label, stratum in (
-        ("No threshold flag", "no_threshold_flag"),
-        ("Threshold flag", "threshold_flag"),
-    ):
-        cells = []
-        for platform in platforms:
-            key = (platform, stratum)
-            if key in by_type.index:
-                row = by_type.loc[key]
-                cells.append(f"{row['mean_determinacy']:.3f} (n={row['contracts']:,.0f})")
-            else:
-                cells.append("unavailable")
-        lines.append(f"| {label} | " + " | ".join(cells) + " |")
-    lines.extend(
-        [
-            "",
-            "These are raw proxy means in purposive sampled portfolios. Threshold flags come from the text measure and also enter its outcome-definition component; the strata describe composition rather than supply an independent validation or causal adjustment. Longer text and a higher component score do not establish better forecasting or more equivalent claims.",
-        ]
-    )
-    if all(
-        (platform, stratum) in by_type.index
-        for platform in ("Kalshi", "Polymarket")
-        for stratum in ("all", "no_threshold_flag", "threshold_flag")
-    ):
-        gaps = [
-            float(
-                float(str(by_type.loc[("Kalshi", stratum), "mean_determinacy"]))
-                - float(str(by_type.loc[("Polymarket", stratum), "mean_determinacy"]))
-            )
-            for stratum in ("all", "no_threshold_flag", "threshold_flag")
-        ]
-        if gaps[0] * gaps[1] < 0 and gaps[0] * gaps[2] < 0:
-            overall_leader = "Kalshi" if gaps[0] > 0 else "Polymarket"
-            within_leader = "Polymarket" if gaps[0] > 0 else "Kalshi"
-            lines.extend(
-                [
-                    "",
-                    f"**Composition reversal:** {overall_leader} has the higher overall composite mean, while {within_leader} has the higher mean in both threshold-flag strata. The overall ranking depends on the mix of contracts; it is not a general ranking of platform clarity.",
-                ]
-            )
-    lines.append("")
+    lines.extend([
+        "",
+        "Literal cues describe the retained portfolios. The legacy column `determinacy_score` stores an exploratory text index; it has no independent human construct validation. The threshold flag contributes to that index, so stratification is descriptive. Corrected parsing eliminates the previously reported composition reversal. Final field-placement invariance is documented separately from the frozen four-repair diagnostic in the measurement note.",
+        "",
+    ])
     for platform in platforms:
         row = overall.loc[platform]
-        share = float(row["between_family_variance_share"])
-        variance = f"{share:.1%}" if pd.notna(share) else "undefined (constant scores)"
-        lines.append(
-            f"- **{platform} family structure:** {row['families']:,.0f} families; the five largest account for {row['top_five_family_share']:.1%} of sampled contracts. Between-family differences account for {variance} of the score sum of squares; {row['varying_families']:,.0f} families ({row['contracts_in_varying_families']:,.0f} contracts) vary internally."
-        )
-    lines.append(
-        "Family units follow the APIs: Kalshi series and Polymarket events. Their different granularity means concentration and variance shares describe each sample; they do not rank platform diversity."
-    )
+        lines.append(f"- {platform}: {row['families']:,.0f} API families; top five contain {row['top_five_family_share']:.1%} of rows; {row['varying_families']:,.0f} families ({row['contracts_in_varying_families']:,.0f} rows) vary internally in the index.")
+    lines.append("Kalshi series and Polymarket events have different granularity. Their family counts and concentration do not rank platform diversity.")
     return lines
 
 
-def write_research_log(
-    path: Path,
-    models: pd.DataFrame,
-    error_models: pd.DataFrame,
-    matches: pd.DataFrame,
-    matched_models: pd.DataFrame,
-) -> None:
-    """Record substantive specifications, including weakened and infeasible results."""
+def sample_limit_lines(contracts: pd.DataFrame) -> list[str]:
+    """State the fixed sample's provenance and unrecoverable selection boundaries."""
 
-    baseline = _model_record(models, "main_composite")
-    cohort = _model_record(models, "cohort_exposure_adjusted")
-    within_kalshi = _model_record(models, "within_family_kalshi")
-    within_poly = _model_record(models, "within_family_polymarket")
-    counts = matches["match_label"].value_counts() if not matches.empty else pd.Series(dtype=int)
-    lines = [
-        "# Research Log",
+    counts = contracts.groupby("platform").size()
+    description = "; ".join(f"{platform}: {count:,}" for platform, count in counts.items())
+    return [
+        f"The fixed historical sample contains {len(contracts):,} contracts ({description}). Raw normalization reconciles 12,253 Kalshi rows minus two missing titles and 8,000 retained Polymarket rows minus 751 unsupported outcome-label rows. Raw snapshots remain unchanged.",
         "",
-        f"## {date.today().isoformat()} — sample and exposure audit",
+        "Kalshi coverage selects 120 high-volume series and caps each acquisition tier. Polymarket coverage selects high-volume closed markets using a flawed historical sports filter. `gameStartTime` wrongly flagged named minerals and suit markets as sports. The classifier is repaired for future acquisition; omitted historical records are not restored by that repair. The 23,700 scanned minus 8,000 retained difference is 15,700, with no established sports/overflow split. These portfolios are purposive, use different category/family schemes, and support no population ranking.",
         "",
-        "- Removed sports before imposing the Polymarket volume cap using official fields plus a documented conservative taxonomy. This corrects contamination by tournament families.",
-        "- Parsed mixed ISO timestamp precision explicitly; the prior coercion had erased Polymarket resolution timestamps.",
-        "- Replaced scheduled duration with retrieval-capped observed exposure in the preferred volume specification and added opening-year cohorts.",
+        "September 10 is the legacy snapshot label, not a verified HTTP acquisition timestamp. Three Polymarket source updates fall on September 11; the discrepancy remains unresolved. Missing historical caches now fail before network access. Date-only retrieval boundaries and metadata elapsed time are exposure proxies. The audit separates scheduled future openings, positive-volume same-day openings and close-before-open records; neither clipping nor alternate date conventions establishes that rules preceded trading.",
+        "",
+        "Outcome provenance separates Kalshi recorded binary results and scalar settlements from Polymarket final-status endpoint prices and unresolved price inference. Fifteen proposed-status and 38 missing-status endpoint records are qualified separately; two `settled` statuses count as recorded final status. Six Kalshi scalar settlements and ten Polymarket intermediate-price cases remain separate categories. See [data sources](../DATA_SOURCES.md) and the sample audit tables for the exact ledger.",
     ]
-    if baseline is not None:
-        lines.append(
-            f"- Original-style baseline determinacy coefficient: {_estimate(baseline, 'HC3 SE')}."
-        )
-    if cohort is not None:
-        lines.append(
-            f"- Preferred exposure/cohort-adjusted coefficient: {_estimate(cohort, 'HC3 SE')}."
-        )
-    lines.extend(
-        [
-            "",
-            f"## {date.today().isoformat()} — within-family diagnostic",
-            "",
-            "- Question: Does determinacy predict volume using only variation inside repeated Kalshi series or Polymarket events? This removes stable family popularity by demeaning outcomes and controls within family.",
-        ]
-    )
-    for platform, record in (("Kalshi", within_kalshi), ("Polymarket", within_poly)):
-        if record is not None:
-            lines.append(f"- {platform}: {_estimate(record, 'family-clustered SE')}.")
-    lines.append(
-        "- Decision: Treat the determinacy–volume association as secondary and exploratory unless stronger within-family or fixed-window-volume evidence emerges. A weak/null within-family estimate is evidence about identification, not evidence that representations do not matter."
-    )
-    lines.extend(
-        [
-            "",
-            f"## {date.today().isoformat()} — construct and case audit",
-            "",
-            "- Recast semantic determinacy as an intra-contract property and divergence as an inter-contract property; neither is a substitute for the other.",
-            "- Require a counterfactual witness state and implied settlement on each side before calling a pair truth-condition divergent. Automated text distances remain candidate diagnostics only.",
-            "- Added the representation-aware bridge: a common Bayesian posterior over histories can assign different probabilities to platform-defined payoff events. Keep rule constitution separate from updating and semantic indeterminacy separate from uncertainty over worlds.",
-            "- Audited full case descriptions for logical relations, including fractional tie/death payouts. Relation labels are bound to rule/ID fingerprints. Existing daily price fills are not synchronized quote evidence; coherence outputs report explicit eligibility gates without adding a general price-effect claim.",
-            f"- Matching inventory: {int(counts.get('high_confidence', 0))} high-confidence, {int(counts.get('probable', 0))} probable, and {int(counts.get('rejected', 0))} rejected candidates retained for audit.",
-        ]
-    )
-    if not matched_models.empty:
-        lines.append(
-            f"- Sparse matched-price diagnostic: {_estimate(_records(matched_models)[0], 'HC3 SE')}."
-        )
+
+
+def case_exhibit_lines(cases: pd.DataFrame, *, observed_only: bool = False) -> list[str]:
+    """Render only assertions that remain bound to verified operative inputs."""
+
+    if cases.empty:
+        return ["Case evidence unavailable."]
+    cases = add_claim_relations(cases)
+    priority = {"hilton-first-vs-advance": 0, "khamenei-death-allocation": 1, "suit-adjudication-episode": 2, "minerals-observed-chronology": 3}
+    rows = sorted(_records(cases), key=lambda row: (priority.get(str(row["case_id"]), 9), str(row["case_id"])))
+    lines: list[str] = []
+    for row in rows:
+        observed = str(row.get("evidence_kind", "")).startswith("observed_") or str(row.get("scenario_status", "")).lower().startswith(("observed", "realized"))
+        if observed_only and not observed:
+            continue
+        lines.extend([f"### {row['phenomenon']}", ""])
+        if not bool(row.get("claim_relation_validated", False)):
+            lines.extend(["Operative inputs require re-audit; payout and witness assertions are withheld.", ""])
+            continue
+        lines.extend([
+            f"- **Evidence:** {row['scenario_status']}",
+            f"- **Scenario:** {row['witness_state']}",
+            f"- **Qualifying condition:** A — {row['signature_a']}; B — {row['signature_b']}.",
+            f"- **{'Settlement' if observed else 'Hypothetical payout'}:** A — {row['payout_a']}; B — {row['payout_b']}.",
+            f"- **Implication:** {row.get('explanation', '')}",
+            f"- **Boundary:** {row.get('audit_note', '')}",
+            "- **Contracts:** " + "; ".join(
+                f"[{row[f'{side}_contract_id']}]({row[f'{side}_url']})"
+                for side in ("a", "b")
+                if str(row.get(f"{side}_url", "")).startswith("https://")
+            ) + ".",
+        ])
+        if observed:
+            lines.append(f"- **Chronology:** {row.get('chronology', '')}")
+            sources = json.loads(str(row.get("event_sources", "[]")))
+            for source in sources:
+                lines.append(f"- **Independent event evidence:** [{source['finding']}]({source['url']}).")
+        lines.append("")
+    if not lines:
+        lines.append("Observed cases require the explicitly versioned case-evidence bundle.")
+    lines.extend(["Full operative text, source versions, outcome evidence and chronology: [casebook](REPRESENTATION_CASEBOOK.md) and [case matrix](tables/representation-case-matrix.csv).", ""])
+    return lines
+
+
+def _opening_lines(cases: pd.DataFrame) -> list[str]:
+    """Use an actual opening contrast only when its complete-input audit is valid."""
+
+    audited = add_claim_relations(cases) if not cases.empty else cases
+    realized = audited.loc[audited.case_id.astype(str).str.contains("hilton")] if not audited.empty else audited
+    if not realized.empty and bool(realized.claim_relation_validated.all()):
+        return ["Steve Hilton finished second in California's June 2, 2026 gubernatorial primary and advanced under the top-two rule. The archived first-place Kalshi contract settled NO/$0; the Polymarket advancement contract recorded resolved YES. The result concerns one election, yet the contracts reward different achievements.", ""]
+    return ["Apparently similar prediction-market questions can specify different payouts. The empirical comparison requires complete archived rules and independently supported event and settlement records.", ""]
+
+
+def literature_lines() -> list[str]:
+    """Position the diagnostic contribution against the verified review source map."""
+
+    return [
+        "[Wolfers and Zitzewitz (2004)](https://doi.org/10.1257/0895330041371321) already discuss payoff design, clear specification and adjudication. [Wand and Weber (1993)](https://doi.org/10.1111/j.1365-2575.1993.tb00127.x) relate representational clarity to interpretation mappings. [Eriksson and Öhlund (2024)](https://doi.org/10.17705/1jais.00845) show how constitutive rules create digitally represented institutional entities and rights. Here the observable objects are contract clauses and settlements; published text does not identify designers' motives.",
+        "",
+        "[Gebele and Matthes (2026)](https://arxiv.org/abs/2601.01706) directly study resolution semantics, payoff regions and cross-platform comparison. [Capponi, Gliozzo and Zhu (2025)](https://arxiv.org/abs/2512.02436) develop automated relationship discovery. Their preprints supply close comparisons; their empirical performance is not independently replicated here. This paper's diagnostic contribution is the joined audit of separating scenarios, fractional settlement and delegated interpretation. It makes no priority claim for payoff mappings or event-equivalence checks.",
+        "",
+        "[Wang (2026)](https://doi.org/10.1016/j.econlet.2026.113176) examines event occurrence versus pending adjudication; the review accessed an abstract, highlights and section passages, rather than the complete paywalled article. [Nechepurenko (2026)](https://arxiv.org/abs/2609.15368) distinguishes proposals, disputes, oracle settlement and adapter completion in a recent preprint. These distinctions guide the case chronology and prevent treating closure timestamps as a full settlement history. The Rezaei Sanjabi working paper remains an abstract-only lead; its empirical findings are not adopted.",
+    ]
+
+
+def reference_lines() -> list[str]:
+    """Supply the bounded verified bibliography without inventing inaccessible details."""
+
+    return [
+        "- Wolfers, J., & Zitzewitz, E. (2004). Prediction Markets. *Journal of Economic Perspectives, 18*(2), 107–126. [DOI](https://doi.org/10.1257/0895330041371321).",
+        "- Wand, Y., & Weber, R. (1993). On the ontological expressiveness of information systems analysis and design grammars. *Information Systems Journal*. [DOI](https://doi.org/10.1111/j.1365-2575.1993.tb00127.x).",
+        "- Eriksson, O., & Öhlund, A. (2024). Digital Institutionalization: The Case of E-Prescribing. *Journal of the Association for Information Systems*. [DOI](https://doi.org/10.17705/1jais.00845).",
+        "- Gebele, J., & Matthes, F. (2026). Semantic Non-Fungibility and Violations of the Law of One Price in Prediction Markets. arXiv:2601.01706v1, preprint. [Version](https://arxiv.org/html/2601.01706v1).",
+        "- Wang, G. (2026). Do prediction markets price events or adjudication? Evidence from the disputed Polymarket markets. *Economics Letters, 268*, 113176. [DOI](https://doi.org/10.1016/j.econlet.2026.113176). Review access was partial.",
+        "- Nechepurenko, M. (2026). Resolution Is Not Settlement, Part I: Oracle Adjudication and Semantic Governance on Polymarket. arXiv:2609.15368v1, preprint. [Version](https://arxiv.org/html/2609.15368v1).",
+        "- Capponi, A., Gliozzo, A., & Zhu, B. (2025). Semantic Trading: Agentic AI for Clustering and Relationship Discovery in Prediction Markets. arXiv:2512.02436v1, preprint. [Version](https://arxiv.org/html/2512.02436v1).",
+    ]
+
+
+def supplementary_model_lines(models: pd.DataFrame) -> list[str]:
+    """Present final estimates with their actual covariance and confidence intervals."""
+
+    lines = ["| Specification | Coefficient | 95% interval | Uncertainty | n |", "|---|---:|---:|---|---:|"]
+    for name in ("cohort_exposure_adjusted", "cohort_exposure_adjusted_hc3", "within_family_kalshi", "within_family_polymarket"):
+        row = _model_record(models, name)
+        if row is not None:
+            covariance = str(row.get("covariance", "family-clustered" if name != "cohort_exposure_adjusted_hc3" else "HC3"))
+            lines.append(f"| {name} | {_value(row, 'coefficient'):.4f} | [{_value(row, 'ci_lower'):.4f}, {_value(row, 'ci_upper'):.4f}] | {covariance}; SE {_value(row, 'std_error'):.4f} | {int(_value(row, 'n')):,} |")
+    lines.extend(["", "The preferred pooled coefficient uses one within-platform SD of the text index and standardized log cumulative volume. Its family clusters are qualified by platform. HC3 uses the same formula and rows as a covariance comparison. Within-family models use internally varying families and a different residual-score SD; their magnitudes are not directly comparable to the pooled coefficient.", "", "Volume selection, retrospective rules, family concentration and incomplete exposure metadata limit interpretation to these selected portfolios. Subgroup significance differences do not test heterogeneity. The frozen review's top-five families contribute 69.48% of focal sandwich variance; its bounded largest-family deletion remains negative. Those checks concern the archived and frozen repaired specifications, rather than certifying the final field-invariant index. No new deletion grid was run."])
+    return lines
+
+
+def write_supplementary_results(path: Path, models: pd.DataFrame, error_models: pd.DataFrame, panel_summary: pd.DataFrame, matched_models: pd.DataFrame) -> None:
+    """Keep activity, terminal-error and dormant panel evidence outside the main argument."""
+
+    lines = ["# Supplementary analysis", "", *supplementary_model_lines(models), "", "## Terminal-error diagnostic", ""]
+    if not error_models.empty:
+        lines.append(_estimate(_records(error_models)[0], "family-clustered SE") + ". This last-trade Kalshi diagnostic lacks a common forecast horizon; a null is not equivalence.")
     else:
-        lines.append(
-            "- Matched-price regression remains infeasible; no average divergence claim is made."
-        )
-    if not error_models.empty:
-        lines.append(
-            f"- Kalshi last-trade error diagnostic: {_estimate(_records(error_models)[0], 'series-clustered SE')}; this is not a common-horizon accuracy test."
-        )
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        lines.append("Not estimable on the available final analysis rows.")
+    lines.extend(["", "## Dormant price panel", "", f"{len(panel_summary)} saved pair summaries remain. Matched-model rows: {len(matched_models)}. There are no qualifying synchronized-price observations. The retained `bad72f8883` cache and alternate `627b27c83f-interval-max` contain different pair inventories; the alternate third pair remains eligible, so prior three-to-two attrition was not caused by current eligibility.", "", "All existing model rows are retained in [analysis-market-models.csv](tables/analysis-market-models.csv), with formula, covariance, sample size and confidence intervals. These exploratory values are unadjusted for multiple comparisons. Figures of score–volume bins use unclustered descriptive mean intervals, separate from preferred family-clustered model inference."])
+    _write_lines(path, lines)
 
 
-def write_research_summary(
-    path: Path,
-    contracts: pd.DataFrame,
-    models: pd.DataFrame,
-    error_models: pd.DataFrame,
-    matches: pd.DataFrame,
-    panel_summary: pd.DataFrame,
-    matched_models: pd.DataFrame,
-    cases: pd.DataFrame,
-    profiles: pd.DataFrame,
-    coherence: pd.DataFrame,
-) -> None:
-    """Write the paper-oriented summary with bounded, critic-audited claims."""
+def write_research_summary(path: Path, contracts: pd.DataFrame, models: pd.DataFrame, error_models: pd.DataFrame, matches: pd.DataFrame, panel_summary: pd.DataFrame, matched_models: pd.DataFrame, cases: pd.DataFrame, profiles: pd.DataFrame, coherence: pd.DataFrame) -> None:
+    """Generate a case-led summary synchronized with the approved outline."""
 
-    coverage = coverage_table(contracts)
-    platform_descriptions = "; ".join(
-        f"{record['platform']}: {int(_value(record, 'contracts')):,} contracts"
-        for record in _records(coverage)
-    )
-    high_matches = matches.loc[matches["match_label"] == "high_confidence"]
-    baseline = _model_record(models, "main_composite")
-    cohort = _model_record(models, "cohort_exposure_adjusted")
-    resolved = _model_record(models, "resolved_cohort_adjusted")
-    within_kalshi = _model_record(models, "within_family_kalshi")
-    within_poly = _model_record(models, "within_family_polymarket")
-    qualitative = _model_record(models, "qualitative_contracts")
-    quantitative = _model_record(models, "quantitative_contracts")
-    ambiguity = _model_record(models, "direct_ambiguity_count")
-    temporal_rows = models.loc[models["model"].str.startswith("temporal_")]
-    first_open = contracts["open_timestamp"].min()
-    last_resolution = contracts["resolution_timestamp"].max()
+    counts = matches.match_label.value_counts() if not matches.empty else pd.Series(dtype=int)
+    lines = ["# Same Future, Different Claim", "", *_opening_lines(cases), "## Question and evidence", "", "When do apparently similar market questions expose traders to different settlements, and when does written text leave a scenario to later interpretation? The main evidence joins realized settlements, documented adjudication and exact rule comparisons. It establishes case-level distinctions; it does not estimate their prevalence or effects on prices.", "", *case_exhibit_lines(cases, observed_only=True), "## Concepts and compact payout explanation", "", "**Payoff divergence** occurs when two contracts pay differently in an explicitly specified relevant scenario. **Written-rule determinacy** concerns whether a specified rule version and stated information determine one payout. Different procedures require a separating payout scenario before they establish divergence. Adjudication can supply the later institutional decision.", "", *representation_bridge_lines(), "", "## Position in the literature", "", *literature_lines(), "", "## Sampled text context", "", *sample_limit_lines(contracts), "", *platform_profile_lines(profiles), "", f"Automated matching retains {int(counts.get('high_confidence', 0))} high-confidence candidates, {int(counts.get('probable', 0))} probable candidates and {int(counts.get('rejected', 0))} rejected rows. The manually audited candidate predicates/windows are documented separately; retrieval confidence alone does not establish complete-rule equivalence.", "", "## Supplementary empirical checks", "", *supplementary_model_lines(models), "", *coherence_status_lines(cases, coherence), "", "Activity estimates, terminal-error diagnostics and dormant panel details: [supplementary analysis](SUPPLEMENTARY_ANALYSIS.md).", "", "## Implications and limits", "", "Contract comparison and offsetting positions require the same paying condition and amount. Forecast evaluation must identify the milestone being predicted. Interfaces could show those conditions beside prices; that intervention remains untested. Account cash returns can include reimbursements, so the Khamenei contract settlement is distinguished from trader-level receipts. The suit dispute shows that adjudication matters without proving manipulation or a causal ambiguity effect.", "", "The incremental contribution is an empirical diagnostic of comparability, extending established attention to contract specification with linked payout and chronology evidence. The composite platform-ranking and composition-reversal claims are withdrawn. Case evidence survives this correction."]
+    _write_lines(path, lines)
 
-    result_lines: list[str] = []
-    if baseline is not None:
-        result_lines.append(
-            f"- **Baseline association:** one within-platform SD more measured determinacy corresponds to {_estimate(baseline, 'HC3 SE')} SD in log volume."
-        )
-    if cohort is not None:
-        result_lines.append(
-            f"- **Preferred cohort/exposure specification:** replacing scheduled duration with observed exposure and adding opening-year controls gives {_estimate(cohort, 'HC3 SE')}."
-        )
-    if resolved is not None:
-        result_lines.append(f"- **Resolved contracts only:** {_estimate(resolved, 'HC3 SE')}.")
-    for label, model_record in (("Kalshi", within_kalshi), ("Polymarket", within_poly)):
-        if model_record is not None:
-            result_lines.append(
-                f"- **Within-family {label}:** {_estimate(model_record, 'family-clustered SE')}. This estimand uses only families whose determinacy varies internally."
-            )
-    type_parts = []
-    if qualitative is not None:
-        type_parts.append(f"no threshold flag {_estimate(qualitative, 'SE')}")
-    if quantitative is not None:
-        type_parts.append(f"threshold flag {_estimate(quantitative, 'SE')}")
-    if type_parts:
-        result_lines.append(f"- **Contract-type estimates:** {'; '.join(type_parts)}.")
-    if ambiguity is not None:
-        result_lines.append(
-            f"- **Direct ambiguity lexicon check:** one SD more flagged ambiguity terms corresponds to {_estimate(ambiguity, 'SE')} SD in log volume."
-        )
-    if not temporal_rows.empty:
-        temporal_detail = "; ".join(
-            f"{str(record['model']).removeprefix('temporal_').replace('_', ' ')} {_estimate(record)}"
-            for record in _records(temporal_rows)
-        )
-        result_lines.append(
-            f"- **Temporal replication split (July 1, 2025):** {temporal_detail}. This is a stability diagnostic, not a preregistered holdout test."
-        )
-    if not error_models.empty:
-        result_lines.append(
-            f"- **Forecast-error diagnostic:** {_estimate(_records(error_models)[0], 'series-clustered SE')}. The coefficient is not a fixed-horizon accuracy comparison and a null is not evidence of equivalence."
-        )
-    diagnostic_interpretation: list[str] = []
-    if (
-        qualitative is not None
-        and quantitative is not None
-        and _value(qualitative, "p_value") >= 0.05
-        and _value(quantitative, "p_value") < 0.05
-    ):
-        diagnostic_interpretation.append(
-            "- **Contract-type interpretation:** the threshold-flag estimate is negative and distinguishable from zero; the no-flag estimate is not. These separate significance tests do not establish that the two coefficients differ."
-        )
-    if ambiguity is not None and _value(ambiguity, "coefficient") <= 0:
-        diagnostic_interpretation.append(
-            "- **Lexicon interpretation:** the coefficient for words such as ‘deal’ and ‘agreement’ is nonpositive. These are text flags, not observations of traders interpreting a contract differently."
-        )
-    if (
-        within_kalshi is not None
-        and within_poly is not None
-        and _value(within_kalshi, "p_value") >= 0.05
-        and _value(within_poly, "p_value") >= 0.05
-    ):
-        diagnostic_interpretation.append(
-            "- **Family interpretation:** neither platform has a detectable within-family coefficient. Read the pooled association alongside the strong concentration of score variation between families. Within-family coefficients use one SD of the varying-family residual score and are not directly comparable in magnitude to the pooled coefficient."
-        )
-    temporal_lookup = {str(record["model"]): record for record in _records(temporal_rows)}
-    early_kalshi = temporal_lookup.get("temporal_early_kalshi")
-    early_poly = temporal_lookup.get("temporal_early_polymarket")
-    late_kalshi = temporal_lookup.get("temporal_late_kalshi")
-    late_poly = temporal_lookup.get("temporal_late_polymarket")
-    if (
-        early_kalshi is not None
-        and early_poly is not None
-        and late_kalshi is not None
-        and late_poly is not None
-        and _value(early_poly, "p_value") >= 0.05
-        and _value(late_poly, "p_value") < 0.05
-    ):
-        diagnostic_interpretation.append(
-            "- **Platform-time diagnostic:** the period-specific estimates vary. These exploratory splits do not isolate a change in platform governance or establish a difference by comparing significance levels."
-        )
 
-    case_lines: list[str] = []
-    for record in _records(cases):
-        case_lines.append(
-            f"- **{record['phenomenon']} — {record['mechanism']}.** {record.get('explanation', '')} Scope: {record['scope']}. Hypothetical witness: {record['witness_state']} Implied settlements: {record['a_platform']} = {record['payout_a']}; {record['b_platform']} = {record['payout_b']}."
-        )
-        secondary = record.get("secondary_witness_state")
-        if isinstance(secondary, str) and secondary:
-            case_lines.append(
-                f"  Additional witness: {secondary} A = {record['secondary_payout_a']}; B = {record['secondary_payout_b']}."
-            )
-    if not case_lines:
-        case_lines.append(
-            "- Run `main.py anecdotes` to build the archived witness-state case matrix."
-        )
-    main_result_lines = [
-        line
-        for line in result_lines
-        if any(
-            label in line
-            for label in (
-                "Preferred cohort/exposure",
-                "Within-family",
-                "Contract-type estimates",
-            )
-        )
+def write_research_status(path: Path, contracts: pd.DataFrame, models: pd.DataFrame, cases: pd.DataFrame, profiles: pd.DataFrame, coherence: pd.DataFrame) -> None:
+    """Write a current handoff while preserving research history elsewhere."""
+
+    lines = ["# Research Status", "", f"Updated {date.today().isoformat()} after approved P1–P7 implementation.", "", *_opening_lines(cases), *coherence_status_lines(cases, coherence), "", "## Current sample and measurement", "", *sample_limit_lines(contracts), "", *platform_profile_lines(profiles), "", "## Supplementary association", "", *supplementary_model_lines(models), "", "## Locked scope", "", "Use the case-led PAPER_OUTLINE.md and documented casebook. Keep payoff divergence distinct from written-rule determinacy. Treat text features as portfolio context and volume as supplementary. No replacement historical sample, new activity design, synchronized price collection, comprehension study or new critic round was authorized. Missing historical caches fail closed. Research-log entries survive regeneration; cycle approval, archives and validation are in paper-revision/2026-10-12-01/."]
+    _write_lines(path, lines)
+
+
+def write_paper_outline(path: Path, contracts: pd.DataFrame, models: pd.DataFrame, cases: pd.DataFrame, profiles: pd.DataFrame) -> None:
+    """Generate the approved five-section working conference-paper outline."""
+
+    lines = ["# Same Future, Different Claim: How Prediction Markets Define What Counts", "", "Working ICIS conference-paper outline, revised under approved P1–P7. Main evidence: observed settlements and adjudication; sampled literal text features provide context. Activity estimates are supplementary.", "", "## 1. Introduction", "", *_opening_lines(cases), "- **Research question:** When do apparently similar prediction-market questions expose traders to different settlements, and when do written rules leave a scenario to later interpretation?", "- **Puzzle:** the market headline identifies a public phenomenon; operative clauses select an achievement, deadline, evidence source, exception and payout amount. Comparisons of displayed prices depend on those selections.", "- **Contribution:** a diagnostic account grounded in linked event/rule/settlement records. It distinguishes ordinary achievement conditions, fractional exceptions and delegated interpretation; it estimates no causal price mechanism or trader-comprehension effect.", "", "## 2. Literature and constructs", "", *literature_lines(), "", "**Payoff divergence** requires an explicitly specified scenario with different payouts. **Written-rule determinacy** asks whether the rule version uniquely determines the payout given the information held fixed. A complete eventual adjudication and an incomplete written garment criterion are compatible. Semantic differentiation describes observed rule dimensions; motives and design processes require additional evidence.", "", *representation_bridge_lines(), "", "## 3. Method", "", "- **Case audit:** bind assertions to complete operative inputs, stable platform identifiers and source versions. For realized splits, verify both contract settlements and an independent event source. Separate observed events, observed settlements, dispute chronology and hypothetical payout witnesses. Changed operative inputs block stale assertions pending re-audit.", "- **Sample and provenance:** freeze the historical 19,500 rows for before/after measurement comparison. Report flawed historical selection and absent acquisition timestamps. Preserve raw data and distinguish normalization attrition from acquisition exclusions.", "- **Text features:** report authority, date/time, definition/threshold, edge-clause and discretion-term cues literally. The legacy composite is exploratory. Four bounded parser repairs and field-placement invariance are documented; no human inter-coder validation is claimed.", "- **Supplementary methods:** use the exact exposure/opening-cohort formula with platform-qualified family clusters. Compare HC3 on identical rows; retain existing within-family diagnostics with their distinct scale. Daily price alignment supplies no synchronized-price test.", "", "## 4. Results", "", *case_exhibit_lines(cases, observed_only=True), "### Sampled text context", "", *platform_profile_lines(profiles), "", "The minerals chronology records YES/YES in successive contracts and does not instantiate the separate announcement-versus-signature counterfactual. President-elect interruption, Fed quantization and Trump announcement/first-departure scenarios remain supplementary witnesses with their rule qualifications. Exhibit counts refer to cases rather than independent mechanisms.", "", "Main exhibits: (1) Hilton settlement contrast; (2) Khamenei fractional settlement; (3) suit adjudication chronology; (4) literal text profile and compact payout schematic. Full rules and supplementary witnesses are in the casebook. All volume/terminal-error tables and their uncertainty belong in [supplementary analysis](SUPPLEMENTARY_ANALYSIS.md).", "", "## 5. Discussion and conclusion", "", "Contract prices are comparable only after the paying conditions and amounts have been established. Hilton demonstrates an ordinary milestone distinction; Khamenei demonstrates a special price-based exception; the suit episode demonstrates institutional completion of a disputed category. The cases make established specification concerns concrete through auditable linked records.", "", "For comparison and hedging, show what qualifies and how much pays. For forecast evaluation, identify the achievement being evaluated. For adjudication, retain proposal/dispute/final-outcome chronology. Interface recommendations remain proposals.", "", "Purposive volume selection, flawed historical filtering, missing acquisition records, retrospective rule snapshots, unvalidated text indices and limited synchronized price evidence constrain generalization. Account reimbursements and contract payouts are separate. No platform ranking, manipulation inference or causal effect follows from these exhibits.", "", "Before comparing forecasts, establish what would have to happen for each contract to pay.", "", "## Appendix: sample and provenance note", "", *sample_limit_lines(contracts), "", "## References", "", *reference_lines(), "", "The linked citations in section 2 are the verified review source map. Recent preprints, partial article access and abstract-only leads retain their stated evidence levels. The former Bayesian source audit is preserved as history; the elementary expected-payout identity supplies no new updating theorem."]
+    _write_lines(path, lines)
+
+
+def write_claim_confidence(path: Path, models: pd.DataFrame, cases: pd.DataFrame, profiles: pd.DataFrame) -> None:
+    """Regenerate the twenty original claim IDs with their approved dispositions."""
+
+    preferred = _model_record(models, "cohort_exposure_adjusted")
+    volume = "Not estimable" if preferred is None else f"β={_value(preferred, 'coefficient'):.4f}, family-clustered 95% CI [{_value(preferred, 'ci_lower'):.4f}, {_value(preferred, 'ci_upper'):.4f}], n={int(_value(preferred, 'n')):,}"
+    dispositions = [
+        (1, "First place versus advancement", "Hilton supplies archived NO/$0 versus resolved YES; supplementary Steyer second-place witness remains hypothetical. Complete-rule audit gates each case."),
+        (2, "Call versus inauguration", "Bounded counterfactual; overlapping/non-nested under the archived model; no realized split or global ordering estimated."),
+        (3, "Fed quantization", "12.5-bp counterfactual conditional on literal wording and other operative clauses; no realized unusual-rate case established."),
+        (4, "Announcement versus signature", "Minerals chronology records YES/YES; separate YES/NO witness concerns dates, scope and milestones together."),
+        (5, "Announcement versus first departure", "Trump witness remains hypothetical with competing leaders and death-price exception; no global binary relation."),
+        (6, "Suit category and adjudication", "Observed appearance, proposed/disputed sequence and final NO support adjudication relevance; no manipulation or causal ambiguity inference."),
+        (7, "Portfolio text descriptions", "Corrected literal components describe selected rule text; independent human scale validation is absent."),
+        (8, "Composition reversal", "WITHDRAWN: bounded parser corrections eliminate the old overall/within-stratum reversal; no replacement institutional ranking."),
+        (9, "Threshold and family composition", "Corrected flag shares and API-family descriptions are sample context; granularity differs between platforms."),
+        (10, "Pooled activity association", volume + "; supplementary selected-portfolio association."),
+        (11, "Within-family identification", "Existing diagnostics retain a residual-score SD distinct from the pooled scale; inspect final model table rather than reusing old values."),
+        (12, "Subgroup activity estimates", "Exploratory supplementary coefficients; different significance levels do not establish heterogeneity."),
+        (13, "Temporal activity stability", "Existing period models are exploratory descriptions; no preregistered holdout or new interaction grid."),
+        (14, "Terminal-error association", "Supplementary Kalshi last-trade diagnostic lacks a common horizon; no accuracy advantage or equivalence established."),
+        (15, "Generalization and cause", "Volume-selected, retrospective portfolios and family concentration prevent causal or market-wide interpretation."),
+        (16, "Expected-payout identity", "Elementary background under any common distribution; fractional amounts matter. Khamenei separately records 45c versus YES, with differing deadlines and possible reimbursements."),
+        (17, "Interface comparability", "Untested proposal to display qualifying conditions and payout amounts; no behavioral effect measured."),
+        (18, "Logical probability restrictions", "Mathematical background for complete determinate binary relations; fractional/adjudicated exceptions require qualifications."),
+        (19, "Written-rule determinacy", "Conditional on stated scenario information and rule version. Later adjudication may define one eventual outcome."),
+        (20, "Observed price-coherence test", "Not estimable: no qualifying synchronized-price observations; missing excess is insufficient evidence."),
     ]
-    supplementary_lines = [line for line in result_lines if line not in main_result_lines]
-
-    lines = [
-        "# Same Future, Different Claim",
-        "",
-        "## 1. Research question and contribution",
-        "",
-        "How do prediction-market resolution architectures differentiate claims about the same public phenomenon, and how do determinacy and trading activity vary across the sampled market portfolios?",
-        "",
-        "The central contribution is upstream of aggregation: platform resolution architectures choose predicates, measurement conventions, temporal boundaries, evidence, exceptions, and fallback procedures. Markets with similar labels can therefore price non-equivalent digital claims. Even identical posterior beliefs about world histories can imply different claim probabilities when the represented payoff sets differ.",
-        "",
-        "## 2. Construct architecture",
-        "",
-        "**Semantic differentiation** is the process of selecting what counts, when it counts, and whose evidence counts. **Divergence** describes differences between the resulting claims; **determinacy** describes clarity within one claim. More explicit contracts need not be equivalent contracts.",
-        "",
-        "A contract is a possibly set-valued mapping from world histories to institutionally permissible settlements. **Semantic determinacy** is an intra-contract property: how uniquely a relevant world history maps to a settlement. **Semantic divergence** is an inter-contract property: whether two contracts about the same phenomenon map at least one plausible world history to different payouts or procedures.",
-        "",
-        "The constructs are orthogonal. Two precise contracts can diverge (network call versus inauguration); two identically vague contracts can have low determinacy but little between-contract divergence. Automated wording, number, source, stage, and deadline distances retrieve candidates but are not treated as validated semantic equivalence measures.",
-        "",
-        *representation_bridge_lines(),
-        "",
-        "## 3. Audited mechanism cases",
-        "",
-        *case_lines,
-        "",
-        "The archived rules are observed evidence; these scenarios are hypothetical, not records of realized settlements. Payout-divergence cases specify outcomes on both sides. The suit case illustrates an unspecified category boundary with an adjudication procedure. Exact rules, source links, and case-specific audit boundaries are in `tables/representation-case-matrix.csv` and `REPRESENTATION_CASEBOOK.md`.",
-        "",
-        "## 4. Data and sample correction",
-        "",
-        f"The reproducible official-API sample contains {platform_descriptions}. Openings begin {first_open.date() if pd.notna(first_open) else 'unknown'}; the latest observed resolution is {last_resolution.date() if pd.notna(last_resolution) else 'unknown'}. Polymarket sports contracts are excluded before its high-volume cap using official sports fields plus a conservative documented taxonomy. Volume remains cumulative and is standardized within platform; this purposive sample is not population-representative.",
-        "",
-        f"The automated matcher retains {len(high_matches)} high-confidence metadata pairs, dominated by repeated families. Only {len(panel_summary)} pairs have aligned histories, all too sparse and homogeneous to test whether divergence predicts price wedges.",
-        "",
-        *coherence_status_lines(cases, coherence),
-        "",
-        "## 5. Measurement and method",
-        "",
-        "The transparent determinacy proxy averages source specificity, temporal specificity, operational definition, edge-case completeness, and discretion clarity. Calendar years no longer count as quantitative thresholds. Leave-one-component-out models, direct ambiguity counts, and qualitative/quantitative splits expose score dependence.",
-        "",
-        "Volume models compare the original baseline with a preferred retrieval-capped exposure/opening-cohort specification, resolved-only samples, family-clustered uncertainty, family aggregation, and within-family demeaning. The within-family estimates remove stable Kalshi-series or Polymarket-event popularity but are supported by relatively few families with internal semantic variation.",
-        "",
-        "## 6. Empirical results",
-        "",
-        "### Sampled platform rule profiles",
-        "",
-        *platform_profile_lines(profiles),
-        "",
-        "### Secondary trading-activity evidence",
-        "",
-        *main_result_lines,
-        "",
-        *diagnostic_interpretation,
-        "",
-        "Trading activity varies across portfolios of differently specified claims; the available associations do not isolate an effect of ambiguity itself. The paper's central result is the documented difference in what contracts require for a payout.",
-        "",
-        "## 7. Information Systems storyline",
-        "",
-        "- **Phenomenon:** nearly identical market labels can expose traders to different platform-defined claims.",
-        "- **Puzzle:** aggregation accounts often treat the proposition being priced as fixed before it enters the information system.",
-        "- **Mechanism:** resolution architectures partition world histories through predicate selection, operationalization, boundary rules, adjudication, and fallback.",
-        "- **Formal bridge:** updating fixes a posterior over world histories; the platform's payout mapping determines which claim that posterior values. Same world beliefs need not mean the same claim probability.",
-        "- **Evidence:** witness-state cases demonstrate non-equivalence; systematic metadata document determinacy variation; volume associations supply secondary exploratory consequences.",
-        "- **Contribution:** collective-intelligence systems govern the referents of aggregation, not only information processing about those referents.",
-        "- **Memorable finding:** a second-place finish can lose a first-place contract and win an advancement contract. Clear resolution rules can still define different claims.",
-        "",
-        "## 8. Best outputs",
-        "",
-        "- `tables/representation-case-matrix.csv`: exact rules, signatures, witness states, and implied settlements.",
-        "- `tables/coherence-case-diagnostics.csv` and `tables/coherence-panel-readiness.csv`: audited relation implications and explicit price-evidence gates.",
-        "- `REPRESENTATION_CASEBOOK.md`: plain-language explanations of the striking cases.",
-        "- `PAPER_OUTLINE.md`: five-section ICIS paper outline, with current estimates and exhibits.",
-        "- `tables/analysis-platform-profiles.csv` and `figures/views-platform-rule-profiles.svg`: component differences, contract mix, and conditional score comparisons.",
-        "- `figures/views-conceptual-schematic.svg`: platform-specific resolution architectures and distinct claims.",
-        "- `tables/analysis-market-models.csv`: baseline, cohort/exposure, market-type, leave-one-out, and within-family estimates.",
-        "- `figures/views-determinacy-volume.svg`: descriptive score–volume pattern; not a causal figure.",
-        "",
-        "## 9. Candidate abstract",
-        "",
-        "Prediction markets perform two analytically distinct information functions: platforms constitute payoff-relevant claims over possible world histories, after which traders form and markets aggregate valuations of those claims. A representation-aware Bayesian benchmark shows why identical posterior beliefs about worlds can assign different probabilities to different payoff events. We distinguish divergence between claims from determinacy within a claim: an incomplete institutional mapping does not yet supply a unique target event. Archived Kalshi and Polymarket rules and counterfactual witness states demonstrate payout contrasts, while sampled rule profiles reveal systematic specification and composition differences. Volume associations remain exploratory. The sparse aligned-price evidence does not establish a realized divergence effect or support a current coherence test. The study explains how collective-intelligence systems constitute the object of aggregation as well as aggregate information about it.",
-        "",
-        "## 10. Conference-paper scope",
-        "",
-        "- Lead with understandable rule contrasts, the multidimensional platform profiles, and contract-composition patterns.",
-        "- Use the preferred volume association and within-family diagnostic as secondary evidence; keep remaining checks in the tables and research log.",
-        "- Audit the quoted case clauses when preparing the submission. Independent coding is a useful extension, not a reason to suspend the current mechanism paper.",
-        "- Reserve common-horizon prices on manually checked claims for a subsequent test of the price-wedge implication.",
-        "",
-        "## 11. Supplementary diagnostics",
-        "",
-        *supplementary_lines,
-    ]
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-
-
-def write_research_status(
-    path: Path,
-    contracts: pd.DataFrame,
-    models: pd.DataFrame,
-    cases: pd.DataFrame,
-    profiles: pd.DataFrame,
-    coherence: pd.DataFrame,
-) -> None:
-    """Write a one-page handoff of current evidence and decisions."""
-
-    cohort = _model_record(models, "cohort_exposure_adjusted")
-    within_kalshi = _model_record(models, "within_family_kalshi")
-    within_poly = _model_record(models, "within_family_polymarket")
-    lines = [
-        "# Research Status",
-        "",
-        f"Updated {date.today().isoformat()}.",
-        "",
-        "## Current core",
-        "",
-        f"The strongest contribution is an audited account of how resolution architectures turn one public-world phenomenon into non-equivalent digital claims. The case matrix currently contains {len(cases)} mechanisms with exact rules and counterfactual witness states.",
-        "Same posterior over world histories does not require equal probabilities for different payoff events: `q_c(e)=E_{μ_e}[r_c]`, equal to `P(Y_c|e)` for determinate binary contracts. Semantic indeterminacy leaves the written mapping incomplete; it is separate from uncertainty about worlds. This is our representation extension, not Meehan and Zhang's own market argument; see [source audit](../docs/BAYES_SOURCE_AUDIT.md).",
-        "",
-        *coherence_status_lines(cases, coherence),
-        "",
-        "## Current empirical package",
-        "",
-        f"The corrected non-sports metadata sample contains {len(contracts):,} contracts.",
-        "",
-        *platform_profile_lines(profiles),
-        "",
-    ]
-    if cohort is not None:
-        lines.append(
-            f"- Preferred cohort/exposure-adjusted determinacy–volume estimate: {_estimate(cohort, 'HC3 SE')}."
-        )
-    if within_kalshi is not None:
-        lines.append(
-            f"- Within-family Kalshi estimate: {_estimate(within_kalshi, 'clustered SE')}."
-        )
-    if within_poly is not None:
-        lines.append(
-            f"- Within-family Polymarket estimate: {_estimate(within_poly, 'clustered SE')}."
-        )
-    qualitative = _model_record(models, "qualitative_contracts")
-    quantitative = _model_record(models, "quantitative_contracts")
-    if qualitative is not None and quantitative is not None:
-        lines.append(
-            f"- Contract-type split: qualitative {_estimate(qualitative)}; quantitative {_estimate(quantitative)}."
-        )
-    temporal_rows = models.loc[models["model"].str.startswith("temporal_")]
-    if not temporal_rows.empty:
-        detail = "; ".join(
-            f"{str(record['model']).removeprefix('temporal_').replace('_', ' ')} "
-            f"{_value(record, 'coefficient'):.3f}"
-            for record in _records(temporal_rows)
-        )
-        lines.append(f"- Temporal/platform split: {detail}.")
-    lines.extend(
-        [
-            "",
-            "These volume results are exploratory consequences, not the theory’s sole support. The tiny aligned-price panel does not identify a divergence effect.",
-            "",
-            "## Locked decisions",
-            "",
-            "- Keep determinacy (within contract) separate from divergence (between contracts).",
-            "- Require a witness state before labeling truth-condition divergence.",
-            "- Require a complete-rule audit for a probability restriction; no inclusion inference from a headline or one witness. Neither platform is classified as more Bayesian or as violating global evidential constancy.",
-            "- Keep automated text-distance scores as candidate diagnostics until validated coding exists.",
-            "- Exclude sports before Polymarket’s high-volume cap and control cumulative-volume exposure/cohort.",
-            "",
-            "## Conference-paper focus",
-            "",
-            "Use PAPER_OUTLINE.md: platform profiles, audited payout contrasts, and secondary activity associations. Keep case explanations accessible and distinguish hypothetical scenarios from realized events. The empirical/theory critic feedback and implemented decisions are recorded in ../docs/CRITIC_REVIEW.md. Common-horizon price comparisons are a future extension.",
-        ]
-    )
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-
-
-def write_paper_outline(
-    path: Path,
-    contracts: pd.DataFrame,
-    models: pd.DataFrame,
-    cases: pd.DataFrame,
-    profiles: pd.DataFrame,
-) -> None:
-    """Generate a five-part ICIS outline tied to the current evidence and exhibits."""
-
-    cohort = _model_record(models, "cohort_exposure_adjusted")
-    case_count = len(cases)
-    lines = [
-        "# Same Future, Different Claim: How Prediction Markets Define What Counts",
-        "",
-        "Working ICIS conference-paper outline. Lead with observable differences in contract rules, explain why these matter for collective intelligence, and use activity associations as a secondary result.",
-        "",
-        "## 1. Introduction",
-        "",
-        "- **Motivation:** similar market headlines invite readers to treat their displayed probabilities as forecasts of the same event. Yet finishing first and advancing to the next round are different bets.",
-        "- **Opening example:** a candidate who finishes second loses a first-place contract but wins an advancement contract under a top-two rule. A called election winner who never takes office likewise separates media-call and inauguration contracts.",
-        "- **Theoretical shortcoming:** aggregation-focused explanations leave the constitution of the priced claim in the background. Position this as an upstream complement; do not claim that prior research universally ignores contract design.",
-        "- **RQ:** How do prediction-market resolution architectures differentiate claims about the same public phenomenon, and how do determinacy and trading activity vary across the sampled market portfolios?",
-        f"- **Methods:** official Kalshi/Polymarket metadata for {len(contracts):,} contracts, {case_count} purposively selected archived-rule cases, transparent rule-text measures, descriptive platform comparisons, and a small main-text set of exploratory volume estimates.",
-        "- **Contribution:** distinguish semantic differentiation as a design process, divergence between resulting claims, and determinacy within each claim. Explain why explicit rules can still price different state exposure.",
-        "",
-        "## 2. Literature and conceptual framework",
-        "",
-        "- **Prediction markets and collective intelligence:** connect information aggregation and forecast evaluation to the proposition the market actually prices.",
-        "- **IS representation and classification:** connect digital categories and operational definitions to what observable circumstances count as an outcome.",
-        "- **Platform governance and adjudication:** explain evidence authorities, time boundaries, exceptions, fallback procedures, and settlement methods as contract-design choices.",
-        "- **Constructs:** differentiation selects what/when/whose evidence counts; determinacy concerns one contract's mapping from a scenario to settlement; divergence concerns differences between two such mappings. A procedural difference alone need not imply a payout difference.",
-        "- **Core argument:** two precise contracts can disagree about what success means. Unclear category boundaries, such as ‘suit,’ present a separate interpretive problem.",
-        "",
-        *representation_bridge_lines(),
-        "",
-        "- **Theoretical implication:** under shared beliefs and otherwise comparable pricing conditions, different payout mappings can have different expected payoffs. A price gap need not be a disagreement about the same event; the current study does not estimate that mechanism in prices.",
-        "- **Exhibit:** conceptual schematic plus the compact determinacy/divergence matrix in `../docs/CONSTRUCTS.md`. These literature streams are an outline for a sourced literature section, not a completed literature review.",
-        "",
-        "## 3. Method",
-        "",
-        "- **Data and selection:** immutable September 10, 2026 official-API snapshots for this reproduction; purposive Kalshi series and volume-selected Polymarket contracts, with sports excluded before its cap. Report platform counts and coverage from `tables/preprocessing-coverage.csv`.",
-        "- **Units:** contract for text profiles and activity; Kalshi series or Polymarket event for family structure; a contract pair for payout divergence; one contract for the suit category example. Family granularities differ across APIs.",
-        "- **Text measurement:** source, temporal, outcome-definition, edge-clause, and discretion proxies averaged on a 0–1 scale. Recognize ET in clock context. Scores describe archived textual specification, not a validated scale of all institutional determinacy.",
-        "- **Platform comparisons:** report raw components, text length, threshold-flag composition, and composite means inside each flag group. Since the flag enters the score, these strata reveal composition rather than independently validate the measure.",
-        "- **Case method:** preserve exact rules and links; specify a hypothetical scenario, the decisive qualifying condition, implied settlements, and the interpretation boundary. These cases show how divergence can occur, not its population frequency or realized financial impact.",
-        "- **Coherence method:** audit the entire archived mapping, including cancellation, ties and death allocation, before assigning a logical relation. Audits are fingerprint-bound to IDs and rule text. Overlap/non-nesting needs witnesses in both differences and the intersection; one separating state never proves inclusion. Separately validated fresh synchronized YES prices are required for any price diagnostic.",
-        "- **Retrieval:** retrieve shared phenomena before screening claim compatibility. First-place/advancement and departure/first-departure pairs remain useful cases while being excluded from high-confidence claim candidates.",
-        "- **Activity:** standardize log cumulative volume and determinacy within platform; control observed exposure, opening year, text length, category, and platform. Report the preferred association and one within-family diagnostic per platform; leave existing additional checks in supplementary tables.",
-        "- **Scope:** sparse matched histories cannot support a divergence–price-wedge estimate. No extensive new robustness program is needed for the descriptive mechanism contribution.",
-        "",
-        "## 4. Results",
-        "",
-        "- **4.1 Different portfolios of claims:** compare the component profiles and contract-type mix. Explain the conditional composite comparison using the table below; avoid a global platform-quality ranking.",
-        "- **4.2 Same recognizable issue, different payable claim:** use the primary and election cases as entry points, followed by Fed rounding, the minerals milestone, and the competing-leader departure condition.",
-        "- **4.3 What counts as a suit?:** separate within-contract category interpretation from between-contract differentiation. Authentic images and explicit dates need not define the clothing category.",
-        "- **Representation-aware implications:** the election and minerals cases support overlap without nesting; neither yields an extra marginal restriction. Fed nesting is unclassified; primary ties and leader death allocations prevent a globally binary reading. The suit mapping requires institutional completion. Current coherence tests are not estimable: the legacy panel supplies neither manual relation validation nor fresh synchronized quote evidence.",
-        "- **4.4 Trading activity across claim portfolios:** report the preferred volume association, contract-type estimates, and the within-family boundary. The evidence does not establish that ambiguity causes participation.",
-        "",
-        *platform_profile_lines(profiles),
-        "",
-        "### Case exhibit: scenario → qualifying condition → settlement",
-        "",
-    ]
-    for record in _records(cases):
-        lines.extend(
-            [
-                f"- **{record['phenomenon']}** ({record['scope']}): {record.get('explanation', '')}",
-                f"  Hypothetical scenario: {record['witness_state']} A ({record['a_platform']}) = {record['payout_a']}; B ({record['b_platform']}) = {record['payout_b']}.",
-            ]
-        )
-        secondary = record.get("secondary_witness_state")
-        if isinstance(secondary, str) and secondary:
-            lines.append(
-                f"  Second scenario: {secondary} A = {record['secondary_payout_a']}; B = {record['secondary_payout_b']}."
-            )
-        lines.append(f"  Interpretation boundary: {record.get('audit_note', '')}")
-    lines.extend(
-        [
-            "",
-            "Exact clauses and URLs: [casebook](REPRESENTATION_CASEBOOK.md).",
-            "",
-            "### Compact activity exhibit",
-            "",
-        ]
-    )
-    if cohort is not None:
-        lines.append(
-            f"- Preferred exposure/cohort association: {_estimate(cohort, 'HC3 SE')} SD of log volume per one within-platform SD of the score."
-        )
-    for platform in ("Kalshi", "Polymarket"):
-        model_record = _model_record(models, f"within_family_{platform.lower()}")
-        if model_record is not None:
-            lines.append(
-                f"- Within-family {platform}: {_estimate(model_record, 'family-clustered SE')}. Uses one SD of residual score in internally varying families, so coefficient magnitude is not on the pooled score scale."
-            )
-    for name, label in (
-        ("qualitative_contracts", "No threshold flag"),
-        ("quantitative_contracts", "Threshold flag"),
-    ):
-        model_record = _model_record(models, name)
-        if model_record is not None:
-            lines.append(
-                f"- {label}: {_estimate(model_record, 'HC3 SE')}. Separate significance levels do not test whether the two coefficients differ."
-            )
-    lines.extend(
-        [
-            "",
-            "- **Main exhibits:** (1) conceptual schematic; (2) sampled platform profile table/figure; (3) compact case matrix; (4) preferred activity estimate and within-family diagnostic. Keep the full model inventory in supplementary outputs.",
-            "",
-            "## 5. Discussion and conclusion",
-            "",
-            "- **Answer to the RQ:** platforms differentiate claims through success predicates, milestones, measurement buckets, time and evidence boundaries, and competing outcomes. The sampled portfolios also differ in their mix and textual specification.",
-            "- **Theoretical contribution:** collective-intelligence systems help define what information is aggregated about. Clear specification and equivalent claims are separate achievements.",
-            "- **Empirical contribution:** auditable ordinary scenarios connect the conceptual distinction to platform rules; component and composition profiles extend beyond isolated anecdotes; volume estimates show an associated portfolio pattern.",
-            "- **Design implications:** show ‘what must happen to pay Yes,’ relevant deadlines, measurement conventions, and evidence rules beside similar headlines. Flag first-place versus advancement and individual versus first departure when comparing probabilities. These are proposed implications, not evaluated interventions.",
-            "- **Boundaries:** purposive samples, API family granularity, a text proxy, hypothetical rule-based cases, and cumulative activity constrain generalization and causal claims. Keep this concise and tied to what the paper actually claims.",
-            "- **Focused extension:** the implemented coherence module makes tests on validated binary equivalence, nesting, disjointness or complementarity possible once fresh synchronized prices and comparable market conditions exist. Numerical excess is conditional on a probability-price approximation, not proof of Bayesian irrationality or a causal divergence effect.",
-            "- **Closing message:** before asking whose forecast is right, establish what would have to happen for each contract to pay.",
-        ]
-    )
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    audited = add_claim_relations(cases) if not cases.empty else cases
+    required_cases = {
+        1: "hilton-first-vs-advance", 2: "election-call-vs-inauguration",
+        3: "fed-quantization-convention", 4: "minerals-observed-chronology",
+        5: "leader-announcement-vs-departure", 6: "suit-adjudication-episode",
+        16: "khamenei-death-allocation",
+    }
+    for index, (identifier, label, _disposition) in enumerate(dispositions):
+        if identifier in required_cases:
+            selected = audited.loc[audited.case_id.eq(required_cases[identifier])] if not audited.empty else audited
+            if selected.empty or not bool(selected.claim_relation_validated.all()):
+                dispositions[index] = (identifier, label, "Case assertion withheld: verified operative inputs are unavailable or changed; re-audit required.")
+    lines = ["# Claim confidence and disposition", "", f"Updated {date.today().isoformat()} under approved P1–P7. Claim IDs preserve the former overview; row counts denote exhibits rather than independent mechanisms.", "", "| ID | Claim | Current evidence and boundary |", "|---:|---|---|"]
+    lines.extend(f"| {identifier} | {label} | {disposition} |" for identifier, label, disposition in dispositions)
+    lines.extend(["", f"The generated case matrix contains {len(cases)} exhibits. Numerical profiles and covariance rows are regenerated from final data. Code tests establish parser/pipeline behavior; they supply no human construct reliability.", "", "Evidence: [casebook](REPRESENTATION_CASEBOOK.md), [model table](tables/analysis-market-models.csv), [profiles](tables/analysis-platform-profiles.csv), [supplementary analysis](SUPPLEMENTARY_ANALYSIS.md)."])
+    _write_lines(path, lines)

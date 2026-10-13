@@ -1,137 +1,82 @@
 # Same Future, Different Claim
 
-This repository studies how prediction-market platforms turn ostensibly shared future phenomena into different digitally tradable and institutionally resolvable claims. It separates **semantic determinacy** within a contract from **semantic divergence** between contracts and combines systematic Kalshi/Polymarket metadata with an audited counterfactual casebook.
+This project audits when apparently similar prediction-market questions expose traders to different settlements and when written rules leave a scenario to later adjudication. The case-led working paper uses verified Hilton first-place versus advancement settlements, Khamenei's recorded 45-cent versus YES settlements, and the Zelenskyy clothing/adjudication episode. Minerals contracts provide an observed chronology with two YES outcomes; other archived-rule scenarios remain explicitly hypothetical.
 
-The clearest result is representational: finishing first versus advancing, an election call versus inauguration, rounding a 12.5-basis-point move, announcing versus signing a minerals agreement, and individual departure versus being the first leader to leave can imply different settlements. Each case preserves archived official rules and an explicit hypothetical scenario. The separate “suit” case explains an unspecified clothing category whose interpretation is delegated to credible reporting.
+**Payoff divergence** requires different payouts in an explicitly specified scenario. **Written-rule determinacy** asks whether a specified rule version determines the payout given the information held fixed. Ordinary expected-payout reasoning includes fractional amounts and expectations about adjudication. This is a diagnostic empirical contribution, with no priority claim for payoff mappings or new Bayesian updating result.
 
-A focused representation-aware Bayesian layer sharpens this mechanism: the same posterior over world histories can assign different probabilities to different platform-defined payoff events. For a determinate binary mapping, `q_c(e) = E[r_c | e] = P(Y_c | e)`. An incomplete settlement category does not yet supply a unique event; specified fractional payouts require expected-payout rather than binary-event reasoning. This is our IS extension inspired by [Meehan and Zhang (2025)](https://doi.org/10.1215/00318108-11873775), with the transfer checked against the supplied PDF in the [source audit](docs/BAYES_SOURCE_AUDIT.md).
+The historical metadata sample remains fixed at 19,500 rows (12,251 Kalshi; 7,249 Polymarket). Its Polymarket selection used a flawed sports filter. The filter is repaired for future acquisition; excluded historical records and the exact rejected/overflow split cannot be recovered. The old composition-reversal and platform-ranking claims are withdrawn. Literal text features provide portfolio context; the composite is an exploratory specificity index. Activity and terminal-error analyses are supplementary, with platform-qualified family-clustered uncertainty for the exact preferred volume formula.
 
-The corrected metadata sample contains 12,251 Kalshi and 7,249 Polymarket non-sports binary contracts. Its most interesting descriptive contrast is a **composition reversal**: Kalshi has the higher overall determinacy proxy (.624 versus .610), while Polymarket scores higher within both threshold-flag groups (.575 versus .548 without the flag; .724 versus .640 with it). The flag appears in 82.1% of sampled Kalshi contracts and 23.7% of Polymarket contracts. Raw component profiles show more temporal and edge-clause detail on Polymarket and higher outcome-definition and discretion scores on Kalshi. These describe the sampled rule texts, not overall platform quality.
+Start with [PAPER_OUTLINE.md](output/PAPER_OUTLINE.md), [RESEARCH_SUMMARY.md](output/RESEARCH_SUMMARY.md), the [casebook](output/REPRESENTATION_CASEBOOK.md), and [supplementary analysis](output/SUPPLEMENTARY_ANALYSIS.md). Approval, pre-revision preservation and validation are recorded in `output/paper-revision/2026-10-12-01/`.
 
-The preferred exposure/cohort-adjusted association with standardized log volume is −0.129 (HC3 SE 0.009). Within-family estimates are −0.077 (p=.342) on Kalshi and +0.030 (p=.265) on Polymarket, using a different residual-score scale. The volume result remains secondary: it does not establish that ambiguity causes trading. Current numbers include the correction recognizing clock-context “ET” deadlines.
+## Reproduce the approved revision from restored archives
 
-Start with the generated [ICIS paper outline](output/PAPER_OUTLINE.md), [research summary](output/RESEARCH_SUMMARY.md), and [critic feedback and implemented revisions](docs/CRITIC_REVIEW.md).
-
-The [claim-confidence overview](output/CLAIM_CONFIDENCE.md) assesses each current claim's magnitude, significance, robustness, alternative explanations, and strongest example. It is a dated interpretation of the existing evidence, separate from the generated analysis.
-
-## Reproduce the results
-
-Install [uv](https://docs.astral.sh/uv/), then run:
+Use the existing `pyproject.toml` and lockfile with [uv](https://docs.astral.sh/uv/). Raw data are local and Git-ignored. No network calls are required for these commands:
 
 ```bash
 uv sync --dev
-uv run python3 main.py all
-uv run pytest -q
+uv run python3 main.py preprocess --retrieval-date 2026-09-10
+uv run python3 main.py match
+uv run python3 main.py anecdotes --retrieval-date 2026-09-10 \
+  --case-evidence output/paper-revision/2026-10-12-01/case-evidence/case-source-bundle.json
+uv run python3 main.py panel --retrieval-date 2026-09-10 \
+  --history-snapshot data/raw/matched-price-histories-2026-09-10-bad72f8883-interval-max.json
+uv run python3 main.py analyze
+uv run pytest -q tests/test_acquisition.py tests/test_preprocessing.py tests/test_taxonomy.py
+uv run pytest -q tests/test_semantics.py tests/test_analysis.py
+uv run pytest -q tests/test_anecdotes.py tests/test_coherence.py tests/test_matching.py tests/test_panel.py
 uv run ruff check .
 uv run mypy .
 ```
 
-On Windows, use uv’s managed `python` executable if `python3` resolves to the Microsoft Store shim:
+The explicitly selected history version reproduces the dormant retained pair inventory after clipping. The currently selected ID hash has no corresponding archive; using its default path fails rather than collecting fresh historical responses. The alternate `627b27c83f-interval-max` history has a third still-eligible pair and remains preserved. The anecdote bundle is derived from versioned official records and independent event sources preserved during the approved review, rather than a replacement metadata sample.
 
-```powershell
-uv run python main.py all
-```
+The manuscript consists of Markdown and SVG artifacts; there is no PDF/TeX build. `analyze` regenerates the paper, summary, status, confidence overview, supplementary note, tables and figures. It never rewrites the persistent [research log](output/research-log.md). Meaningful decisions and failed attempts are appended by the research agent. Old paper materials and related implementation sources are saved in `output/paper-revision/2026-10-12-01/pre-revision/` with SHA-256 hashes.
 
-Stages can also run separately:
+On Windows, use `uv run python` if `python3` resolves to the Store shim. Static checking targets the installed Python 3.12 interpreter and numerical-library stubs; Python 3.11 compatibility is not separately validated in this session. Tooling excludes the preserved archive and `work/` scratch files from mypy.
 
-```bash
-uv run python3 main.py download
-uv run python3 main.py preprocess
-uv run python3 main.py match
-uv run python3 main.py anecdotes
-uv run python3 main.py panel
-uv run python3 main.py analyze
-```
+## Acquisition and provenance
 
-To reproduce the included September 10, 2026 snapshots when cached locally:
+Only unauthenticated official Kalshi and Polymarket APIs feed the metadata pipeline. Named case records additionally cite independent event reporting and certified election results. Endpoint, selection, timestamp and outcome details are in [DATA_SOURCES.md](DATA_SOURCES.md).
 
-```bash
-uv run python3 main.py all --retrieval-date 2026-09-10 \
-  --kalshi-series-limit 120 --polymarket-limit 8000 --matched-panel-limit 12
-```
+`download` or `all` can acquire a new current-date sample when explicitly desired. An absent historical or future-date cache fails before network access. Cache reuse validates recorded selection parameters, including the Kalshi per-tier cap. New responses record `acquired_at_utc`; legacy `retrieved_at_date` labels remain readable without invented acquisition timestamps. The three source updates on September 11 under a September 10 wrapper remain an unresolved inconsistency.
 
-Raw API responses are date-stamped and immutable. Raw and processed data are Git-ignored; a fresh future run can differ as platform archives and rules evolve.
-
-For the critic-driven revision using locally cached snapshots, regenerate the affected stages without downloading new histories:
-
-```bash
-uv run python3 main.py preprocess --retrieval-date 2026-09-10
-uv run python3 main.py match
-uv run python3 main.py anecdotes --retrieval-date 2026-09-10
-uv run python3 main.py analyze
-```
-
-Use `uv run python` for these commands on Windows when `python3` selects the Store interpreter outside the project environment. In restricted sessions, `uv --cache-dir .uv-cache run ...` keeps the uv cache inside the workspace. No new dependencies or branches are required. `analyze` regenerates the profiles, figures, case-based research summary, and paper outline, screening cached price histories against current match eligibility.
-
-For the Bayesian extension, only `anecdotes --retrieval-date 2026-09-10` and `analyze` are needed with the existing processed contracts/matches/panel. No fresh download or new project dependency is required. `analyze` revalidates the case audit against archived ID/rule fingerprints and writes explicit coherence diagnostics. The manuscript in `input/` is a local theoretical source, not pipeline input.
-
-Optional future price observations go in `data/processed/coherence-price-observations.csv`, with columns `case_id,price_a,price_b,observed_at_a,observed_at_b,comparable_prices,comparison_basis`. A/B follow the case matrix. Use normalized YES prices, identical timezone-aware original observation timestamps and an explicit `True` flag; the basis must document freshness, common horizons and comparable conditions. A separately audited determinate binary relation must first support a marginal restriction. Do not populate this file with forward-filled daily panel rows: matching timestamps after resampling cannot certify freshness. Missing evidence produces `not_estimable`, not a zero excess. `excess` retains the raw inequality distance; the flag uses a numerical tolerance of `1e-9`, not an allowance for trading costs.
-
-## Design
-
-The construct architecture is documented in [docs/CONSTRUCTS.md](docs/CONSTRUCTS.md), with consequential choices in [docs/DECISIONS.md](docs/DECISIONS.md). In brief:
-
-- determinacy asks whether one contract maps a relevant world history uniquely to a settlement;
-- divergence asks whether two contracts about one phenomenon can settle differently;
-- automated text and metadata distances retrieve candidates but do not prove semantic equivalence;
-- a coded divergence requires a plausible witness state and implied settlement on both sides.
-
-The determinacy proxy averages source specificity, temporal specificity, operational definition, edge-case completeness, and discretion clarity. Calendar years are distinguished from substantive quantitative thresholds. Volume models include the original baseline, observed-exposure/opening-cohort adjustment, resolved-only estimates, qualitative/quantitative splits, leave-one-component-out checks, family clustering and aggregation, and estimates based only on within-family variation.
-
-**Semantic differentiation** names the process that creates the claims. The profile table reports raw component means and overall/threshold-stratified composite means, rather than comparing within-platform standardized scores. Threshold flags also enter the proxy, so stratification describes portfolio composition rather than independently validating the scale. Family statistics use Kalshi series and Polymarket events and retain that granularity distinction.
-
-Matching now has two stages: retrieval uses shared-phenomenon language without quantities, while claim-equivalence screening separately considers full wording, numeric overlap, predicates, and deadlines. This prevents divergent thresholds or dates from automatically removing an otherwise useful phenomenon candidate.
-
-## Data sources
-
-Only unauthenticated official APIs are used:
-
-- Kalshi series, live/historical markets, historical cutoff, event records, and candlesticks.
-- Polymarket Gamma market/event metadata and CLOB token price histories.
-
-Polymarket sports rows are removed before its high-volume cap using official sports fields plus the conservative taxonomy in `src/taxonomy.py`. Exact endpoints, fields, selection rules, and limitations are in [DATA_SOURCES.md](DATA_SOURCES.md).
-
-## Main outputs
-
-- [Research summary](output/RESEARCH_SUMMARY.md): current contribution, cases, estimates, interpretation, and paper storyline.
-- [Representation casebook](output/REPRESENTATION_CASEBOOK.md): plain-language explanations with exact archived rules.
-- [Conference paper outline](output/PAPER_OUTLINE.md): Introduction, Literature, Method, Results, and Discussion/Conclusion, linked to the current findings.
-- [Platform rule profile figure](output/figures/views-platform-rule-profiles.svg) and `output/tables/analysis-platform-profiles.csv`: component differences, contract mix, and conditional comparisons.
-- [Research status](output/RESEARCH_STATUS.md): concise handoff of current evidence and locked decisions.
-- `output/tables/representation-case-matrix.csv`: structured signatures, witness states, payouts, URLs, scope, and confidence.
-- `output/tables/coherence-case-diagnostics.csv`: relation-specific restrictions, observation eligibility and conditional price excess; currently all six cases are `not_estimable`.
-- `output/tables/coherence-panel-readiness.csv`: the two eligible legacy pairs have nine daily rows each, with insufficient semantic/synchronization validation.
-- `output/tables/analysis-market-models.csv`: all main and robustness estimates.
-- `output/tables/matching-representative-pairs.csv`: auditable automated candidates; divergence columns remain diagnostics.
-- `output/figures/views-conceptual-schematic.svg`: claim constitution and Bayesian world-belief updating meet at claim valuation, followed by aggregation and price.
-- `output/figures/views-determinacy-volume.svg`: descriptive score–volume pattern.
+The outcome schema separates recorded Kalshi binary results and scalar payouts from Polymarket endpoint-price inference and final-status evidence. Original intraday history timestamps and fill ages survive daily aggregation. Neither closure fields nor daily bucket labels prove synchronized-price freshness. No optional `coherence-price-observations.csv` has been supplied or collected.
 
 ## File structure
 
 ```text
-main.py                  # controller / command dispatch
-views.py                 # vector figures
+main.py                  # controller and explicit cached-stage dispatch
+views.py                 # deterministic vector figures
 src/
-  anecdotes.py           # official-rule archive and witness-state case matrix
-  coherence.py           # audited binary-relation implications and guarded price diagnostics
-  taxonomy.py            # shared sports exclusion rules
-  preprocessing.py       # normalized contract database and observed exposure
-  semantics.py           # determinacy and diagnostic divergence features
-  matching.py            # phenomenon retrieval and claim screening
-  panel.py               # diagnostic price-history alignment
-  analysis.py            # platform profiles, empirical models, existing diagnostics
-  reporting.py           # generated research documents and ICIS paper outline
-docs/                    # constructs and persistent research decisions
-tests/                   # unit tests; no network or LLM calls
-data/raw/                # immutable local API snapshots (ignored)
-data/processed/          # reproducible derived data (ignored)
-output/tables/           # generated analysis tables
-output/figures/          # generated vector figures
+  config.py              # paths, immutable-cache and acquisition-date guards
+  kalshi.py              # official Kalshi metadata acquisition/cache validation
+  polymarket.py          # official Polymarket metadata acquisition/cache validation
+  taxonomy.py            # reason-coded substantive sports classification
+  preprocessing.py       # normalized rows, outcome/exposure/attrition ledgers
+  semantics.py           # literal text cues and exploratory specificity index
+  matching.py            # phenomenon retrieval and claim candidate screening
+  panel.py               # clipped source histories, daily buckets and fill ages
+  anecdotes.py           # versioned cases and complete-input assertion audits
+  coherence.py           # guarded binary-relation/price diagnostics
+  analysis.py            # selected-portfolio supplementary models and profiles
+  reporting.py           # generated case-led manuscript and companion outputs
+docs/                    # constructs, decisions and historical source audit
+tests/                   # focused deterministic tests; no network or LLM calls
+data/raw/                # immutable restored official API snapshots (ignored)
+data/processed/          # reproducible derived tables (ignored)
+output/tables/           # generated evidence, analysis and audit tables
+output/figures/          # deterministic SVG figures
+output/paper-revision/   # approval, reviews, case evidence and preservation archive
+work/                    # intermediate implementation diagnostics (ignored)
 logs/                    # timestamped pipeline logs (ignored)
 ```
 
-## Limitations
+## Main outputs and interpretation
 
-The samples are purposive and cumulative volume is not a direct measure of information aggregation. Sports exclusion uses a transparent but imperfect taxonomy. The determinacy measure is an auditable proxy rather than a validated scale. Relatively few repeated families vary internally in determinacy. The two currently aligned matched histories are too sparse and homogeneous for a divergence–price-wedge test. The strongest next steps are independent signature coding, fixed-window volume, common-horizon prices, and broader cross-platform history coverage.
+- `preprocessing-normalization-ledger.csv`, `preprocessing-outcome-ledger.csv` and `preprocessing-exposure-ledger.csv`: reconcile retained rows and evidence categories.
+- `representation-case-matrix.csv`: complete operative inputs, source roles, hypothetical/observed labels, payouts and audit eligibility. Changed inputs block stale assertions.
+- `analysis-platform-profiles.csv`: literal components and threshold-stratified exploratory composite descriptions.
+- `analysis-market-models.csv`: existing specifications, exact preferred family-clustered row and same-formula HC3 comparison, confidence intervals and sample sizes.
+- `coherence-case-diagnostics.csv` and `coherence-panel-readiness.csv`: explicit missing-evidence gates. Missing excess means not estimable.
 
-The relation audit does not force an inequality: election/minerals cases overlap without nesting; Fed remains unclassified beyond conditional non-equivalence; primary ties and leader death clauses allow fractional payouts; suit is adjudicatively incomplete. None currently yields a useful binary marginal restriction. Daily alignment uses up to seven-day forward fill and lacks original price-time provenance. No current coherence test, trader-irrationality conclusion, platform Bayesian ranking or causal divergence-price effect is claimed.
+The portfolios are purposive and selected by volume; categories and family units differ by platform. The index lacks independent human construct validation. Case evidence establishes existence and distinctions, without population prevalence, trader understanding, causal effects, manipulation findings or account-level redemption audits. Account reimbursements and contract settlement amounts are separate. Interface recommendations are untested proposals. Deferred work O1–O4 requires separate approval.

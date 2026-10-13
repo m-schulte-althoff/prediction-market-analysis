@@ -6,7 +6,15 @@ import logging
 from pathlib import Path
 from typing import Any
 
-from src.config import KALSHI_BASE_URL, KALSHI_CATEGORIES, SampleConfig, dated_raw_path
+from src.config import (
+    KALSHI_BASE_URL,
+    KALSHI_CATEGORIES,
+    SampleConfig,
+    acquisition_metadata,
+    dated_raw_path,
+    require_current_acquisition_date,
+    validate_snapshot_date,
+)
 from src.http_client import PublicApiClient
 from src.io_utils import read_json, write_immutable_json
 
@@ -57,6 +65,27 @@ def _series_markets(
     return [by_ticker[key] for key in sorted(by_ticker)]
 
 
+def validate_kalshi_snapshot(payload: dict[str, Any], config: SampleConfig) -> None:
+    """Reject reuse with changed category, series-limit, or per-tier sampling caps."""
+
+    validate_snapshot_date(payload, config.retrieval_date, "Kalshi")
+    selection = payload.get("selection")
+    expected = {
+        "categories": list(KALSHI_CATEGORIES),
+        "series_limit": config.kalshi_series_limit,
+        "markets_per_series_tier": config.kalshi_markets_per_series,
+    }
+    if not isinstance(selection, dict):
+        raise ValueError("Kalshi snapshot does not record its sampling parameters")
+    for parameter, value in expected.items():
+        if selection.get(parameter) != value:
+            raise ValueError(
+                f"Kalshi cached sampling parameter {parameter!r} is "
+                f"{selection.get(parameter)!r}; requested {value!r}. "
+                "The immutable snapshot cannot serve this sample configuration."
+            )
+
+
 def download_kalshi(config: SampleConfig, client: PublicApiClient) -> dict[str, Any]:
     """Download or load the date-stamped Kalshi metadata snapshot."""
 
@@ -66,8 +95,10 @@ def download_kalshi(config: SampleConfig, client: PublicApiClient) -> dict[str, 
         payload = read_json(path)
         if not isinstance(payload, dict):
             raise TypeError("Kalshi snapshot must contain a JSON object")
+        validate_kalshi_snapshot(payload, config)
         return payload
 
+    require_current_acquisition_date(path, config.retrieval_date)
     catalog = client.get_json(
         f"{KALSHI_BASE_URL}/series",
         {"include_volume": "true"},
@@ -87,7 +118,7 @@ def download_kalshi(config: SampleConfig, client: PublicApiClient) -> dict[str, 
 
     cutoff = client.get_json(f"{KALSHI_BASE_URL}/historical/cutoff")
     payload = {
-        "retrieved_at_date": config.retrieval_date.isoformat(),
+        **acquisition_metadata(config.retrieval_date),
         "selection": {
             "categories": list(KALSHI_CATEGORIES),
             "series_limit": config.kalshi_series_limit,

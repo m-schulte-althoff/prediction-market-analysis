@@ -16,6 +16,10 @@ DETERMINACY_COMPONENTS = (
     "discretion_clarity",
 )
 TEMPORAL_REPLICATION_CUTOFF = pd.Timestamp("2025-07-01", tz="UTC")
+PREFERRED_VOLUME_FORMULA = (
+    "volume_z ~ determinacy_z + log_rule_length + log_observed_exposure + "
+    "C(open_year) + C(platform) + C(category_group)"
+)
 
 
 def _zscore(series: pd.Series) -> pd.Series:
@@ -105,6 +109,8 @@ def _model_row(name: str, model: Any, term: str, clusters: int | None = None) ->
         "n": int(model.nobs),
         "r_squared": float(model.rsquared),
         "clusters": clusters,
+        "covariance": str(model.cov_type),
+        "formula": str(model.model.formula),
     }
 
 
@@ -151,7 +157,7 @@ def platform_profiles(frame: pd.DataFrame) -> pd.DataFrame:
 
 
 def market_level_models(frame: pd.DataFrame) -> pd.DataFrame:
-    """Estimate main and obvious-alternative volume specifications with HC3 errors."""
+    """Retain exploratory volume models and prefer covariance-only family clustering."""
 
     specifications = [
         (
@@ -162,8 +168,7 @@ def market_level_models(frame: pd.DataFrame) -> pd.DataFrame:
         ),
         (
             "cohort_exposure_adjusted",
-            "volume_z ~ determinacy_z + log_rule_length + log_observed_exposure + "
-            "C(open_year) + C(platform) + C(category_group)",
+            PREFERRED_VOLUME_FORMULA,
             "determinacy_z",
         ),
         (
@@ -191,6 +196,17 @@ def market_level_models(frame: pd.DataFrame) -> pd.DataFrame:
         elif name == "within_polymarket":
             sample = frame.loc[frame["platform"] == "Polymarket"]
         if len(sample) < 30 or sample[term].nunique() < 2:
+            continue
+        if name == "cohort_exposure_adjusted":
+            specification = smf.ols(formula, data=sample, missing="raise")
+            model = specification.fit(cov_type="HC3")
+            records.append(_model_row(f"{name}_hc3", model, term))
+            clusters = int(sample["family_id"].nunique())
+            if clusters >= 2:
+                clustered = specification.fit(
+                    cov_type="cluster", cov_kwds={"groups": sample["family_id"]}
+                )
+                records.append(_model_row(name, clustered, term, clusters))
             continue
         model = smf.ols(formula, data=sample).fit(cov_type="HC3")
         records.append(_model_row(name, model, term))

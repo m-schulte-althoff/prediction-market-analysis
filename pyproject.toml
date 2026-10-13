@@ -38,10 +38,12 @@ select = ["E", "F", "I", "B", "UP", "SIM"]
 "src/reporting.py" = ["E501"]
 
 [tool.mypy]
-python_version = "3.11"
+# Match the execution interpreter and installed numerical-library stubs.
+python_version = "3.12"
 strict = true
 warn_unreachable = true
 packages = ["src"]
+exclude = ["^output/paper-revision/", "^work/"]
 
 [[tool.mypy.overrides]]
 module = ["scipy.*", "sklearn.*", "statsmodels.*"]

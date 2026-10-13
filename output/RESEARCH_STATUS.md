@@ -1,61 +1,54 @@
 # Research Status
 
-Updated 2026-09-14.
+Updated 2026-10-13 after approved P1–P7 implementation.
 
-## Current core
+Steve Hilton finished second in California's June 2, 2026 gubernatorial primary and advanced under the top-two rule. The archived first-place Kalshi contract settled NO/$0; the Polymarket advancement contract recorded resolved YES. The result concerns one election, yet the contracts reward different achievements.
 
-The strongest contribution is an audited account of how resolution architectures turn one public-world phenomenon into non-equivalent digital claims. The case matrix currently contains 6 mechanisms with exact rules and counterfactual witness states.
-Same posterior over world histories does not require equal probabilities for different payoff events: `q_c(e)=E_{μ_e}[r_c]`, equal to `P(Y_c|e)` for determinate binary contracts. Semantic indeterminacy leaves the written mapping incomplete; it is separate from uncertainty about worlds. This is our representation extension, not Meehan and Zhang's own market argument; see [source audit](../docs/BAYES_SOURCE_AUDIT.md).
+The case inventory contains 9 exhibits; 0 supply a validated binary marginal restriction. 0 observation-level price diagnostics are estimable.
 
-**Representation-aware coherence:** indeterminate: 1; non_equivalent_unclassified: 3; overlap_non_nested: 2. 0 cases supply a validated binary marginal restriction. Not estimable / insufficient evidence for an actual price-coherence test.
+The saved price histories are a dormant diagnostic panel. Original observations are clipped to the supported window before aggregation, and source timestamps and fill ages are retained. Daily labels and forward fills do not certify fresh synchronized quotes. No general divergence–price effect, trader misunderstanding, or forecast-accuracy advantage is established. Missing excess values mean insufficient evidence.
 
-Election and minerals rules support overlapping, non-nested events under the stated archived-rule model; this alone imposes no useful pairwise marginal restriction. Fed inclusion is unclassified. Primary ties and leader death allocations fall outside globally binary payouts; the suit case remains adjudicatively incomplete. These qualifications preserve the existing witness results. The legacy daily panel forward-fills prices for up to seven days and cannot certify synchronized fresh observations. See `tables/coherence-case-diagnostics.csv` and `tables/coherence-panel-readiness.csv` for explicit eligibility reasons. Numerical excess, where estimable, is a conditional price diagnostic; liquidity, fees, spreads, stale trading, risk preferences, market composition and limits to arbitrage prevent interpreting it as trader irrationality.
+## Current sample and measurement
 
-## Current empirical package
+The fixed historical sample contains 19,500 contracts (Kalshi: 12,251; Polymarket: 7,249). Raw normalization reconciles 12,253 Kalshi rows minus two missing titles and 8,000 retained Polymarket rows minus 751 unsupported outcome-label rows. Raw snapshots remain unchanged.
 
-The corrected non-sports metadata sample contains 19,500 contracts.
+Kalshi coverage selects 120 high-volume series and caps each acquisition tier. Polymarket coverage selects high-volume closed markets using a flawed historical sports filter. `gameStartTime` wrongly flagged named minerals and suit markets as sports. The classifier is repaired for future acquisition; omitted historical records are not restored by that repair. The 23,700 scanned minus 8,000 retained difference is 15,700, with no established sports/overflow split. These portfolios are purposive, use different category/family schemes, and support no population ranking.
 
-| Sampled rule-text measure | Kalshi | Polymarket |
+September 10 is the legacy snapshot label, not a verified HTTP acquisition timestamp. Three Polymarket source updates fall on September 11; the discrepancy remains unresolved. Missing historical caches now fail before network access. Date-only retrieval boundaries and metadata elapsed time are exposure proxies. The audit separates scheduled future openings, positive-volume same-day openings and close-before-open records; neither clipping nor alternate date conventions establishes that rules preceded trading.
+
+Outcome provenance separates Kalshi recorded binary results and scalar settlements from Polymarket final-status endpoint prices and unresolved price inference. Fifteen proposed-status and 38 missing-status endpoint records are qualified separately; two `settled` statuses count as recorded final status. Six Kalshi scalar settlements and ten Polymarket intermediate-price cases remain separate categories. See [data sources](../DATA_SOURCES.md) and the sample audit tables for the exact ledger.
+
+| Sampled text feature | Kalshi | Polymarket |
 |---|---:|---:|
 | Contracts | 12,251 | 7,249 |
-| Mean determinacy proxy | 0.624 | 0.610 |
-| Source specificity | 0.550 | 0.518 |
-| Temporal specificity | 0.619 | 0.812 |
-| Outcome definition | 0.678 | 0.501 |
-| Edge-clause completeness | 0.273 | 0.409 |
-| Discretion clarity | 0.997 | 0.811 |
-| Threshold-flag share | 82.1% | 23.7% |
+| Exploratory rule-text specificity index | 0.621 | 0.657 |
+| Authority/source cues | 0.550 | 0.653 |
+| Date/time cues | 0.605 | 0.798 |
+| Definition/threshold cues | 0.679 | 0.617 |
+| Edge-clause cues | 0.272 | 0.404 |
+| Absence of flagged discretion terms | 0.997 | 0.811 |
+| Threshold-flag share | 82.2% | 24.7% |
 | Mean analyzed text length (words) | 100.5 | 157.8 |
 
-| Determinacy proxy within text strata | Kalshi | Polymarket |
-|---|---:|---:|
-| No threshold flag | 0.548 (n=2,191) | 0.575 (n=5,534) |
-| Threshold flag | 0.640 (n=10,060) | 0.724 (n=1,715) |
+Literal cues describe the retained portfolios. The legacy column `determinacy_score` stores an exploratory text index; it has no independent human construct validation. The threshold flag contributes to that index, so stratification is descriptive. Corrected parsing eliminates the previously reported composition reversal. Final field-placement invariance is documented separately from the frozen four-repair diagnostic in the measurement note.
 
-These are raw proxy means in purposive sampled portfolios. Threshold flags come from the text measure and also enter its outcome-definition component; the strata describe composition rather than supply an independent validation or causal adjustment. Longer text and a higher component score do not establish better forecasting or more equivalent claims.
+- Kalshi: 120 API families; top five contain 46.2% of rows; 43 families (6,345 rows) vary internally in the index.
+- Polymarket: 2,634 API families; top five contain 2.6% of rows; 85 families (519 rows) vary internally in the index.
+Kalshi series and Polymarket events have different granularity. Their family counts and concentration do not rank platform diversity.
 
-**Composition reversal:** Kalshi has the higher overall composite mean, while Polymarket has the higher mean in both threshold-flag strata. The overall ranking depends on the mix of contracts; it is not a general ranking of platform clarity.
+## Supplementary association
 
-- **Kalshi family structure:** 120 families; the five largest account for 46.2% of sampled contracts. Between-family differences account for 95.8% of the score sum of squares; 48 families (6,443 contracts) vary internally.
-- **Polymarket family structure:** 2,634 families; the five largest account for 2.6% of sampled contracts. Between-family differences account for 99.1% of the score sum of squares; 145 families (1,048 contracts) vary internally.
-Family units follow the APIs: Kalshi series and Polymarket events. Their different granularity means concentration and variance shares describe each sample; they do not rank platform diversity.
+| Specification | Coefficient | 95% interval | Uncertainty | n |
+|---|---:|---:|---|---:|
+| cohort_exposure_adjusted | -0.1243 | [-0.2048, -0.0438] | cluster; SE 0.0411 | 19,500 |
+| cohort_exposure_adjusted_hc3 | -0.1243 | [-0.1426, -0.1060] | HC3; SE 0.0093 | 19,500 |
+| within_family_kalshi | -0.0753 | [-0.2366, 0.0861] | cluster; SE 0.0823 | 6,345 |
+| within_family_polymarket | -0.0445 | [-0.1218, 0.0327] | cluster; SE 0.0394 | 519 |
 
-- Preferred cohort/exposure-adjusted determinacy–volume estimate: -0.129 (HC3 SE 0.009, p=2.49e-44, n=19,500).
-- Within-family Kalshi estimate: -0.077 (clustered SE 0.082, p=0.342, n=6,443).
-- Within-family Polymarket estimate: 0.030 (clustered SE 0.027, p=0.265, n=1,048).
-- Contract-type split: qualitative -0.032 (SE 0.017, p=0.0625, n=7,725); quantitative -0.068 (SE 0.014, p=1.81e-06, n=11,775).
-- Temporal/platform split: early kalshi -0.187; early polymarket -0.044; late kalshi -0.079; late polymarket -0.129.
+The preferred pooled coefficient uses one within-platform SD of the text index and standardized log cumulative volume. Its family clusters are qualified by platform. HC3 uses the same formula and rows as a covariance comparison. Within-family models use internally varying families and a different residual-score SD; their magnitudes are not directly comparable to the pooled coefficient.
 
-These volume results are exploratory consequences, not the theory’s sole support. The tiny aligned-price panel does not identify a divergence effect.
+Volume selection, retrospective rules, family concentration and incomplete exposure metadata limit interpretation to these selected portfolios. Subgroup significance differences do not test heterogeneity. The frozen review's top-five families contribute 69.48% of focal sandwich variance; its bounded largest-family deletion remains negative. Those checks concern the archived and frozen repaired specifications, rather than certifying the final field-invariant index. No new deletion grid was run.
 
-## Locked decisions
+## Locked scope
 
-- Keep determinacy (within contract) separate from divergence (between contracts).
-- Require a witness state before labeling truth-condition divergence.
-- Require a complete-rule audit for a probability restriction; no inclusion inference from a headline or one witness. Neither platform is classified as more Bayesian or as violating global evidential constancy.
-- Keep automated text-distance scores as candidate diagnostics until validated coding exists.
-- Exclude sports before Polymarket’s high-volume cap and control cumulative-volume exposure/cohort.
-
-## Conference-paper focus
-
-Use PAPER_OUTLINE.md: platform profiles, audited payout contrasts, and secondary activity associations. Keep case explanations accessible and distinguish hypothetical scenarios from realized events. The empirical/theory critic feedback and implemented decisions are recorded in ../docs/CRITIC_REVIEW.md. Common-horizon price comparisons are a future extension.
+Use the case-led PAPER_OUTLINE.md and documented casebook. Keep payoff divergence distinct from written-rule determinacy. Treat text features as portfolio context and volume as supplementary. No replacement historical sample, new activity design, synchronized price collection, comprehension study or new critic round was authorized. Missing historical caches fail closed. Research-log entries survive regeneration; cycle approval, archives and validation are in paper-revision/2026-10-12-01/.
