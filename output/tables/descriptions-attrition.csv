@@ -1,0 +1,5 @@
+Platform,Normalization disposition,Rows
+Kalshi,question_length_le4,2
+Kalshi,retained,12251
+Polymarket,retained,7249
+Polymarket,unsupported_binary_labels,751

@@ -1,5 +1,11 @@
 # Supplementary analysis
 
+## Text measurement and portfolio context
+
+The [measurement note](MEASUREMENT_NOTE.md) retains the composite definition and repair history. [Component profiles](tables/analysis-platform-profiles.csv) and the [data atlas](descriptions-data.html) describe the selected portfolios. Components are mean weighted cue scores; the discretion-term score is max(0, 1 − 0.25 × distinct configured phrases), not a no-flag share. These lexical descriptions do not validate scenario-level determinacy.
+
+## Activity association
+
 | Specification | Coefficient | 95% interval | Uncertainty | n |
 |---|---:|---:|---|---:|
 | cohort_exposure_adjusted | -0.1243 | [-0.2048, -0.0438] | cluster; SE 0.0411 | 19,500 |
@@ -9,7 +15,9 @@
 
 The preferred pooled coefficient uses one within-platform SD of the text index and standardized log cumulative volume. Its family clusters are qualified by platform. HC3 uses the same formula and rows as a covariance comparison. Within-family models use internally varying families and a different residual-score SD; their magnitudes are not directly comparable to the pooled coefficient.
 
-Volume selection, retrospective rules, family concentration and incomplete exposure metadata limit interpretation to these selected portfolios. Subgroup significance differences do not test heterogeneity. The frozen review's top-five families contribute 69.48% of focal sandwich variance; its bounded largest-family deletion remains negative. Those checks concern the archived and frozen repaired specifications, rather than certifying the final field-invariant index. No new deletion grid was run.
+Volume selection, retrospective rules, family concentration and incomplete exposure metadata limit interpretation to these selected portfolios. Subgroup significance differences do not test heterogeneity.
+
+The current cycle's [independent reproduction](paper-revision/2026-10-15-01/scratch-empirics/reproduction-results.json) uses the final field-invariant features. Its top five families contribute 66.86% of focal sandwich variance. Omitting the largest family by row count (2,000 rows) gives β=−0.1199, family-clustered SE 0.0402 and 95% interval [−0.1986, −0.0411], n=17,500. This bounded diagnostic does not establish broad robustness or causality. The older 69.48% concentration belongs to the earlier frozen specification and is retained only as historical evidence. No further deletion grid was run.
 
 ## Terminal-error diagnostic
 

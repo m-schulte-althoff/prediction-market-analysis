@@ -47,10 +47,10 @@ def platform_rule_profiles(profiles: pd.DataFrame, path: Path) -> None:
         yticks=np.arange(5),
         yticklabels=[
             "Authority/source cues", "Date/time cues", "Definition/threshold cues",
-            "Edge-clause cues", "No discretion flags",
+            "Edge-clause cues", "Discretion-term score",
         ],
         xlim=(0, 1.05),
-        xlabel="Mean literal text component (0–1)",
+        xlabel="Mean weighted text cue score (0–1)",
         title="Different literal rule-text cues",
     )
     axes[0].invert_yaxis()
@@ -104,11 +104,11 @@ def conceptual_schematic(path: Path) -> None:
     axis.axis("off")
     nodes = [
         (0.09, 0.78, "Possible world\nhistories $\\Omega$", "#E7EEF5"),
-        (0.30, 0.78, "Platform $c$\nresolution architecture", "#DDEAF4"),
+        (0.30, 0.78, "Contract $c$\nconditions and procedure", "#DDEAF4"),
         (
             0.54,
             0.78,
-            "Payout mapping $r_c$\namounts and exceptions\nwritten interpretation $R_c$",
+            "Payout mapping $r_c$\namounts and exceptions\nrequired decision inputs",
             "#F5DFE2",
         ),
         (0.09, 0.30, "Trader evidence $e$", "#E7EEF5"),
@@ -161,7 +161,7 @@ def conceptual_schematic(path: Path) -> None:
     axis.text(
         0.50,
         0.02,
-        "A point claim valuation requires a sufficiently complete mapping. "
+        "Analytical decomposition; arrows are not estimated causal effects. "
         "Equating price with probability requires additional assumptions.",
         ha="center",
         fontsize=9,

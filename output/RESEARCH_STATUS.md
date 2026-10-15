@@ -1,14 +1,19 @@
 # Research Status
 
-Updated 2026-10-13 after approved P1–P7 implementation.
+Updated 2026-10-15 under approved cycle 2026-10-15-01, P1–P6.
 
-Steve Hilton finished second in California's June 2, 2026 gubernatorial primary and advanced under the top-two rule. The archived first-place Kalshi contract settled NO/$0; the Polymarket advancement contract recorded resolved YES. The result concerns one election, yet the contracts reward different achievements.
+On June 2, 2026, Steve Hilton finished second in California’s gubernatorial primary and advanced to the general election. California’s nonpartisan primary sends the two candidates with the most votes to the next round, so finishing first and advancing are different achievements. Kalshi listed a contract on whether Hilton would finish first; Polymarket listed one on whether he would advance. The archived Kalshi record shows NO and a zero settlement, while the Polymarket record shows resolved YES, corresponding to a full unit payout. The certified election result and both records therefore describe a consistent outcome: Hilton qualified without taking first place. [Certified results](https://elections.cdn.sos.ca.gov/sov/2026-primary/sov/06-sov-summary.pdf) and the [contract audit](REPRESENTATION_CASEBOOK.md) identify the event and the claims separately.
+
+The distinction matters when prices are used beyond the individual contract. If an analyst pooled these two prices as estimates of ‘Hilton’s primary prospects,’ the combined series would mix forecasts of first place with forecasts of advancing. Scoring both against a single outcome would likewise evaluate different targets as though they were the same forecast. Positions in the two contracts would not form an exact offset in the observed second-place outcome. These are consequences of their specified claims; the case does not show that traders or analysts actually made those mistakes.
+
+## Main interpretation
+
+The documentary audit distinguishes qualifying conditions, payout amounts and required institutional inputs. The [observed exhibits](REPRESENTATION_CASEBOOK.md) are re-audited against their supplied fields before publication. The suit extension concerns one contract; it supplies no pairwise relation or demonstrated institutional incompleteness. Historical proposal/finality logs remain unavailable. The presidential interruption witness is withheld because governing-version coverage is incomplete.
 
 The case inventory contains 9 exhibits; 0 supply a validated binary marginal restriction. 0 observation-level price diagnostics are estimable.
 
 The saved price histories are a dormant diagnostic panel. Original observations are clipped to the supported window before aggregation, and source timestamps and fill ages are retained. Daily labels and forward fills do not certify fresh synchronized quotes. No general divergence–price effect, trader misunderstanding, or forecast-accuracy advantage is established. Missing excess values mean insufficient evidence.
-
-## Current sample and measurement
+## Sample and measurement
 
 The fixed historical sample contains 19,500 contracts (Kalshi: 12,251; Polymarket: 7,249). Raw normalization reconciles 12,253 Kalshi rows minus two missing titles and 8,000 retained Polymarket rows minus 751 unsupported outcome-label rows. Raw snapshots remain unchanged.
 
@@ -22,20 +27,19 @@ Outcome provenance separates Kalshi recorded binary results and scalar settlemen
 |---|---:|---:|
 | Contracts | 12,251 | 7,249 |
 | Exploratory rule-text specificity index | 0.621 | 0.657 |
-| Authority/source cues | 0.550 | 0.653 |
-| Date/time cues | 0.605 | 0.798 |
-| Definition/threshold cues | 0.679 | 0.617 |
-| Edge-clause cues | 0.272 | 0.404 |
-| Absence of flagged discretion terms | 0.997 | 0.811 |
+| Authority/source cue score | 0.550 | 0.653 |
+| Date/time cue score | 0.605 | 0.798 |
+| Definition/threshold cue score | 0.679 | 0.617 |
+| Edge-clause cue score | 0.272 | 0.404 |
+| Discretion-term score (1 − penalty) | 0.997 | 0.811 |
 | Threshold-flag share | 82.2% | 24.7% |
 | Mean analyzed text length (words) | 100.5 | 157.8 |
 
-Literal cues describe the retained portfolios. The legacy column `determinacy_score` stores an exploratory text index; it has no independent human construct validation. The threshold flag contributes to that index, so stratification is descriptive. Corrected parsing eliminates the previously reported composition reversal. Final field-placement invariance is documented separately from the frozen four-repair diagnostic in the measurement note.
+The five components are mean weighted cue scores, not frequencies of institutionally determinate rules. The discretion-term score is max(0, 1 − 0.25 × the number of distinct configured phrases); 0.811 does not mean 81.1% of rules lack a flag. The legacy column `determinacy_score` stores their exploratory mean, without independent human construct validation. The threshold flag contributes to that index, so stratification is descriptive. Measurement repairs and field-placement invariance are documented in the measurement note.
 
 - Kalshi: 120 API families; top five contain 46.2% of rows; 43 families (6,345 rows) vary internally in the index.
 - Polymarket: 2,634 API families; top five contain 2.6% of rows; 85 families (519 rows) vary internally in the index.
 Kalshi series and Polymarket events have different granularity. Their family counts and concentration do not rank platform diversity.
-
 ## Supplementary association
 
 | Specification | Coefficient | 95% interval | Uncertainty | n |
@@ -47,8 +51,11 @@ Kalshi series and Polymarket events have different granularity. Their family cou
 
 The preferred pooled coefficient uses one within-platform SD of the text index and standardized log cumulative volume. Its family clusters are qualified by platform. HC3 uses the same formula and rows as a covariance comparison. Within-family models use internally varying families and a different residual-score SD; their magnitudes are not directly comparable to the pooled coefficient.
 
-Volume selection, retrospective rules, family concentration and incomplete exposure metadata limit interpretation to these selected portfolios. Subgroup significance differences do not test heterogeneity. The frozen review's top-five families contribute 69.48% of focal sandwich variance; its bounded largest-family deletion remains negative. Those checks concern the archived and frozen repaired specifications, rather than certifying the final field-invariant index. No new deletion grid was run.
+Volume selection, retrospective rules, family concentration and incomplete exposure metadata limit interpretation to these selected portfolios. Subgroup significance differences do not test heterogeneity.
 
-## Locked scope
+The current cycle's [independent reproduction](paper-revision/2026-10-15-01/scratch-empirics/reproduction-results.json) uses the final field-invariant features. Its top five families contribute 66.86% of focal sandwich variance. Omitting the largest family by row count (2,000 rows) gives β=−0.1199, family-clustered SE 0.0402 and 95% interval [−0.1986, −0.0411], n=17,500. This bounded diagnostic does not establish broad robustness or causality. The older 69.48% concentration belongs to the earlier frozen specification and is retained only as historical evidence. No further deletion grid was run.
+## Approved scope and remaining evidence
 
-Use the case-led PAPER_OUTLINE.md and documented casebook. Keep payoff divergence distinct from written-rule determinacy. Treat text features as portfolio context and volume as supplementary. No replacement historical sample, new activity design, synchronized price collection, comprehension study or new critic round was authorized. Missing historical caches fail closed. Research-log entries survive regeneration; cycle approval, archives and validation are in paper-revision/2026-10-12-01/.
+P1–P6 are approved in paper-revision/2026-10-15-01/APPROVED_PROMPT_PLAN.md, with the user's prose amendments. P2 adds one question's pinned protocol state and creator updates; the HTTP-403 historical-log limit is recorded in P2_OUTCOME.md. O1–O4, broader samples, price/comprehension studies and another critic round remain excluded. Source/version gaps limit exhaustive rule claims. Metadata endDate is an exposure/window proxy, not necessarily the operative rule deadline. New updates and sources never backdate the original snapshots.
+
+Manuscript: [PAPER_OUTLINE.md](PAPER_OUTLINE.md). Persistent research history is in research-log.md; cycle outcomes and validation are in paper-revision/2026-10-15-01/.

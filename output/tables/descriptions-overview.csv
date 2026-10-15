@@ -1,0 +1,3 @@
+Platform,Contracts,API families,Categories,Index mean,Median text words [IQR],Threshold flag,Top-five family share
+Kalshi,"12,251",120,5,0.621,78 [36–109],82.2%,46.2%
+Polymarket,"7,249","2,634",14,0.657,138 [120–175],24.7%,2.6%

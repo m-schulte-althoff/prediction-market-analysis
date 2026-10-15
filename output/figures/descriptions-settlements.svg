@@ -1,0 +1,332 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="673.064375pt" height="222.810344pt" viewBox="0 0 673.064375 222.810344" xmlns="http://www.w3.org/2000/svg" version="1.1" role="img" aria-labelledby="descriptions-settlements-title descriptions-settlements-desc"><title id="descriptions-settlements-title">Observed contract settlements</title><desc id="descriptions-settlements-desc">Circles are contract A; diamonds are B. Blue is Kalshi, coral is Polymarket. Cases form a separate purposive evidence inventory.</desc>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="descriptions-settlements-figure_1">
+  <g id="descriptions-settlements-patch_1">
+   <path d="M 0 222.810344
+L 673.064375 222.810344
+L 673.064375 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="descriptions-settlements-axes_1">
+   <g id="descriptions-settlements-patch_2">
+    <path d="M 185.984375 184.608
+L 665.864375 184.608
+L 665.864375 7.2
+L 185.984375 7.2
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="descriptions-settlements-line2d_1">
+    <path d="M 232.424375 42.144
+L 619.424375 42.144
+" clip-path="url(#descriptions-settlements-p176d9b0a04)" style="fill: none; stroke: #cfd8d5; stroke-width: 4; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-settlements-line2d_2">
+    <path d="M 406.574375 95.904
+L 619.424375 95.904
+" clip-path="url(#descriptions-settlements-p176d9b0a04)" style="fill: none; stroke: #cfd8d5; stroke-width: 4; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-settlements-line2d_3">
+    <path d="M 619.424375 149.664
+L 619.424375 149.664
+" clip-path="url(#descriptions-settlements-p176d9b0a04)" style="fill: none; stroke: #cfd8d5; stroke-width: 4; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-settlements-matplotlib.axis_1">
+    <g id="descriptions-settlements-xtick_1">
+     <g id="descriptions-settlements-line2d_4">
+      <path d="M 232.424375 184.608
+L 232.424375 7.2
+" clip-path="url(#descriptions-settlements-p176d9b0a04)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-settlements-line2d_5">
+      <defs>
+       <path id="descriptions-settlements-m44736501fb" d="M 0 0
+L 0 3.5
+" style="stroke: #536766; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-settlements-m44736501fb" x="232.424375" y="184.608" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-settlements-text_1">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="232.424375" y="199.205656" transform="rotate(-0 232.424375 199.205656)">0.00</text>
+     </g>
+    </g>
+    <g id="descriptions-settlements-xtick_2">
+     <g id="descriptions-settlements-line2d_6">
+      <path d="M 329.174375 184.608
+L 329.174375 7.2
+" clip-path="url(#descriptions-settlements-p176d9b0a04)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-settlements-line2d_7">
+      <g>
+       <use xlink:href="#descriptions-settlements-m44736501fb" x="329.174375" y="184.608" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-settlements-text_2">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="329.174375" y="199.205656" transform="rotate(-0 329.174375 199.205656)">0.25</text>
+     </g>
+    </g>
+    <g id="descriptions-settlements-xtick_3">
+     <g id="descriptions-settlements-line2d_8">
+      <path d="M 425.924375 184.608
+L 425.924375 7.2
+" clip-path="url(#descriptions-settlements-p176d9b0a04)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-settlements-line2d_9">
+      <g>
+       <use xlink:href="#descriptions-settlements-m44736501fb" x="425.924375" y="184.608" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-settlements-text_3">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="425.924375" y="199.205656" transform="rotate(-0 425.924375 199.205656)">0.50</text>
+     </g>
+    </g>
+    <g id="descriptions-settlements-xtick_4">
+     <g id="descriptions-settlements-line2d_10">
+      <path d="M 522.674375 184.608
+L 522.674375 7.2
+" clip-path="url(#descriptions-settlements-p176d9b0a04)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-settlements-line2d_11">
+      <g>
+       <use xlink:href="#descriptions-settlements-m44736501fb" x="522.674375" y="184.608" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-settlements-text_4">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="522.674375" y="199.205656" transform="rotate(-0 522.674375 199.205656)">0.75</text>
+     </g>
+    </g>
+    <g id="descriptions-settlements-xtick_5">
+     <g id="descriptions-settlements-line2d_12">
+      <path d="M 619.424375 184.608
+L 619.424375 7.2
+" clip-path="url(#descriptions-settlements-p176d9b0a04)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-settlements-line2d_13">
+      <g>
+       <use xlink:href="#descriptions-settlements-m44736501fb" x="619.424375" y="184.608" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-settlements-text_5">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="619.424375" y="199.205656" transform="rotate(-0 619.424375 199.205656)">1.00</text>
+     </g>
+    </g>
+    <g id="descriptions-settlements-text_6">
+     <!-- Recorded normalized contract settlement ($ per $1 maximum payout) -->
+     <g style="fill: #536766" transform="translate(259.174375 213.208)">
+      <text>
+       <tspan x="0" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">R</tspan>
+       <tspan x="6.948242" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">e</tspan>
+       <tspan x="13.100586" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">c</tspan>
+       <tspan x="18.598633" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">o</tspan>
+       <tspan x="24.716797" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">r</tspan>
+       <tspan x="28.828125" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">d</tspan>
+       <tspan x="35.175781" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">e</tspan>
+       <tspan x="41.328125" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">d</tspan>
+       <tspan x="47.675781" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766"> </tspan>
+       <tspan x="50.854492" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">n</tspan>
+       <tspan x="57.192383" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">o</tspan>
+       <tspan x="63.310547" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">r</tspan>
+       <tspan x="67.421875" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">m</tspan>
+       <tspan x="77.163086" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">a</tspan>
+       <tspan x="83.291016" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">l</tspan>
+       <tspan x="86.069336" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">i</tspan>
+       <tspan x="88.847656" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">z</tspan>
+       <tspan x="94.09668" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">e</tspan>
+       <tspan x="100.249023" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">d</tspan>
+       <tspan x="106.59668" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766"> </tspan>
+       <tspan x="109.775391" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">c</tspan>
+       <tspan x="115.273438" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">o</tspan>
+       <tspan x="121.391602" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">n</tspan>
+       <tspan x="127.729492" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">t</tspan>
+       <tspan x="131.650391" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">r</tspan>
+       <tspan x="135.761719" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">a</tspan>
+       <tspan x="141.889648" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">c</tspan>
+       <tspan x="147.387695" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">t</tspan>
+       <tspan x="151.308594" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766"> </tspan>
+       <tspan x="154.487305" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">s</tspan>
+       <tspan x="159.697266" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">e</tspan>
+       <tspan x="165.849609" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">t</tspan>
+       <tspan x="169.770508" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">t</tspan>
+       <tspan x="173.691406" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">l</tspan>
+       <tspan x="176.469727" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">e</tspan>
+       <tspan x="182.62207" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">m</tspan>
+       <tspan x="192.363281" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">e</tspan>
+       <tspan x="198.515625" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">n</tspan>
+       <tspan x="204.853516" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">t</tspan>
+       <tspan x="208.774414" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766"> </tspan>
+       <tspan x="211.953125" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">(</tspan>
+       <tspan x="232.46582" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">1</tspan>
+       <tspan x="238.828125" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766"> </tspan>
+       <tspan x="242.006836" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">m</tspan>
+       <tspan x="251.748047" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">a</tspan>
+       <tspan x="257.875977" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">x</tspan>
+       <tspan x="263.793945" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">i</tspan>
+       <tspan x="266.572266" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">m</tspan>
+       <tspan x="276.313477" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">u</tspan>
+       <tspan x="282.651367" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">m</tspan>
+       <tspan x="292.392578" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766"> </tspan>
+       <tspan x="295.571289" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">p</tspan>
+       <tspan x="301.918945" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">a</tspan>
+       <tspan x="308.046875" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">y</tspan>
+       <tspan x="313.964844" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">o</tspan>
+       <tspan x="320.083008" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">u</tspan>
+       <tspan x="326.420898" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">t</tspan>
+       <tspan x="330.341797" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">)</tspan>
+       <tspan x="215.854492" y="-0.40625" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">p</tspan>
+       <tspan x="222.202148" y="-0.40625" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">e</tspan>
+       <tspan x="228.354492" y="-0.40625" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">r</tspan>
+      </text>
+     </g>
+    </g>
+   </g>
+   <g id="descriptions-settlements-matplotlib.axis_2">
+    <g id="descriptions-settlements-ytick_1">
+     <g id="descriptions-settlements-line2d_14">
+      <defs>
+       <path id="descriptions-settlements-m242f89a216" d="M 0 0
+L -3.5 0
+" style="stroke: #233d3c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-settlements-m242f89a216" x="185.984375" y="42.144" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-settlements-text_7">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="178.984375" y="45.943219" transform="rotate(-0 178.984375 45.943219)">Hilton · first place / advancement</text>
+     </g>
+    </g>
+    <g id="descriptions-settlements-ytick_2">
+     <g id="descriptions-settlements-line2d_15">
+      <g>
+       <use xlink:href="#descriptions-settlements-m242f89a216" x="185.984375" y="95.904" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-settlements-text_8">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="178.984375" y="99.703219" transform="rotate(-0 178.984375 99.703219)">Khamenei · departure settlements</text>
+     </g>
+    </g>
+    <g id="descriptions-settlements-ytick_3">
+     <g id="descriptions-settlements-line2d_16">
+      <g>
+       <use xlink:href="#descriptions-settlements-m242f89a216" x="185.984375" y="149.664" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-settlements-text_9">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="178.984375" y="153.463219" transform="rotate(-0 178.984375 153.463219)">Minerals · different milestones</text>
+     </g>
+    </g>
+   </g>
+   <g id="descriptions-settlements-patch_3">
+    <path d="M 185.984375 184.608
+L 665.864375 184.608
+" style="fill: none; stroke: #d8dedc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-settlements-PathCollection_1">
+    <defs>
+     <path id="descriptions-settlements-m4c834f7950" d="M 0 4.1833
+C 1.109424 4.1833 2.173559 3.742521 2.95804 2.95804
+C 3.742521 2.173559 4.1833 1.109424 4.1833 0
+C 4.1833 -1.109424 3.742521 -2.173559 2.95804 -2.95804
+C 2.173559 -3.742521 1.109424 -4.1833 0 -4.1833
+C -1.109424 -4.1833 -2.173559 -3.742521 -2.95804 -2.95804
+C -3.742521 -2.173559 -4.1833 -1.109424 -4.1833 0
+C -4.1833 1.109424 -3.742521 2.173559 -2.95804 2.95804
+C -2.173559 3.742521 -1.109424 4.1833 0 4.1833
+z
+" style="stroke: #335c81"/>
+    </defs>
+    <g clip-path="url(#descriptions-settlements-p176d9b0a04)">
+     <use xlink:href="#descriptions-settlements-m4c834f7950" x="232.424375" y="37.3056" style="fill: #335c81; stroke: #335c81"/>
+    </g>
+   </g>
+   <g id="descriptions-settlements-text_10">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #233d3c" x="232.424375" y="52.3056" transform="rotate(-0 232.424375 52.3056)">A: $0.00</text>
+   </g>
+   <g id="descriptions-settlements-PathCollection_2">
+    <defs>
+     <path id="descriptions-settlements-me2565b72a6" d="M -0 5.91608
+L 5.91608 0
+L 0 -5.91608
+L -5.91608 -0
+z
+" style="stroke: #d1495b"/>
+    </defs>
+    <g clip-path="url(#descriptions-settlements-p176d9b0a04)">
+     <use xlink:href="#descriptions-settlements-me2565b72a6" x="619.424375" y="46.9824" style="fill: #d1495b; stroke: #d1495b"/>
+    </g>
+   </g>
+   <g id="descriptions-settlements-text_11">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #233d3c" x="619.424375" y="37.9824" transform="rotate(-0 619.424375 37.9824)">B: $1.00</text>
+   </g>
+   <g id="descriptions-settlements-PathCollection_3">
+    <g clip-path="url(#descriptions-settlements-p176d9b0a04)">
+     <use xlink:href="#descriptions-settlements-m4c834f7950" x="406.574375" y="91.0656" style="fill: #335c81; stroke: #335c81"/>
+    </g>
+   </g>
+   <g id="descriptions-settlements-text_12">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #233d3c" x="406.574375" y="106.0656" transform="rotate(-0 406.574375 106.0656)">A: $0.45</text>
+   </g>
+   <g id="descriptions-settlements-PathCollection_4">
+    <g clip-path="url(#descriptions-settlements-p176d9b0a04)">
+     <use xlink:href="#descriptions-settlements-me2565b72a6" x="619.424375" y="100.7424" style="fill: #d1495b; stroke: #d1495b"/>
+    </g>
+   </g>
+   <g id="descriptions-settlements-text_13">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #233d3c" x="619.424375" y="91.7424" transform="rotate(-0 619.424375 91.7424)">B: $1.00</text>
+   </g>
+   <g id="descriptions-settlements-PathCollection_5">
+    <defs>
+     <path id="descriptions-settlements-m04fcc7298f" d="M 0 4.1833
+C 1.109424 4.1833 2.173559 3.742521 2.95804 2.95804
+C 3.742521 2.173559 4.1833 1.109424 4.1833 0
+C 4.1833 -1.109424 3.742521 -2.173559 2.95804 -2.95804
+C 2.173559 -3.742521 1.109424 -4.1833 0 -4.1833
+C -1.109424 -4.1833 -2.173559 -3.742521 -2.95804 -2.95804
+C -3.742521 -2.173559 -4.1833 -1.109424 -4.1833 0
+C -4.1833 1.109424 -3.742521 2.173559 -2.95804 2.95804
+C -2.173559 3.742521 -1.109424 4.1833 0 4.1833
+z
+" style="stroke: #d1495b"/>
+    </defs>
+    <g clip-path="url(#descriptions-settlements-p176d9b0a04)">
+     <use xlink:href="#descriptions-settlements-m04fcc7298f" x="619.424375" y="144.8256" style="fill: #d1495b; stroke: #d1495b"/>
+    </g>
+   </g>
+   <g id="descriptions-settlements-text_14">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #233d3c" x="619.424375" y="159.8256" transform="rotate(-0 619.424375 159.8256)">A: $1.00</text>
+   </g>
+   <g id="descriptions-settlements-PathCollection_6">
+    <g clip-path="url(#descriptions-settlements-p176d9b0a04)">
+     <use xlink:href="#descriptions-settlements-me2565b72a6" x="619.424375" y="154.5024" style="fill: #d1495b; stroke: #d1495b"/>
+    </g>
+   </g>
+   <g id="descriptions-settlements-text_15">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #233d3c" x="619.424375" y="145.5024" transform="rotate(-0 619.424375 145.5024)">B: $1.00</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="descriptions-settlements-p176d9b0a04">
+   <rect x="185.984375" y="7.2" width="479.88" height="177.408"/>
+  </clipPath>
+ </defs>
+</svg>

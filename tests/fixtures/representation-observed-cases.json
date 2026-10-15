@@ -185,7 +185,46 @@
           "basis": "THEORY_REVIEW.md C1; dated account and accompanying photograph",
           "finding": "Zelenskyy appeared in the Netherlands on June 24, 2025; no independent clothing classification is supplied."
         }
-      ]
+      ],
+      "protocol_evidence": {
+        "chain_id": 137,
+        "read_block_number": 95596076,
+        "read_block_hash": "0x9751daf09ba364fc77858fc7921c00198e38523d2f3c2c3f66ee5057d4b94b4a",
+        "read_block_time_utc": "2026-10-15T21:24:02+00:00",
+        "acquired_at_utc": "2026-10-15T21:25:40.148963+00:00",
+        "adapter": "0x6A9D222616C90FcA5754cd1333cFD9b7fb6a4F74",
+        "ctf": "0x4d97dcd97ec945f40cf65f87097ace5ea0476045",
+        "oracle": "0xee3afe347d5c74317041e2618c49534daf887c24",
+        "question_id": "0x0bf7a42b24b91417c1c1976cf99d153ac046f7bffd66c934291c94ddb742b743",
+        "condition_id": "0x655e5ca101c466b6293aa15e06173b78b293221803d56e35551f708cd82eb352",
+        "condition_link_verified": true,
+        "ancillary_question_hash_verified": true,
+        "resolved": true,
+        "payout_numerators": [
+          0,
+          1
+        ],
+        "creator": "0x91430cad2d3975766499717fa0d66a78d814e5c5",
+        "creator_updates": [
+          {
+            "timestamp_utc": "2025-05-29T16:35:11+00:00",
+            "text": "We’re aware of the dispute on this market. If a clarification is to be issued, it will be at 2 PM ET. If no statement is issued at that time, then there will be no clarification by the Polymarket team.\n\nThe orderbook will be cleared at 2 PM ET regardless of whether a clarification is made."
+          },
+          {
+            "timestamp_utc": "2025-07-01T13:33:09+00:00",
+            "text": "At the time of this clarification, 09:33am ET July 01, a consensus of credible reporting has not confirmed that Zelenskyy has worn a suit"
+          }
+        ],
+        "stored_request_timestamp_utc": "2025-07-05T00:27:54+00:00",
+        "ancillary_support": "NO, YES and UNKNOWN/50-50; creator bulletin-board updates are relevant",
+        "historical_log_status": "HTTP 403; no complete proposal/dispute/final-resolution log chronology recovered",
+        "source_sha256": {
+          "suit-protocol-state.json": "d401451492f949c1b7614374d93ec113f2cc7e1cdba652f243015da7e5747f26",
+          "suit-protocol-responses.json": "13b11ce714137c165d820f444ff56b0b20c21dc4a1d16cb894a098959a74d89f",
+          "suit-creator-updates.json": "51e1a8f912fc283e8e29bad7845afeddf17fe6749f096ca7f163687cc604f344",
+          "suit-creator-update-responses.json": "19da5ba371f3b3fe15ebea737833ffef9650449d23723bcdd197f5d848d47e03"
+        }
+      }
     },
     "minerals": {
       "a": {

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Any
 
@@ -9,9 +10,19 @@ import pandas as pd
 import pytest
 
 import main as controller
-from src.anecdotes import CLAIM_AUDITS, add_claim_relations, case_assertion_fingerprint
+from src.anecdotes import (
+    CLAIM_AUDITS,
+    _observed_cases,
+    add_claim_relations,
+    case_assertion_fingerprint,
+)
 from src.coherence import ClaimRelation
-from src.reporting import _opening_lines, case_exhibit_lines, write_claim_confidence
+from src.reporting import (
+    _opening_lines,
+    case_exhibit_lines,
+    write_claim_confidence,
+    write_paper_outline,
+)
 
 
 def _audited_case(monkeypatch: pytest.MonkeyPatch) -> pd.DataFrame:
@@ -20,6 +31,8 @@ def _audited_case(monkeypatch: pytest.MonkeyPatch) -> pd.DataFrame:
     record: dict[str, Any] = {
         "case_id": "hilton-first-vs-advance",
         "phenomenon": "Synthetic separating settlement",
+        "a_platform": "Synthetic A",
+        "b_platform": "Synthetic B",
         "a_contract_id": "synthetic-A",
         "b_contract_id": "synthetic-B",
         "a_url": "https://example.test/A",
@@ -124,6 +137,36 @@ def test_observed_exhibits_omit_hypothetical_witness_with_negative_realized_phra
     witness = hypothetical.iloc[0]["witness_state"]
     assert witness in "\n".join(case_exhibit_lines(hypothetical))
     assert witness not in "\n".join(case_exhibit_lines(hypothetical, observed_only=True))
+
+
+def test_manuscript_withholds_static_observed_claims_after_protocol_input_changes(
+    tmp_path: Path,
+) -> None:
+    """The whole manuscript must re-audit evidence before publishing static case prose."""
+
+    fixture = Path(__file__).parent / "fixtures/representation-observed-cases.json"
+    evidence = json.loads(fixture.read_text(encoding="utf-8"))
+    cases = add_claim_relations(pd.DataFrame(_observed_cases(evidence, "2026-09-10")))
+    assert cases.claim_relation_validated.all()
+    contracts = pd.DataFrame({"platform": ["Kalshi"]})
+    path = tmp_path / "paper.md"
+    write_paper_outline(path, contracts, pd.DataFrame(), cases, pd.DataFrame())
+    published = path.read_text(encoding="utf-8")
+    assert "NO/$0" in published
+    assert "$0.45" in published
+
+    index = cases.index[cases.case_id.eq("suit-adjudication-episode")][0]
+    raw_settlement = cases.at[index, "settlement_evidence"]
+    assert isinstance(raw_settlement, str)
+    settlement = json.loads(raw_settlement)
+    settlement["protocol_evidence"]["payout_numerators"] = [1, 0]
+    cases.at[index, "settlement_evidence"] = json.dumps(settlement, sort_keys=True)
+    assert cases.claim_relation_validated.all()  # Deliberately stale CSV flags.
+    write_paper_outline(path, contracts, pd.DataFrame(), cases, pd.DataFrame())
+    withheld = path.read_text(encoding="utf-8")
+    assert "withheld" in withheld
+    assert "NO/$0" not in withheld
+    assert "$0.45" not in withheld
 
 
 def test_analysis_rerun_preserves_existing_research_log(

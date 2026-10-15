@@ -1,0 +1,1421 @@
+{
+  "created_at_utc": "2026-10-13T12:25:00.593171+00:00",
+  "commit": "32231e50323a8fc56a0613a10e455c66a22cee05",
+  "branch": "paper-revision/2026-10-12-01",
+  "file_count": 233,
+  "total_uncompressed_bytes": 333271233,
+  "scope": [
+    "complete output/paper-revision/2026-10-12-01 cycle, including pre-revision archive",
+    "regenerated data/processed contract, matching, and panel files",
+    "revision pipeline logs",
+    "complete work directory used for revision audits and verification"
+  ],
+  "excluded_as_unmodified_or_runtime_only": [
+    "data/raw",
+    "output/legacy",
+    "data/processed/bayes-source-text.txt",
+    "data/processed/coherence-output-hashes.json",
+    "data/processed/coherence-schematic-preview.png",
+    ".venv and repository-level tool caches"
+  ],
+  "files": [
+    {
+      "path": "data/processed/matching-candidates.csv",
+      "bytes": 75699866,
+      "sha256": "75231b6fcd2f6f8da794fecd5510ec74fb46dcd5d5ae401e86643f0e42fbce40",
+      "category": "regenerated-data"
+    },
+    {
+      "path": "data/processed/panel-daily.csv",
+      "bytes": 8643,
+      "sha256": "63628c9dde892773a99061f74ca0b05e6ca4b5b90324ad96aacf0207148c46aa",
+      "category": "regenerated-data"
+    },
+    {
+      "path": "data/processed/panel-matched-summary.csv",
+      "bytes": 741,
+      "sha256": "b0d27af691466addfa08984ce52c328fd034d49d15e924ba75437ebb90632576",
+      "category": "regenerated-data"
+    },
+    {
+      "path": "data/processed/semantics-contracts.csv",
+      "bytes": 26989877,
+      "sha256": "3463a188be2d6544618e224e06eb562b400b1b8c513e83f836179ffa6112183e",
+      "category": "regenerated-data"
+    },
+    {
+      "path": "logs/pipeline-20261013-093637.log",
+      "bytes": 214,
+      "sha256": "3c85aa17b3d366ec5e6f027925eb3c6fd682849997ed700925d1c7caf7d3c36e",
+      "category": "pipeline-log"
+    },
+    {
+      "path": "logs/pipeline-20261013-093750.log",
+      "bytes": 227,
+      "sha256": "f35bd1e1067cdbfd5e09224241e19eb44d02085a95d1d4ecb82951d06f3cb513",
+      "category": "pipeline-log"
+    },
+    {
+      "path": "logs/pipeline-20261013-093847.log",
+      "bytes": 397,
+      "sha256": "2eb86b1c5a7a95ff71f80e9461f99b8f2f11b810622ada34e2ab03fc9d2322f7",
+      "category": "pipeline-log"
+    },
+    {
+      "path": "logs/pipeline-20261013-093949.log",
+      "bytes": 379,
+      "sha256": "6c29dd174c73acb5569e7c576d23862fa1357ed9c19e45b6c0505dab779d2f85",
+      "category": "pipeline-log"
+    },
+    {
+      "path": "logs/pipeline-20261013-094027.log",
+      "bytes": 383,
+      "sha256": "774647ddb32ce563679850c8dc94f1610a343429612d11cbc2be0e4309f2197d",
+      "category": "pipeline-log"
+    },
+    {
+      "path": "logs/pipeline-20261013-094231.log",
+      "bytes": 383,
+      "sha256": "2da2b88f57c7c1ac4c536bb74d2bbf7f3ac1477cc66a94ed9745b63adab414a2",
+      "category": "pipeline-log"
+    },
+    {
+      "path": "logs/pipeline-20261013-095204.log",
+      "bytes": 383,
+      "sha256": "e2d53149825f8752156e829e186231e1c8fa68813271d1a004588d0007cc39d1",
+      "category": "pipeline-log"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/APPROVED_PROMPT_PLAN.md",
+      "bytes": 37992,
+      "sha256": "bc54816d13b8ba206c7d876523cbe6b20cf0bfec252a4ff67440c8ac57a39d1c",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/BASELINE_MANIFEST.json",
+      "bytes": 6268,
+      "sha256": "8063baac8686f6f8348dc1ab96a146caf124cf79ab2d84dfa0d070d36d923799",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/CONTEXT.md",
+      "bytes": 5883,
+      "sha256": "2d98272081aecb9a1e5ae8f308baea197a07a3f8218eb57282b3f4f19c9b4003",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/DATA_AUDIT_REVIEW.md",
+      "bytes": 33450,
+      "sha256": "2b5e0ced553bb4710ae2595d3ea81673870b15dad87394e18e95863af1facbcf",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/DATA_FOLLOWUP_BASELINE.json",
+      "bytes": 11965,
+      "sha256": "7079820945ce4b696b01b0355e9f6e789c36d872faa16a9153c29b8011a90edd",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/DATA_FOLLOWUP_CHANGES.md",
+      "bytes": 5722,
+      "sha256": "d1f7113ab583f5eb7c94bd9395519792f78c3eb1787705a1a714e95c2874c62b",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/DATA_FOLLOWUP_PACKET.md",
+      "bytes": 4924,
+      "sha256": "2ce5777abde1ce6397a4a8838b5f63f368cf8f1417e4ce189662d8bfbd623c3a",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/DATA_FOLLOWUP_VALIDATION.json",
+      "bytes": 429,
+      "sha256": "bfd68afd0fdf7eda9ed61985a2a6d1296a0ab3a51ea6ba1488ba69e4a7490e76",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/EMPIRICAL_REVIEW.md",
+      "bytes": 30712,
+      "sha256": "c262097456124a46222372624470b39e61a4ee714995c6495cc7a453b73ae94a",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/IMPLEMENTATION_BASELINE.json",
+      "bytes": 8204,
+      "sha256": "06a057c2feed4c863a6661f1aa803230d9294566bbfcba86a45f3c24bb27b7a3",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/IMPLEMENTATION_VALIDATION.json",
+      "bytes": 771,
+      "sha256": "a7242bb82011eed5f47053a5f848dba8e34516108a086b834c2b3735ce2e9297",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/LEAD_REVIEW.md",
+      "bytes": 12111,
+      "sha256": "7ba70131fea65d549c9c777bce3a3c0b56337970bb057780f9df89c5f18be5c3",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/REVIEW_PACKET.md",
+      "bytes": 3765,
+      "sha256": "5eab90b23bf8ee989bc16f27a5a261a73982c12a67866389cce1ab6309bfe24f",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/REVIEW_VALIDATION.md",
+      "bytes": 3673,
+      "sha256": "1b4a7a4ab9f7daa991072107ed3a4dd64f4efcbc324468addd01e8f504811b52",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/REVISION_PACKAGE.zip",
+      "bytes": 8670239,
+      "sha256": "8eaadb9e18c9359f0c636853804f9628c0de63e3fe7e62412922d323fcf61058",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/REVISION_PROMPT_PLAN.md",
+      "bytes": 37992,
+      "sha256": "bc54816d13b8ba206c7d876523cbe6b20cf0bfec252a4ff67440c8ac57a39d1c",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/REVISION_SUMMARY.md",
+      "bytes": 8556,
+      "sha256": "892fb2d1ba3d01fd82f6ccb92fd5e4651604aed718a892cc2826f3a53d5316a0",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/STATUS.md",
+      "bytes": 1816,
+      "sha256": "40475b1f687e16d0a8234165b0acb8f68f81f4ee899a1950bc63bcb8fe2317f6",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/THEORY_REVIEW.md",
+      "bytes": 38919,
+      "sha256": "c6f764150326868b5ac62d14cba4781db632110856de90b60a703fcb6131cc06",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/before-data-followup-2026-10-13/CONTEXT.md",
+      "bytes": 4561,
+      "sha256": "00a9c7f022e8c3b203d33fc95adafe091634d85c2c576a8d48c7312e5992c792",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/before-data-followup-2026-10-13/DATA_AUDIT_REVIEW.md",
+      "bytes": 39256,
+      "sha256": "fec4e0bd85f015ee1d59572b2bef020d6059c4f5aae00a9906507a085ce35d0b",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/before-data-followup-2026-10-13/EMPIRICAL_REVIEW.md",
+      "bytes": 35001,
+      "sha256": "aa48cd8bd35ae727e47ef50991eb3e2af34e6ef82ea770b0041cb2142dec2e59",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/before-data-followup-2026-10-13/LEAD_REVIEW.md",
+      "bytes": 6336,
+      "sha256": "69445b47ed54db370a57ba97a580b52e7cd13b39980dd79f1d171d9c5a85cfc5",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/before-data-followup-2026-10-13/PROJECT_DATA_AUDIT_REVIEW.md",
+      "bytes": 39256,
+      "sha256": "fec4e0bd85f015ee1d59572b2bef020d6059c4f5aae00a9906507a085ce35d0b",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/before-data-followup-2026-10-13/REVIEW_PACKET.md",
+      "bytes": 3579,
+      "sha256": "4cf0af1dfa98917d0a4496ad0b64f8224f052f002baf9dfa1003c5fd94d44c34",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/before-data-followup-2026-10-13/REVIEW_VALIDATION.md",
+      "bytes": 1949,
+      "sha256": "937fb76a6209bf46a7d58d5efb1f7060ea8dc3a4befcb4633a4917be76dacda6",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/before-data-followup-2026-10-13/REVISION_PROMPT_PLAN.md",
+      "bytes": 29865,
+      "sha256": "51d2b964701636dc42bc1d2519d842edc7f0769546273720c5fcefd69dc32241",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/before-data-followup-2026-10-13/STATUS.md",
+      "bytes": 2234,
+      "sha256": "a95db052ca70f3dd36678b68247059e5473f230e83964512153fa0831be73be0",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/before-data-followup-2026-10-13/THEORY_REVIEW.md",
+      "bytes": 38919,
+      "sha256": "c6f764150326868b5ac62d14cba4781db632110856de90b60a703fcb6131cc06",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/before-data-followup-2026-10-13/scratch-research-log.md",
+      "bytes": 2146,
+      "sha256": "a7e271638ecac95316500129bf1294f5192c801c18a1af01e8b921a5cc1877bf",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/case-evidence/case-audit-record.json",
+      "bytes": 7599,
+      "sha256": "740ec4558ac323c7b752bc2749732b12e733afd3e1a9c4a6ac9930b523812f78",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/case-evidence/case-source-bundle.json",
+      "bytes": 42679,
+      "sha256": "39a72b0036b443eaa8a6bce900f77389f6bd8be5d8194aad111099e7ade6451a",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/case-evidence/hilton-gamma-id-825460-lead-check.json",
+      "bytes": 3621,
+      "sha256": "ac9df5918c772c8382bdcf93aa1b7fee35a578745369d4fcd2a404ac5ecbdca8",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/case-evidence/hilton-lead-verification.json",
+      "bytes": 639,
+      "sha256": "e2066d34a9ce1965efc9138955e34e8234516034614159c0a9f28d8e0ca7a3bb",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/case-evidence/hilton-restored-snapshot-check.json",
+      "bytes": 11635,
+      "sha256": "dcf8103bc0436a58d0ef92e474b650b01a901f1353128d31ec3dd350231923c3",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/case-evidence/hilton-settlement-evidence-2026-10-13.json",
+      "bytes": 2724,
+      "sha256": "4c5527c3409a5791629590e554553ecdf32988ab8032f2897748e217f5091b80",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/case-evidence/kalshi-hilton-historical-2026-10-13.json",
+      "bytes": 2887,
+      "sha256": "feba3058cca9ebb1523f364d3afafbe0740d32e53b5f42e425d1730865f12586",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/case-evidence/khamenei-kalshi-july-current.json",
+      "bytes": 2196,
+      "sha256": "7424e7c1b05ff56a96e13187f1b5028386436cac95367e957eedadac3995a2d5",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/case-evidence/khamenei-polymarket-june-current.json",
+      "bytes": 3151,
+      "sha256": "d1e48a6551328aa46b808c65d5f72f4dfa2e44e003ff82745774b079f6568308",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/case-evidence/khamenei-restored-settlement-evidence.json",
+      "bytes": 12542,
+      "sha256": "af6a9b4980d61c82193dc6424b0a0c33a87eadb0ca1f8774866bb8f964a2ccca",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/case-evidence/minerals-april-event-current.json",
+      "bytes": 6553,
+      "sha256": "b76c71a1c10bb477ee3f54e6836cc6f5b6660114231c57d9a64feb9a40ee8af8",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/case-evidence/minerals-march-event-current.json",
+      "bytes": 7590,
+      "sha256": "30f1cd4a4c2246e70ccc9d393c1b63951c8c172383385b0058aa252ca73a788a",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/case-evidence/suit-market-current.json",
+      "bytes": 3299,
+      "sha256": "a748922d8f3655988e7d3ca65b0b3ac8f39593b669c46ea78a11aa4541ea32c0",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/implementation-notes/case-outcomes.md",
+      "bytes": 3135,
+      "sha256": "1dfb3f09a87889eecee56ad49a35faeb9eecd9543745bff53e6beaf2c7763740",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/implementation-notes/literature-passage.md",
+      "bytes": 11466,
+      "sha256": "36cd890391e018a57b217744f066a014f059fef8836a88e9dea3f14283254037",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/implementation-notes/matching-candidate-audit.md",
+      "bytes": 8992,
+      "sha256": "9daf544aed9de0bc04bb51be92ae387fecf46fc8bd5b4a6d449a5c559b3bd1b8",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/implementation-notes/measurement-inference-outcomes.md",
+      "bytes": 9085,
+      "sha256": "805373a446dee214a037d4ca4664b52afe3ba99611b98dd7ad1ce7ce523a5817",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/implementation-notes/provenance-outcomes.md",
+      "bytes": 3723,
+      "sha256": "a226dc4e429c3ffe987fa87acc5bee8de7bafc6ecb2cbcb7b200e12f4547641f",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/implementation-notes/sample-panel-outcomes.md",
+      "bytes": 7909,
+      "sha256": "a011ca40da14a1c5a2805b2d17af0cf80d1e231fc0ec05d26f3b08ad467d10c2",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/implementation-notes/theory-outcomes.md",
+      "bytes": 4326,
+      "sha256": "06cf6442423aa8aea9234746e9d88371b0f1de1e47db20fd647b65b7730cada3",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/.gitignore",
+      "bytes": 4863,
+      "sha256": "1cea77482f39e334ecf70a2665074431352eb30a9ad267637a0446b50f835636",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/CHANGELOG.md",
+      "bytes": 2540,
+      "sha256": "46d70e2f8b625fd06a5acd8c72c4124bcc15db88d66517966b8710aa30c45aab",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/DATA_SOURCES.md",
+      "bytes": 6932,
+      "sha256": "b417a2177140943dfb0a974d531eceb7d7cf564312ea5707816e0d6bf790eac5",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/INSTRUCTIONS.md",
+      "bytes": 3924,
+      "sha256": "452f42d537be02bc6694ce0ad27bb810a210523e66f5e8b85d25df30c57f9482",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/README.md",
+      "bytes": 12342,
+      "sha256": "d7766060cea0d21548d70f726a6926993f46023424f380facbe0242653d49b16",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/data/processed/bayes-source-text.txt",
+      "bytes": 158895,
+      "sha256": "287566a90aba44b960c3bc3a8e202703eb495007282c7fa36bb17ca867402e31",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/data/processed/coherence-output-hashes.json",
+      "bytes": 2594,
+      "sha256": "906a06f3728bd900539b983a76fd439a8d25a4089af0cda7f5a455164e7fcfc1",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/data/processed/coherence-schematic-preview.png",
+      "bytes": 57605,
+      "sha256": "333c459177ce2a150d58bde56ce6c527a93f1813ab700714e4ea95e115d1635b",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/data/processed/matching-candidates.csv",
+      "bytes": 72189960,
+      "sha256": "0f077969f8a23fd8008c82b1e0ef3dd8bb32046eb2a5219828f4076524e1a211",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/data/processed/panel-daily.csv",
+      "bytes": 5285,
+      "sha256": "b507787075839d0526baef10483d5906d01d16b4a016473a7da171ac7211d619",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/data/processed/panel-matched-summary.csv",
+      "bytes": 716,
+      "sha256": "55b460f47a4aba68d72d61507ff010034e952c54adf1b030a1872e5f085bfd81",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/data/processed/semantics-contracts.csv",
+      "bytes": 22332966,
+      "sha256": "611d66c303abc8aa2a23f2d3334d226f686d4422c72ef4128a6c7dfa80ced9fc",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/docs/BAYES_SOURCE_AUDIT.md",
+      "bytes": 4234,
+      "sha256": "17cc5f6fad783cf2aadf0489011e0328b25111033b199038c332434340eb07c5",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/docs/CONSTRUCTS.md",
+      "bytes": 9619,
+      "sha256": "e92f4f5637a19ba6c0d9d225682a76be3f9d1e925dd0c5374474608514c0b78f",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/docs/CRITIC_REVIEW.md",
+      "bytes": 4346,
+      "sha256": "32c4bbc3e0d7347205aa63827055eb4b48084f59c8759dad7894775754de3ad4",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/docs/DECISIONS.md",
+      "bytes": 3358,
+      "sha256": "5a9d85a164bf1ee2041fd3c17b272e20aabcc9bc7ccf8f612dc8c071d4e2afdf",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/main.py",
+      "bytes": 13481,
+      "sha256": "f4822f7b7f35d554244675e613cef55f8cf6e9eb7c72cf58cd63f1db9a0d8107",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/CLAIM_CONFIDENCE.md",
+      "bytes": 21147,
+      "sha256": "4a8865b220f15c12c2873242440dbb81e99c72aa2484b47bfb8b84d4d0698500",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/DATA_AUDIT_REVIEW.md",
+      "bytes": 33450,
+      "sha256": "2b5e0ced553bb4710ae2595d3ea81673870b15dad87394e18e95863af1facbcf",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/PAPER_OUTLINE.md",
+      "bytes": 18368,
+      "sha256": "8165c5c1da799d41c8c9b226a8c2153d1783c8899e5453be418163486febbe05",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/REPRESENTATION_CASEBOOK.md",
+      "bytes": 20844,
+      "sha256": "f9fbcf78abcc258c61e34eb425d7782b2cb9892595d8d70f51b46fa0d875ee3d",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/RESEARCH_STATUS.md",
+      "bytes": 5437,
+      "sha256": "d7b00a6b0ea13e4b1845240e4ef4832f3d3f80335d242a8bbb087081893122e5",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/RESEARCH_SUMMARY.md",
+      "bytes": 18885,
+      "sha256": "7ee8f107e030deafa94008b3b246fe419ca56dd991d5dd9fad09c4b6224cd9ec",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/figures/views-conceptual-schematic.svg",
+      "bytes": 64027,
+      "sha256": "93fb48f1e82588d12d94ae21d10ce22186d154168fe3a4f14e9ecc7ec906acef",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/figures/views-determinacy-distribution.svg",
+      "bytes": 38765,
+      "sha256": "88f2e453d9202d858d80eebcdb9630b395980ae0722681075552f9c5a9bb7252",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/figures/views-determinacy-volume.svg",
+      "bytes": 43211,
+      "sha256": "f6115c979e531a50a69aa8a8ad24a1ce750753d13dc56f2bd099386e797a34fb",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/figures/views-matched-trajectories.svg",
+      "bytes": 67830,
+      "sha256": "3dd12f0e19840d50c48f193c9206de597321ed6d1bb7fa93092c39f730e9143b",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/figures/views-platform-rule-profiles.svg",
+      "bytes": 66347,
+      "sha256": "9df0f7bc970a10fe2c38e23516888e31d86de68e877f6a2a67517e3973b2be02",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/research-log.md",
+      "bytes": 2611,
+      "sha256": "21e797d36602b2fc640f909d8c634b24036fabaab784588f3cace8484bb1b6a2",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/tables/analysis-determinacy-bins.csv",
+      "bytes": 759,
+      "sha256": "c82a502715e342b1006b7de3689b56b610e5b2febe0d0b3a139e79f24be3d7c3",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/tables/analysis-market-models.csv",
+      "bytes": 3968,
+      "sha256": "17e3eddd23df981f1388d7a2a5c117532453483224f4bc8caf7f69533d742f92",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/tables/analysis-matched-model.csv",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/tables/analysis-platform-profiles.csv",
+      "bytes": 1694,
+      "sha256": "4809e0586ec29be72d15eede19f024aa3a12d2e5c3188ba8dbc3ed4635273f56",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/tables/analysis-terminal-error.csv",
+      "bytes": 249,
+      "sha256": "8308b65e60ffced5b1f42f664c403bc8136de29f3f818f4032ef973d3dd86430",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/tables/coherence-case-diagnostics.csv",
+      "bytes": 1462,
+      "sha256": "bbe022702589772ce65228f7b7bb3e4c8ea7a63e4df47c114203351dcd06ccf0",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/tables/coherence-panel-readiness.csv",
+      "bytes": 593,
+      "sha256": "43e000b3a345419dcefcc9f2d780583932f76453c3e7785b1f22f2b9cc782add",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/tables/matching-high-confidence.csv",
+      "bytes": 19029,
+      "sha256": "a96d91618ff033865575b898daf0e59181721bbc6db232a3db721750483fc8f1",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/tables/matching-representative-pairs.csv",
+      "bytes": 13789,
+      "sha256": "d43be633fe1e4bcc70a1b0ed7e6364f3613019555122270e32b93660223f4bb6",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/tables/preprocessing-coverage.csv",
+      "bytes": 319,
+      "sha256": "1469e449c5cb80101a67a03583c8323e857cbdf2a509cf205d1f17d50a64e70f",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/tables/representation-case-matrix.csv",
+      "bytes": 23297,
+      "sha256": "e046f29fa4f253ed7d9a94b03835954d7deef8ca1b47964bbadeb30c98b5f4c9",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/output/tables/semantics-component-examples.csv",
+      "bytes": 1259,
+      "sha256": "137eddf5065b2649099ceb80be89165a6759513ed066cd701c222152d554e918",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/pyproject.toml",
+      "bytes": 968,
+      "sha256": "9e665cfcff397e7b88da3539c6bde34ba7dfd3c0fa4794fcc10cf9ff3ea91649",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/src/__init__.py",
+      "bytes": 56,
+      "sha256": "83c9483923f6eda8ce9bfe425ab959603e069d2e5705b378e3a5d685f7413d92",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/src/analysis.py",
+      "bytes": 17655,
+      "sha256": "7f4be0995cbaf7522d7b9ba90eb697440d76c09797cfb4244e14dc7ef0b05cb2",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/src/anecdotes.py",
+      "bytes": 29482,
+      "sha256": "4471b5c232eafa4ee422f77e33bbe4634693fd5f159d1ffe4e145a7840f33894",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/src/coherence.py",
+      "bytes": 10316,
+      "sha256": "2362c7dfdc55fdaaec5707394ce78d30409d53d50891f78931de6dafac74ab5c",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/src/config.py",
+      "bytes": 2006,
+      "sha256": "140feca0e437fef4e22f8175b072658f2bcb9e674a9b9742e4f8a3cb7fc52a11",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/src/http_client.py",
+      "bytes": 2107,
+      "sha256": "7133d98bb487fb143af699fad93cc7381297efcf2fa8830f8e257ed221af84b7",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/src/io_utils.py",
+      "bytes": 1333,
+      "sha256": "b53ee6c7b41493b02efe907b0e0f724363e781111ee6597390e904cc5c1b143d",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/src/kalshi.py",
+      "bytes": 3714,
+      "sha256": "8d61dbc7f543e2962891f7e872f2ff72e061636b37c4180d7afa80e9e8cad38a",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/src/matching.py",
+      "bytes": 9841,
+      "sha256": "258f8081901216e5c46d0db89c9ffde83915c2b4e330b30dc067757db476241c",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/src/panel.py",
+      "bytes": 10293,
+      "sha256": "1ea8005cf62aea0f74fee05c32880b279e94d62fb836e0a68dbe22b5dc9a5621",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/src/polymarket.py",
+      "bytes": 3007,
+      "sha256": "ec0812c43b2456cc73731ae330b6c14707f7e1d96055034f8f15ec6dfd50e862",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/src/preprocessing.py",
+      "bytes": 10332,
+      "sha256": "4e2501863d638ac140443512e3fb36e537dfc47f8279b7f9c625d49bb336305b",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/src/reporting.py",
+      "bytes": 49090,
+      "sha256": "78d90f0d2159169780269ede6b1b0e0c38c23afbc9d24f07cb852dc76841272a",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/src/semantics.py",
+      "bytes": 11039,
+      "sha256": "1bb5698a6e0a2f95f710c00f501f7cdb1b5feae3ea58d035102be5f64ab4a485",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/src/taxonomy.py",
+      "bytes": 1465,
+      "sha256": "9dd98c5a8e5bc99e81a152418893670e137b5d7a3d3ff92e11b7d2cffde32754",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/tests/test_analysis.py",
+      "bytes": 6319,
+      "sha256": "9388b901073277290c65c30cfa2cf0adbc649a0b472b3b94b4f801504037b46d",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/tests/test_anecdotes.py",
+      "bytes": 5004,
+      "sha256": "6a0a09e09b529888c4d888bcbeadff600be5034dcb64703ae4f4cdf8327a5c57",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/tests/test_coherence.py",
+      "bytes": 7166,
+      "sha256": "2194e878fd233088268bbc25023b5407dab53c1e1f46f7c7ca5634aa2e3690ad",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/tests/test_matching.py",
+      "bytes": 4250,
+      "sha256": "6b4c701d4c109a6c9ebde8d737bed439b0d526f2983c56c6996a5ecc16627f79",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/tests/test_panel.py",
+      "bytes": 2046,
+      "sha256": "450230f2ae64ffbce6e6ad2ac0d575853697f1a95a83ce8970e9335e77602ae3",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/tests/test_preprocessing.py",
+      "bytes": 4400,
+      "sha256": "f44c2f6bb43b9111fb598e4a465c88df71ecd0fa6dbb073c5b8f437cffef9e93",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/tests/test_semantics.py",
+      "bytes": 3770,
+      "sha256": "bd5e519db2e679a713e90450f4b9414f6276e722fbb4484000ef774819824aca",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/uv.lock",
+      "bytes": 420218,
+      "sha256": "22ac82e0626d86797a3bff625cdc2652d30313fec14aa5c228919be906890007",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/pre-revision/views.py",
+      "bytes": 10013,
+      "sha256": "51c8a28f1f79459faa4406ed747bc3b3aca3c9bf595c745774337bca2abe3fca",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/alternate-poly-exclusions.csv",
+      "bytes": 736302,
+      "sha256": "0d1e02a7b95640672ea316129bc5e19fadce82173748a58839c996844967521d",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/analysis-determinacy-bins.csv",
+      "bytes": 757,
+      "sha256": "96ea71c8b7a46a237616c409fb152bf9ec723655e11755e2df76eb68621287a2",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/analysis-platform-profiles.csv",
+      "bytes": 1692,
+      "sha256": "d313fcb59470355b74aab9c1a34b38f63223c9dc3a4c25030f1dd066b73e5516",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/audit-results.json",
+      "bytes": 39613,
+      "sha256": "590e678fea74d64c9ff6e718e3f0ae6ee5f7a602e8e5548b2925519a3710945b",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/audit_restored.py",
+      "bytes": 13903,
+      "sha256": "1a45eccf70cddcc074ff905c0e60f82523a6bec78759b5116ab3ae26218547c3",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/cases-rebuilt.csv",
+      "bytes": 23297,
+      "sha256": "e046f29fa4f253ed7d9a94b03835954d7deef8ca1b47964bbadeb30c98b5f4c9",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/current-panel-rebuilt.csv",
+      "bytes": 5285,
+      "sha256": "b507787075839d0526baef10483d5906d01d16b4a016473a7da171ac7211d619",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/current-panel-summary-rebuilt.csv",
+      "bytes": 716,
+      "sha256": "55b460f47a4aba68d72d61507ff010034e952c54adf1b030a1872e5f085bfd81",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/kalshi-settlement-records.csv",
+      "bytes": 1932646,
+      "sha256": "8ea7b9e8faaf7d034c1ecdf066908aefd591e93965f267ea66888d927ba1970a",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/kalshi-timing-exceptions.csv",
+      "bytes": 228234,
+      "sha256": "41c9e799da34da382f63fea7f3be7f1d5ce903f274da0306be51a1bed4fe53e9",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/matched-price-histories-2026-09-10-627b27c83f-interval-max-KXGOVFLNOMR-26-BD.csv",
+      "bytes": 3102,
+      "sha256": "32f12f3e258ade921c2f7fd5a6239c5cda26ea4ba0a064c245947561556618ca",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/matched-price-histories-2026-09-10-627b27c83f-interval-max-KXGOVFLNOMR-26-JCOL.csv",
+      "bytes": 2983,
+      "sha256": "e02b6cd5a3193f36532568d6d8b03ba8fb278f63a7bc10ea5a06ae3687d1cf17",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/matched-price-histories-2026-09-10-627b27c83f-interval-max-KXGOVFLNOMR-26-JFIS.csv",
+      "bytes": 3093,
+      "sha256": "aef29549ef8e7467d5a875417783ef537ff41e2c991a1ed55c25e2a379080272",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/matched-price-histories-2026-09-10-627b27c83f-interval-max-panel.csv",
+      "bytes": 8786,
+      "sha256": "2b6cd66b03f334304b8f9f7a0cc5c329c22e2735c2038e6bfa5a02bdab915775",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/matched-price-histories-2026-09-10-bad72f8883-interval-max-KXGOVFLNOMR-26-JCOL.csv",
+      "bytes": 2692,
+      "sha256": "44929b34b04009945336a4338c55b685df43198c620628dc9cabc3aa3821bb66",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/matched-price-histories-2026-09-10-bad72f8883-interval-max-KXGOVFLNOMR-26-JFIS.csv",
+      "bytes": 2789,
+      "sha256": "5182964463c5e8a502a8ed7a14a309d89ac0933eddeb91766386979c6d265b22",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/matched-price-histories-2026-09-10-bad72f8883-interval-max-panel.csv",
+      "bytes": 5285,
+      "sha256": "b507787075839d0526baef10483d5906d01d16b4a016473a7da171ac7211d619",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/matching-candidates-rebuilt.csv",
+      "bytes": 72189960,
+      "sha256": "0f077969f8a23fd8008c82b1e0ef3dd8bb32046eb2a5219828f4076524e1a211",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/matching-case-results.json",
+      "bytes": 314,
+      "sha256": "04427f82b09c1e3cb5b67d4d129442cf25593a0f4836fc629a6fe684e36370d1",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/matching_case_checks.py",
+      "bytes": 3244,
+      "sha256": "dcb010cc39ac000dc63e427e8c5640965464039bc360a876e5a08ae56cdd8d9e",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/measurement_checks.py",
+      "bytes": 2492,
+      "sha256": "6a94860a555c71021e70cc12bea0c2fb06cd5a791cf8f31a0b31633a2f45a086",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/normalization-ledger.csv",
+      "bytes": 2118439,
+      "sha256": "fc1e64906ea57f7f687621257ebb57138124f891e8f9788d7abb3880daf3eff6",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/parser-prevalence.json",
+      "bytes": 1174,
+      "sha256": "6b36ed968fb4952970a01125cc77917fe1f405663be84124e9f6af3d1a16c71e",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/polymarket-settlement-records.csv",
+      "bytes": 1551067,
+      "sha256": "def2a76c0eedbc382a606c33a90831df15a75b0a1988208d318f82d57f39a53d",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/polymarket-timing-exceptions.csv",
+      "bytes": 10004,
+      "sha256": "ae46b1534c0d44599241355a7825555b8a3b9f4fa508c29612719485c2b2942b",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/preprocessing-coverage.csv",
+      "bytes": 319,
+      "sha256": "1469e449c5cb80101a67a03583c8323e857cbdf2a509cf205d1f17d50a64e70f",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/terminal-attrition.json",
+      "bytes": 135,
+      "sha256": "106e9b4675413cc37d56dbf220c615c1ada03a53f6db274af928338ffaf0495a",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/uv-cache/.gitignore",
+      "bytes": 1,
+      "sha256": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/uv-cache/CACHEDIR.TAG",
+      "bytes": 43,
+      "sha256": "5953156d7e0c564a427251316eaf26f8870e6483ae2197f916b630e4f93e31ae",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/uv-cache/interpreter-v4/ecd9b9db130f466f/405b711922781cd5.msgpack",
+      "bytes": 1015,
+      "sha256": "6fa47605d64d98a2af3d9f8328bcdd94e9012d76145c86ed64e9480442f4597e",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/uv-cache/sdists-v9/.git",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit-followup/uv-cache/sdists-v9/.gitignore",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit/audit-results.json",
+      "bytes": 6192,
+      "sha256": "3a76f7dd5dd970c20cb9f6f9f8e82d85d5a0bb3960ddd9f9bed93567a70f7f40",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-data-audit/audit_checks.py",
+      "bytes": 7674,
+      "sha256": "a0c06d86cb65f3f8b26fbba8e0f59986e4314ea5593bd39146e66cc1916638ba",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/baseline-platform-profiles.csv",
+      "bytes": 1694,
+      "sha256": "4809e0586ec29be72d15eede19f024aa3a12d2e5c3188ba8dbc3ed4635273f56",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/baseline-reproduction.json",
+      "bytes": 994,
+      "sha256": "5d13f52b2e3f6b52d9d68bf3a5175cf11747b18b20beb398410d11466d91bd6f",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/diagnostics.py",
+      "bytes": 17463,
+      "sha256": "ec34064c4bfd93226a25b84b25a2f7469e4243ea12a68016512266c456a4ea6f",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/exposure-row-diagnostics.csv",
+      "bytes": 2297143,
+      "sha256": "a3f137ec9e863d45def4f75119f078d6579ab0e20487d28f47625a57549e2720",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/exposure-summary.csv",
+      "bytes": 227,
+      "sha256": "4b6241440e20ad5bfc80e898d3103e8b30d0b539e2b7cae74023f3dd778fa5db",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/family-influence-summary.json",
+      "bytes": 1424,
+      "sha256": "43a17f87ab93906312c709a08286eec9f5f3fa616f70ce29c50931cb92393c4c",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/frozen-diagnostic-specification.json",
+      "bytes": 1039,
+      "sha256": "38f0083f112f94efca660098af5c5c27df6cf06bd403baee75e6b67d96221749",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/measurement-first-sorted-examples.csv",
+      "bytes": 91381,
+      "sha256": "21fce679b058e7940aa0a69a394318c8da5c559e8b194d485ca5aed07b9ceecb",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/measurement-platform-profiles.csv",
+      "bytes": 9577,
+      "sha256": "395fedd7277aef9db0f3686dbd1b0e7ab3f2e61f4d4d0fadb07a2c85610ff8d4",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/measurement-prevalence.csv",
+      "bytes": 333,
+      "sha256": "5f5fd2d11897e23a6f179b212a93e500cbd857ae2b043f19eff7bd6f29eef148",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/measurement-row-diagnostics.csv",
+      "bytes": 2338187,
+      "sha256": "58533b7ceb004093907d2e28db4ac1e3573eb9979ad85d8719e3dc501528ed62",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/measurement-score-effects.csv",
+      "bytes": 676,
+      "sha256": "3352ad8b7113823ef9ef79d8913791c8380bbaffa53e56c4d760c7ee9985222e",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/preferred-family-influence.csv",
+      "bytes": 284975,
+      "sha256": "3a0c8f6331d8cf19ad08390e9f1245e5f36c0588295062806e33428c1c5e5f1f",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/preferred-model-diagnostics.csv",
+      "bytes": 2718,
+      "sha256": "71603478f7eac52d978cb1b5c1b1630239c4b98445c76a24914f471d82c6200a",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/quote-repair-comparison.json",
+      "bytes": 3067,
+      "sha256": "b2c1b924eaafcb86158fec25dd644715a733b05e3ab63a2350ac954e02bfaca8",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/resolution-status-crosstab.csv",
+      "bytes": 148,
+      "sha256": "e100e4f1e5ec38809fe24be198ea95ed9504851c75e7c62ca8c07c309b981072",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/resolution-status-diagnostics.csv",
+      "bytes": 841917,
+      "sha256": "4acfc3042a54de234a6739632cb3ffc7dfe16fa3d4cd21e4e3dc914d052d06be",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics-data-followup/run-log.txt",
+      "bytes": 3380,
+      "sha256": "704e9f3b818a3535f1534b1b13a540d8340f07efef2e76f99a62cf4a35bcd4e1",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics/hilton-gamma-id-825460-lead-check.json",
+      "bytes": 3621,
+      "sha256": "ac9df5918c772c8382bdcf93aa1b7fee35a578745369d4fcd2a404ac5ecbdca8",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics/hilton-lead-verification.json",
+      "bytes": 639,
+      "sha256": "e2066d34a9ce1965efc9138955e34e8234516034614159c0a9f28d8e0ca7a3bb",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics/hilton-settlement-evidence-2026-10-13.json",
+      "bytes": 2724,
+      "sha256": "4c5527c3409a5791629590e554553ecdf32988ab8032f2897748e217f5091b80",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics/kalshi-hilton-historical-2026-10-13.json",
+      "bytes": 2887,
+      "sha256": "feba3058cca9ebb1523f364d3afafbe0740d32e53b5f42e425d1730865f12586",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics/polymarket-hilton-gamma-2026-10-13.json",
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-empirics/polymarket-hilton-page-2026-10-13.html",
+      "bytes": 1260998,
+      "sha256": "ade10c82b5fa73347b792e7e9a10ec2e12b7b4c5af828e6cc807ecf22436ed49",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-lead-data-followup/hilton-restored-snapshot-check.json",
+      "bytes": 11635,
+      "sha256": "dcf8103bc0436a58d0ef92e474b650b01a901f1353128d31ec3dd350231923c3",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-lead-data-followup/khamenei-kalshi-july-current.json",
+      "bytes": 2196,
+      "sha256": "7424e7c1b05ff56a96e13187f1b5028386436cac95367e957eedadac3995a2d5",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-lead-data-followup/khamenei-polymarket-june-current.json",
+      "bytes": 3151,
+      "sha256": "d1e48a6551328aa46b808c65d5f72f4dfa2e44e003ff82745774b079f6568308",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-lead-data-followup/khamenei-restored-settlement-evidence.json",
+      "bytes": 12542,
+      "sha256": "af6a9b4980d61c82193dc6424b0a0c33a87eadb0ca1f8774866bb8f964a2ccca",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-research-log.md",
+      "bytes": 2146,
+      "sha256": "a7e271638ecac95316500129bf1294f5192c801c18a1af01e8b921a5cc1877bf",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-theory/hilton-advancement-current.json",
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-theory/minerals-april-event-current.json",
+      "bytes": 6553,
+      "sha256": "b76c71a1c10bb477ee3f54e6836cc6f5b6660114231c57d9a64feb9a40ee8af8",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-theory/minerals-march-event-current.json",
+      "bytes": 7590,
+      "sha256": "30f1cd4a4c2246e70ccc9d393c1b63951c8c172383385b0058aa252ca73a788a",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-theory/steyer-advancement-current.json",
+      "bytes": 3605,
+      "sha256": "de85d817fe208830440ed0b597d1527bcea10a3eb65c1ceb5ae1c37165ae99cb",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "output/paper-revision/2026-10-12-01/scratch-theory/suit-market-current.json",
+      "bytes": 3299,
+      "sha256": "a748922d8f3655988e7d3ca65b0b3ac8f39593b669c46ea78a11aa4541ea32c0",
+      "category": "revision-cycle"
+    },
+    {
+      "path": "work/__pycache__/verify_revision.cpython-312.pyc",
+      "bytes": 11769,
+      "sha256": "a99af0dae6cc1225d5b8b8f66db29477a1ec1de7f65cdeb5793a00b98fa316e7",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/build_matching_candidate_audit.py",
+      "bytes": 12096,
+      "sha256": "34b973d3924acd142dd23159ee9f2da8021b12cefa71b7c0bba4c7a7c1d2d62e",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/case-outcomes.md",
+      "bytes": 3135,
+      "sha256": "1dfb3f09a87889eecee56ad49a35faeb9eecd9543745bff53e6beaf2c7763740",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/casebook-preview.md",
+      "bytes": 39581,
+      "sha256": "c060ee7801e51511cb65c431ec60a638ffd186c7c66367a7186428cc0d9772bf",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/conceptual-preview.png",
+      "bytes": 66285,
+      "sha256": "8c969664a061666c876cedf8f961b87bc714ebc496fd5163befd2d1c68dbaebc",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/final-output-hashes.json",
+      "bytes": 4829,
+      "sha256": "a77838bd7646acd0e359d53d44fe8ca72189e9c9697aef9ec1d26d5900a95e30",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/literature-passage.md",
+      "bytes": 11466,
+      "sha256": "36cd890391e018a57b217744f066a014f059fef8836a88e9dea3f14283254037",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/matched-price-histories-2026-09-10-627b27c83f-interval-max-repaired-panel.csv",
+      "bytes": 15332,
+      "sha256": "66975bf72016f161b9c24354147f61ecab8eb72f4fc7e4c3a6a287b09adad907",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/matched-price-histories-2026-09-10-bad72f8883-interval-max-repaired-panel.csv",
+      "bytes": 9175,
+      "sha256": "72b8a388d5b44393d600815f2dd630292d31d4173deeed5039fbbe03d68c358d",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/matching-candidate-audit.csv",
+      "bytes": 26533,
+      "sha256": "d339981e064cad99ead1f44fed83e8201ce10104d1b2051636e11e3a30d19203",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/matching-candidate-audit.md",
+      "bytes": 8992,
+      "sha256": "9daf544aed9de0bc04bb51be92ae387fecf46fc8bd5b4a6d449a5c559b3bd1b8",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/matching-panel-audit.json",
+      "bytes": 23842,
+      "sha256": "3bb8b38e580a6784ec73c567562838eaafabcf90f529fd565b920747d866ed80",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/measurement-before-after.csv",
+      "bytes": 5530329,
+      "sha256": "45c8cf6e1139c07b55fdfc1728681b66791502275ddea3dbf580cf63f1968113",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/measurement-diagnostics-summary.json",
+      "bytes": 472,
+      "sha256": "f2e3668914b2af10455ac89e169d3d6d81f51eeaa82d6d3a197fcee0d1c31a26",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/measurement-diagnostics.py",
+      "bytes": 9722,
+      "sha256": "e65f4657383a8f8dda44174cc25005d7d54efdeec247fcc73f6274d5042efcce",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/measurement-final-departures.csv",
+      "bytes": 3880755,
+      "sha256": "d96915faf3036a7e481181b24dfa8b07cf51e93cf1c10e8c4e0bdb880f913951",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/measurement-inference-outcomes.md",
+      "bytes": 9085,
+      "sha256": "805373a446dee214a037d4ca4664b52afe3ba99611b98dd7ad1ce7ce523a5817",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/measurement-original-contracts.csv",
+      "bytes": 22332966,
+      "sha256": "611d66c303abc8aa2a23f2d3334d226f686d4422c72ef4128a6c7dfa80ced9fc",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/measurement-platform-profiles.csv",
+      "bytes": 16060,
+      "sha256": "8992bb7006772189122d95f5b79071b433541a9f0a524fa2d044d409aca4eb54",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/measurement-preferred-models.csv",
+      "bytes": 1892,
+      "sha256": "c81c816e4aba8787f0371895f79c44b91af4bf9e188939ec09086f7f29dfb8cc",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/measurement-rule-family-checks.csv",
+      "bytes": 14364,
+      "sha256": "d2fb4a68bc27d0bb282f53ba75bb2714f8a52816fe5938e161917427e367ee5d",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/measurement-summary.csv",
+      "bytes": 1112,
+      "sha256": "eb317d5fed76800650b52e85d577bb41fc2bdf37b96bd86c1d1a6984e5b375e0",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/panel-cache-audit.csv",
+      "bytes": 424,
+      "sha256": "01b5de789ef40c83be42d746af3d0801f6ef42685959088094f48d6db7d1ec1b",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/panel-source-window-audit.csv",
+      "bytes": 9479,
+      "sha256": "145172803d69391ae5b614489bfdfe8781e2490791d0bc57d52fec0bb5b83a78",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/prepare_case_evidence.py",
+      "bytes": 6113,
+      "sha256": "c34fcaf03856633928ffe0674f5670393aa678fd4aa5c9b1a6a0288e870a0a47",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/preprocessing-exposure-exceptions.csv",
+      "bytes": 26253,
+      "sha256": "28d93d768662b15c388b88e14a6f6d69832da2d325b1d30c4ee05a4d4a4befa1",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/preprocessing-exposure-ledger.csv",
+      "bytes": 271,
+      "sha256": "6681d94b2f0f1200a7d41b4cf3483d0cac6d3a534f12997e5dd5618ee1795048",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/preprocessing-normalization-ledger.csv",
+      "bytes": 2612038,
+      "sha256": "e95db05dc8b3fc12aeb860aa46fa33080a46d495f96d4e9cee628ea3bf537639",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/preprocessing-outcome-evidence.csv",
+      "bytes": 3535658,
+      "sha256": "72a7c83eaf23163fb369d7ab7f293cd84b88b43483dd451f75c76c41890fba5b",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/preprocessing-outcome-ledger.csv",
+      "bytes": 920,
+      "sha256": "ef2307ce708d40d6d3719434a77076182f5879d9077728012c155fd69bd030f2",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/preprocessing-source-missingness.csv",
+      "bytes": 379,
+      "sha256": "c03d16fccea048012d9da12fa45c3bcd70a6193874e9e013a575b51865458bca",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/profile-preview.png",
+      "bytes": 78607,
+      "sha256": "31b0a41d68ce07d5ae6462290e704de97598c26873e504f3a9669368b213cb0c",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/provenance-outcomes.md",
+      "bytes": 3723,
+      "sha256": "a226dc4e429c3ffe987fa87acc5bee8de7bafc6ecb2cbcb7b200e12f4547641f",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/sample-panel-diagnostics.json",
+      "bytes": 7159,
+      "sha256": "c2a0d16ec0f1fee53c82a5d8703dd5e4169928b9108298b439c0052a8bc17371",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/sample-panel-outcomes.md",
+      "bytes": 7909,
+      "sha256": "a011ca40da14a1c5a2805b2d17af0cf80d1e231fc0ec05d26f3b08ad467d10c2",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/taxonomy-recoverable-selection-ledger.csv",
+      "bytes": 926891,
+      "sha256": "d55f7b2222203bc007969d061e5dcf5774977ad8bd18fae2736c4e97d8e1fa2e",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/theory-outcomes.md",
+      "bytes": 4326,
+      "sha256": "06cf6442423aa8aea9234746e9d88371b0f1de1e47db20fd647b65b7730cada3",
+      "category": "working-audit-artifact"
+    },
+    {
+      "path": "work/verify_revision.py",
+      "bytes": 7480,
+      "sha256": "c0a44e130ec8a3f7a1e33ae0e54b657b023fbd67a7e5062ecc73e405caa5084a",
+      "category": "working-audit-artifact"
+    }
+  ]
+}

@@ -26,6 +26,7 @@ class ClaimRelation(StrEnum):
     NON_EQUIVALENT_UNCLASSIFIED = "non_equivalent_unclassified"
     INDETERMINATE = "indeterminate"
     UNCLASSIFIED = "unclassified"
+    NOT_APPLICABLE = "not_applicable"
 
 
 @dataclass(frozen=True)
@@ -66,6 +67,7 @@ def probability_implication(relation: ClaimRelation | str) -> CoherenceImplicati
             "The written representation alone supplies no unique point probability restriction."
         ),
         ClaimRelation.UNCLASSIFIED: "The logical relation has not been established.",
+        ClaimRelation.NOT_APPLICABLE: "One contract is audited; no pairwise relation applies.",
     }
     return CoherenceImplication("none", False, reasons[relation])
 

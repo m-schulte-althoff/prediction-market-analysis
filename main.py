@@ -10,6 +10,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from description_views import write_data_descriptions
 from src.analysis import (
     determinacy_bins,
     market_level_models,
@@ -336,6 +337,17 @@ def run_coherence(cases: pd.DataFrame, panel: pd.DataFrame) -> pd.DataFrame:
     return diagnostics
 
 
+def run_describe() -> None:
+    """Describe retained local data without acquisition, fitting, or manuscript regeneration."""
+
+    contracts = _read_frame(CONTRACT_PATH)
+    cases = _read_frame(CASE_PATH)
+    normalization = _read_frame(TABLE_DIR / "preprocessing-normalization-ledger.csv")
+    path = OUTPUT_DIR / "descriptions-data.html"
+    write_data_descriptions(path, contracts, cases, normalization)
+    LOGGER.info("Descriptive data atlas written to %s", path)
+
+
 def run_all(
     config: SampleConfig,
     case_evidence_path: Path | None = None,
@@ -365,6 +377,7 @@ def parse_args() -> argparse.Namespace:
             "anecdotes",
             "panel",
             "analyze",
+            "describe",
             "all",
         ),
     )
@@ -402,6 +415,8 @@ def main() -> None:
         run_panel(config, arguments.history_snapshot)
     elif arguments.command == "analyze":
         run_analysis()
+    elif arguments.command == "describe":
+        run_describe()
     else:
         run_all(config, arguments.case_evidence, arguments.history_snapshot)
 

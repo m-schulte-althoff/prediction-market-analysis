@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A descriptive atlas of the prediction-market study: sample composition, rule-text features, outcome provenance and audited settlement cases.">
+  <title>Same Future, Different Claim · Data atlas</title>
+  <style>
+    :root { --ink:#233d3c; --muted:#60716e; --paper:#f5f5f0; --line:#dce2db; --blue:#335c81; --rose:#d1495b; --green:#2e6658; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:28px; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif; }
+    a { color:var(--blue); text-underline-offset:3px; }
+    a:hover { color:var(--rose); }
+    :focus-visible { outline:3px solid var(--blue); outline-offset:4px; }
+    .skip { position:absolute; left:20px; top:-100px; background:white; padding:10px; z-index:10; }
+    .skip:focus { top:12px; }
+    .layout { max-width:1510px; margin:auto; display:grid; grid-template-columns:210px minmax(0,1fr); }
+    aside { padding:36px 24px; border-right:1px solid var(--line); }
+    .rail { position:sticky; top:30px; }
+    .brand { font-size:12px; letter-spacing:.12em; text-transform:uppercase; font-weight:750; }
+    .brand-mark { display:block; width:29px; height:29px; border:7px solid var(--green); border-right-color:var(--rose); border-radius:50%; margin-bottom:15px; }
+    .rail p { font-size:12px; line-height:1.65; color:var(--muted); margin-bottom:30px; }
+    nav a { display:block; color:var(--muted); text-decoration:none; padding:10px 0; border-bottom:1px solid var(--line); font-size:13px; }
+    nav a span { color:#82948c; font-size:11px; padding-right:8px; }
+    .rail-note { margin-top:35px; font-size:11px; color:var(--muted); }
+    main { min-width:0; padding:43px 48px 30px; }
+    .eyebrow { text-transform:uppercase; letter-spacing:.15em; font-size:10px; font-weight:750; color:var(--green); margin:0 0 18px; }
+    .topline { display:flex; justify-content:space-between; gap:15px; align-items:center; }
+    .snapshot { border:1px solid var(--line); border-radius:20px; padding:4px 12px; font-size:11px; color:var(--muted); white-space:nowrap; }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { font:normal clamp(37px,4.1vw,61px)/1.07 Georgia,"Times New Roman",serif; letter-spacing:-.035em; margin:16px 0 23px; max-width:780px; }
+    h1 em { font-weight:normal; color:var(--green); }
+    .intro { max-width:740px; font-size:16px; line-height:1.8; color:var(--muted); }
+    .stats { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin:29px 0 18px; padding:23px 0; }
+    .stat { padding:0 20px; border-left:1px solid var(--line); }
+    .stat:first-child { padding-left:0; border:0; }
+    .stat strong { display:block; font:35px/1.1 Georgia,serif; letter-spacing:-.03em; }
+    .stat span { display:block; margin-top:8px; font-size:11px; color:var(--muted); }
+    .blue { color:var(--blue); } .rose { color:var(--rose); }
+    .scope { color:var(--muted); font-size:12px; max-width:840px; }
+    section { padding-top:47px; }
+    .section-title { display:flex; align-items:baseline; gap:12px; margin-bottom:12px; }
+    .section-title .number { font-size:11px; color:var(--green); font-weight:700; }
+    h2 { font:normal 29px/1.2 Georgia,serif; letter-spacing:-.025em; margin:0; }
+    .section-deck { max-width:850px; color:var(--muted); font-size:14px; margin-bottom:22px; }
+    h3 { font-size:16px; line-height:1.45; font-weight:650; margin-bottom:7px; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:19px; }
+    .card { border:1px solid var(--line); border-radius:12px; background:#fff; padding:23px 23px 18px; min-width:0; }
+    .card .kicker { font-size:10px; text-transform:uppercase; letter-spacing:.11em; color:var(--muted); margin:0 0 8px; }
+    .card p { color:var(--muted); font-size:12px; }
+    figure { margin:12px 0 0; }
+    figure svg { width:100%; height:auto; display:block; }
+    figcaption { color:var(--muted); font-size:11px; line-height:1.65; margin-top:10px; }
+    .insight { padding-top:13px; border-top:1px solid var(--line); margin-top:17px; font-size:12px; }
+    .legend { display:flex; flex-wrap:wrap; gap:17px; font-size:11px; margin:14px 0 5px; color:var(--muted); }
+    .dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; background:var(--blue); }
+    .dot.rose { background:var(--rose); }
+    .table-scroll { overflow-x:auto; }
+    .data-table { width:100%; border-collapse:collapse; font-size:12px; line-height:1.6; white-space:normal; }
+    .data-table caption { text-align:left; color:var(--muted); font-size:11px; margin:0 0 10px; }
+    .data-table th { text-align:left; color:var(--muted); font-size:10px; font-weight:650; border-bottom:1px solid var(--line); padding:10px 12px; vertical-align:bottom; }
+    .data-table td { border-bottom:1px solid #eef0eb; padding:11px 12px; font-variant-numeric:tabular-nums; vertical-align:top; }
+    .data-table tr:last-child td { border-bottom:0; }
+    .data-table tbody tr:hover { background:#f7f8f4; }
+    details { margin-top:15px; }
+    summary { cursor:pointer; font-size:12px; color:var(--blue); }
+    details[open] > summary { margin-bottom:15px; }
+    .downloads { display:flex; gap:16px; flex-wrap:wrap; margin-top:14px; font-size:11px; }
+    .constructs { background:var(--ink); color:#fff; border-radius:12px; padding:28px; margin-top:23px; }
+    .constructs h3 { font:normal 22px Georgia,serif; color:#fff; }
+    .constructs p { color:#d4dfd7; font-size:12px; }
+    .construct-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:25px; }
+    .construct-grid > div { border-left:1px solid #526562; padding-left:18px; }
+    .construct-grid > div:first-child { border:0; padding:0; }
+    .constructs .label { display:block; text-transform:uppercase; letter-spacing:.1em; font-size:9px; color:#a9c6b2; margin-bottom:11px; }
+    .formula { padding-top:18px; border-top:1px solid #526562; margin-top:15px; font-size:13px; color:#e4ece5; }
+    .formula code { font-size:15px; }
+    .note { border-left:3px solid #bb9b53; background:#eeeadc; padding:14px 18px; color:#625a43; font-size:12px; margin-top:20px; border-radius:0 6px 6px 0; }
+    .case { padding:17px 19px; margin-top:10px; background:white; border:1px solid var(--line); border-radius:8px; }
+    .case summary { color:var(--ink); font-size:13px; }
+    .case summary > span:last-child { display:block; font-weight:600; margin:7px 0 0 16px; }
+    .tag { font-size:9px; text-transform:uppercase; letter-spacing:.05em; padding:4px 8px; border-radius:4px; display:inline-block; background:#e8eee9; color:var(--green); }
+    .tag.hypothetical { background:#f3edde; color:#7c683a; }
+    .tag.unreviewed { background:#f6e7e8; color:#a73749; }
+    .case dl { font-size:12px; display:grid; grid-template-columns:160px minmax(0,1fr); gap:9px 18px; }
+    .case dt { color:var(--muted); } .case dd { margin:0; overflow-wrap:anywhere; }
+    .case p { font-size:11px; }
+    .filter { display:none; align-items:center; flex-wrap:wrap; gap:12px; margin:20px 0; font-size:12px; }
+    select { font:inherit; color:var(--ink); border:1px solid var(--line); border-radius:6px; padding:8px 30px 8px 12px; background:white; }
+    .case[hidden] { display:none; }
+    .sources { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+    .sources ul { margin:10px 0; padding-left:18px; font-size:12px; color:var(--muted); }
+    .sources li { margin:9px 0; }
+    code { font-size:.9em; overflow-wrap:anywhere; }
+    footer { border-top:1px solid var(--line); margin-top:35px; padding-top:20px; color:var(--muted); font-size:10px; }
+    @media (min-width:1450px) { main { padding-left:58px; padding-right:58px; } }
+    @media (max-width:1100px) { .layout { grid-template-columns:170px minmax(0,1fr); } aside { padding:30px 17px; } main { padding:32px 25px; } .grid { grid-template-columns:1fr; } .construct-grid { gap:16px; } }
+    @media (max-width:720px) { .layout { display:block; } aside { border:0; padding:16px 22px; border-bottom:1px solid var(--line); } .rail { position:static; } .brand-mark,.rail p,.rail-note,nav { display:none; } main { padding:24px 20px; } .topline { display:block; } .snapshot { display:inline-block; margin-bottom:10px; } h1 { margin-top:9px; } .stats { grid-template-columns:1fr 1fr; row-gap:24px; } .stat { padding:0 12px; } .stat:nth-child(3) { border:0; padding:0; } .construct-grid,.sources { grid-template-columns:1fr; } .construct-grid > div { padding:0; border:0; } .case dl { grid-template-columns:1fr; gap:4px; } .case dd { margin-bottom:10px; } .card { padding:19px 15px; } section { padding-top:35px; } }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+    @media print { body { background:white; } .layout { display:block; } aside,.filter,.downloads { display:none; } main { padding:0; } section { padding-top:24px; } .card,figure { break-inside:avoid; } .grid { grid-template-columns:1fr; } .constructs { background:#eef2ef; color:var(--ink); } .constructs h3,.constructs p,.constructs .label,.formula { color:var(--ink); } .case[hidden] { display:block; } }
+  </style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to data atlas</a>
+<div class="layout">
+  <aside><div class="rail">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <div class="brand">Same Future,<br>Different Claim</div>
+    <p>Prediction-market research<br>Descriptive data atlas</p>
+    <nav aria-label="Page sections">
+      <a href="#sample"><span>01</span>The sample</a>
+      <a href="#constructs"><span>02</span>The constructs</a>
+      <a href="#text"><span>03</span>Rule-text patterns</a>
+      <a href="#composition"><span>04</span>Portfolio composition</a>
+      <a href="#outcomes"><span>05</span>Outcome evidence</a>
+      <a href="#cases"><span>06</span>Audited cases</a>
+      <a href="#sources"><span>07</span>Sources &amp; methods</a>
+    </nav>
+    <div class="rail-note">Offline HTML · embedded graphs<br>All charts available as SVG</div>
+  </div></aside>
+  <main id="main">
+    <header>
+      <div class="topline"><p class="eyebrow">The data behind the study</p><span class="snapshot">Snapshot label · $snapshot</span></div>
+      <h1>Same future.<br><em>What actually pays?</em></h1>
+      <p class="intro">Prediction markets can ask similar questions while rewarding different outcomes.
+        Explore the contracts, the language that defines them, and the evidence used to distinguish a shared topic from a shared claim.</p>
+      <div class="stats">
+        <div class="stat"><strong>$contracts</strong><span>Contracts in the historical sample</span></div>
+        <div class="stat"><strong class="blue">$kalshi_n</strong><span>Kalshi contracts</span></div>
+        <div class="stat"><strong class="rose">$polymarket_n</strong><span>Polymarket contracts</span></div>
+        <div class="stat"><strong>$cases_n</strong><span>Exhibits in a separate case inventory</span></div>
+      </div>
+      <p class="scope">One row represents one contract. The sample is purposive and selected by volume; the case inventory provides focused rule and settlement evidence. Neither estimates population prevalence.</p>
+    </header>
+
+    <section id="sample">
+      <div class="section-title"><span class="number">01</span><h2>Two selected portfolios</h2></div>
+      <p class="section-deck">The platforms contribute different mixes of topics and contract families. Read their descriptive statistics in the context of those selection decisions.</p>
+      <div class="card">$overview_table
+        <div class="downloads"><a href="tables/descriptions-overview.csv" download>Summary CSV ↗</a></div>
+      </div>
+      <details><summary>How archived rows become the analysis sample</summary>
+        $attrition_table
+        <p class="scope">Disposition codes are taken directly from the normalization ledger. Kalshi loses two rows with missing titles; Polymarket loses 751 rows with unsupported outcome labels.</p>
+      </details>
+      <div class="note"><strong>Selection matters.</strong> Kalshi acquisition selected high-volume series with per-tier caps. Polymarket acquisition selected high-volume closed markets using a flawed historical sports filter. The classifier is repaired for future acquisition; the omitted historical records and exact sports/overflow split remain unavailable. Native category and family definitions differ.</div>
+    </section>
+
+    <section id="constructs">
+      <div class="section-title"><span class="number">02</span><h2>What is being measured?</h2></div>
+      <p class="section-deck">The study separates a comparison between contracts, a question about a rule given specified information, and an automated description of the text.</p>
+      <div class="constructs">
+        <div class="construct-grid">
+          <div><span class="label">Between contracts</span><h3>Payoff divergence</h3><p>Two contracts assign different normalized settlements to at least one explicitly specified scenario. A separating scenario establishes non-equivalence over the audited domain; it does not measure frequency or economic magnitude.</p></div>
+          <div><span class="label">Within a contract</span><h3>Written-rule determinacy</h3><p>Given a rule version and stated information, is the payout fixed? Record any remaining fact, reference price, interpretation or authority decision. Later adjudication can supply a required input.</p></div>
+          <div><span class="label">Descriptive text proxy</span><h3>Rule-text specificity</h3><p>An exploratory equal-weight average of five literal text components. The legacy field is <code>determinacy_score</code>. It has no independent human construct validation and does not establish a payout mapping.</p></div>
+        </div>
+        <div class="formula"><code>q<sub>c</sub> = E<sub>μ</sub>[r<sub>c</sub>]</code> &nbsp; Expected normalized payout depends on the settlement mapping, including fractional amounts. It is not automatically an observed market price.</div>
+      </div>
+    </section>
+
+    <section id="text">
+      <div class="section-title"><span class="number">03</span><h2>The language of settlement</h2></div>
+      <p class="section-deck">Literal cues show how these sampled contracts describe sources, timing, definitions and exceptions. Means conceal substantial variation within each portfolio.</p>
+      <div class="grid">
+        <article class="card"><p class="kicker">Component profile</p><h3>Which cues appear in the text?</h3>
+          <figure>$components_chart<figcaption>These are mean weighted cue scores, not proportions. The discretion-term score is max(0, 1 − 0.25 × distinct configured phrases); a score of 0.811 is not an 81.1% no-flag share. Cues can also describe the event subject rather than a deciding source.</figcaption></figure>
+          <details><summary>Read exact component means</summary>$components_table</details>
+          <div class="downloads"><a href="figures/descriptions-components.svg" download>SVG ↗</a><a href="tables/descriptions-components.csv" download>CSV ↗</a></div>
+        </article>
+        <article class="card"><p class="kicker">Distribution</p><h3>Similar averages, different distributions</h3>
+          <figure>$distribution_chart<figcaption>Each platform is normalized separately. Twenty fixed bins of width 0.05; the final bin includes 1. Missing scores excluded: $missing_index. The index is descriptive, with no validated “high determinacy” cutoff.</figcaption></figure>
+          <div class="insight">The index combines source, time, definition, fallback and discretion-term components with equal weights.</div>
+          <div class="downloads"><a href="figures/descriptions-distribution.svg" download>SVG ↗</a><a href="tables/descriptions-distribution.csv" download>Bin counts CSV ↗</a></div>
+        </article>
+        <article class="card"><p class="kicker">Text length</p><h3>How much text defines a claim?</h3>
+          <figure>$length_chart<figcaption>The word count covers the question, operative rules and source text combined. Bins include every nonmissing observation, with a 500+ overflow bin. Missing lengths excluded: $missing_length.</figcaption></figure>
+          <div class="insight">Longer descriptions can contain more qualifications, but word count alone does not establish that the rules fix a payout.</div>
+          <div class="downloads"><a href="figures/descriptions-length.svg" download>SVG ↗</a><a href="tables/descriptions-length.csv" download>Bin counts CSV ↗</a></div>
+        </article>
+        <article class="card"><p class="kicker">Threshold composition</p><h3>Numeric contract language is unevenly distributed</h3>
+          $strata_table
+          <div class="insight">A threshold flag contributes directly to the definition component. Differences across these strata are descriptive and do not independently validate the index. Corrected parsing eliminated the study’s earlier composition-reversal claim.</div>
+          <div class="downloads"><a href="tables/descriptions-strata.csv" download>Stratum summaries CSV ↗</a><a href="MEASUREMENT_NOTE.md">Measurement correction ↗</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="composition">
+      <div class="section-title"><span class="number">04</span><h2>What shapes the portfolios?</h2></div>
+      <p class="section-deck">Repeated contract templates and platform-specific topic groupings help explain why a contract-level average need not represent an independent rule design.</p>
+      <article class="card"><p class="kicker">Topic mix</p><h3>Economics dominates the Kalshi sample; Polymarket spans a different topic mix</h3>
+        <figure>$categories_chart<figcaption>The five largest native categories are shown for each platform; smaller categories are grouped only for display. Category schemes are not harmonized. Percentages use all contracts within the respective platform.</figcaption></figure>
+        <details><summary>Read all native categories and counts</summary>$categories_table</details>
+        <div class="downloads"><a href="figures/descriptions-categories.svg" download>SVG ↗</a><a href="tables/descriptions-categories.csv" download>All categories CSV ↗</a></div>
+      </article>
+      <div class="grid" style="margin-top:19px">
+        <article class="card"><p class="kicker">Family concentration</p><h3>Many contracts can share a family</h3>
+          <figure>$families_chart<figcaption>Cumulative share of contracts in the 20 largest API families, ranked separately by size. Kalshi families are series; Polymarket families are events. Their granularity differs, so this is not a diversity ranking.</figcaption></figure>
+          <div class="downloads"><a href="figures/descriptions-families.svg" download>SVG ↗</a><a href="tables/descriptions-families.csv" download>All family counts CSV ↗</a></div>
+        </article>
+        <article class="card"><p class="kicker">Why this matters for the study</p><h3>A contract count is not a rule-design count</h3>
+          <p>Threshold ladders and other families can repeat the same rule template across many contracts. A large family can therefore contribute heavily to an overall text-feature mean.</p>
+          <p>The supplementary activity analysis uses platform-qualified family clusters for its preferred uncertainty estimate. It remains an association in selected portfolios; it does not identify a causal effect of specificity on trading.</p>
+          <p>Volume is the platform-reported cumulative field. Platform units and acquisition selection differ; pooled volume totals are not used here as comparable dollar turnover.</p>
+          <div class="downloads"><a href="SUPPLEMENTARY_ANALYSIS.md">Supplementary estimates ↗</a><a href="tables/analysis-market-models.csv" download>Existing model table ↗</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="outcomes">
+      <div class="section-title"><span class="number">05</span><h2>What counts as outcome evidence?</h2></div>
+      <p class="section-deck">A recorded platform result, an endpoint price and a fractional settlement convey different information. The ledger keeps those categories separate.</p>
+      <div class="card">$outcomes_table
+        <p class="insight">Polymarket endpoint inference with resolved or settled status is distinguished from proposed or missing-status inference. An intermediate price is not converted to a binary outcome. Kalshi scalar settlements remain separate from recorded YES/NO results.</p>
+        <div class="downloads"><a href="tables/descriptions-outcomes.csv" download>Outcome evidence CSV ↗</a><a href="tables/preprocessing-outcome-ledger.csv" download>Full status ledger ↗</a></div>
+      </div>
+      <div class="note"><strong>A timing boundary remains.</strong> The September 10 label is not a verified HTTP acquisition timestamp. Three Polymarket source updates fall on September 11. Elapsed metadata time is an exposure proxy; it does not establish that the archived rules preceded trading.</div>
+    </section>
+
+    <section id="cases">
+      <div class="section-title"><span class="number">06</span><h2>When the distinction changes the payout</h2></div>
+      <p class="section-deck">The separate inventory contains $observed_n validated observed exhibits and $hypothetical_n validated hypothetical witnesses. Cases establish specific distinctions; they are not a representative denominator for their prevalence.</p>
+      <article class="card"><p class="kicker">Recorded settlements · separate case evidence</p><h3>Different claims can pay differently on the same event</h3>
+        <div class="legend"><span><i class="dot" aria-hidden="true"></i>Kalshi</span><span><i class="dot rose" aria-hidden="true"></i>Polymarket</span><span>● Contract A &nbsp; ◆ Contract B</span></div>
+        <figure>$settlements_chart<figcaption>Hilton: first place versus top-two advancement. Khamenei: price-based death allocation versus a YES departure settlement. Minerals: distinct milestones with two YES outcomes. These amounts are normalized contract settlements; account reimbursements and individual receipts were not audited. The clothing/adjudication case concerns one contract and is described below.</figcaption></figure>
+        <details><summary>Read exact observed settlement amounts</summary>$settlements_table</details>
+        <div class="downloads"><a href="figures/descriptions-settlements.svg" download>SVG ↗</a><a href="tables/descriptions-settlements.csv" download>Recorded settlements CSV ↗</a></div>
+      </article>
+      <div class="filter"><label for="evidence-filter">Explore the case inventory</label><select id="evidence-filter"><option value="all">All evidence</option><option value="observed">Observed exhibits</option><option value="hypothetical">Hypothetical witnesses</option><option value="unreviewed">Re-audit required</option></select><span id="case-count" role="status" aria-live="polite"></span></div>
+      $case_cards
+      <div class="note"><strong>Evidence boundary.</strong> A separating scenario alone establishes no binary marginal probability ordering. The retained inventory and price archives supply no eligible synchronized-price test. Missing price excess is “not estimable”; it is not evidence of zero excess, irrationality or manipulation. See the <a href="REPRESENTATION_CASEBOOK.md">full casebook</a> for sources, dates, operative clauses and audit details.</div>
+    </section>
+
+    <section id="sources">
+      <div class="section-title"><span class="number">07</span><h2>Sources, definitions &amp; reproduction</h2></div>
+      <div class="sources">
+        <div><h3>Where the descriptions come from</h3><ul>
+          <li><code>data/processed/semantics-contracts.csv</code>: contract-level descriptions, native categories, text features and outcome provenance.</li>
+          <li><a href="tables/preprocessing-normalization-ledger.csv">Normalization ledger</a>: retained and excluded archived rows.</li>
+          <li><a href="tables/representation-case-matrix.csv">Case matrix</a>: supplied rule versions, witnesses and recorded settlements. Fingerprints bind assertions to audited inputs; they do not certify exhaustive historical governing-rule coverage.</li>
+          <li><a href="../DATA_SOURCES.md">Data sources</a> · <a href="../docs/CONSTRUCTS.md">Construct definitions</a> · <a href="MEASUREMENT_NOTE.md">Measurement note</a>.</li>
+        </ul></div>
+        <div><h3>How to reproduce this page</h3><p class="scope">From the repository root, with the existing processed archives available:</p>
+          <p><code>uv run python3 main.py describe</code></p>
+          <p class="scope">The command reads local data, regenerates this page, and writes descriptive CSV tables and standalone SVG figures. It performs no acquisition or model fitting. The HTML embeds all charts and styling, so the page remains readable when shared alone; relative source and download links require the repository output files.</p>
+          <p class="scope">Graph percentages use within-platform denominators. IQR is the 25th–75th percentile. Components and the composite range from 0 to 1. No inferred population estimates or new construct-validation scores are introduced.</p>
+        </div>
+      </div>
+    </section>
+    <footer>Same Future, Different Claim · Descriptive atlas of the retained research archives · Snapshot label $snapshot · No external scripts, fonts or chart services.</footer>
+  </main>
+</div>
+<script>
+  const filter = document.querySelector('#evidence-filter');
+  const cards = [...document.querySelectorAll('.case')];
+  const count = document.querySelector('#case-count');
+  function filterCases() {
+    let visible = 0;
+    for (const card of cards) {
+      card.hidden = filter.value !== 'all' && card.dataset.kind !== filter.value;
+      if (!card.hidden) visible += 1;
+    }
+    count.textContent = visible + ' of ' + cards.length + ' exhibits';
+  }
+  document.querySelector('.filter').style.display = 'flex';
+  filter.addEventListener('change', filterCases);
+  filterCases();
+</script>
+</body>
+</html>

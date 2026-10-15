@@ -1,0 +1,341 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="466.532344pt" height="265.415609pt" viewBox="0 0 466.532344 265.415609" xmlns="http://www.w3.org/2000/svg" version="1.1" role="img" aria-labelledby="descriptions-families-title descriptions-families-desc"><title id="descriptions-families-title">Contract concentration in API families</title><desc id="descriptions-families-desc">Kalshi series and Polymarket events have different granularity. This does not rank platform diversity.</desc>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="descriptions-families-figure_1">
+  <g id="descriptions-families-patch_1">
+   <path d="M 0 265.415609
+L 466.532344 265.415609
+L 466.532344 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="descriptions-families-axes_1">
+   <g id="descriptions-families-patch_2">
+    <path d="M 56.789844 227.214828
+L 452.969844 227.214828
+L 452.969844 10.998828
+L 56.789844 10.998828
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="descriptions-families-matplotlib.axis_1">
+    <g id="descriptions-families-xtick_1">
+     <g id="descriptions-families-line2d_1">
+      <path d="M 56.789844 227.214828
+L 56.789844 10.998828
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_2">
+      <defs>
+       <path id="descriptions-families-m5e2e97271e" d="M 0 0
+L 0 3.5
+" style="stroke: #536766; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-families-m5e2e97271e" x="56.789844" y="227.214828" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_1">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="56.789844" y="241.812484" transform="rotate(-0 56.789844 241.812484)">1</text>
+     </g>
+    </g>
+    <g id="descriptions-families-xtick_2">
+     <g id="descriptions-families-line2d_3">
+      <path d="M 140.19616 227.214828
+L 140.19616 10.998828
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_4">
+      <g>
+       <use xlink:href="#descriptions-families-m5e2e97271e" x="140.19616" y="227.214828" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_2">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="140.19616" y="241.812484" transform="rotate(-0 140.19616 241.812484)">5</text>
+     </g>
+    </g>
+    <g id="descriptions-families-xtick_3">
+     <g id="descriptions-families-line2d_5">
+      <path d="M 244.454054 227.214828
+L 244.454054 10.998828
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_6">
+      <g>
+       <use xlink:href="#descriptions-families-m5e2e97271e" x="244.454054" y="227.214828" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_3">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="244.454054" y="241.812484" transform="rotate(-0 244.454054 241.812484)">10</text>
+     </g>
+    </g>
+    <g id="descriptions-families-xtick_4">
+     <g id="descriptions-families-line2d_7">
+      <path d="M 348.711949 227.214828
+L 348.711949 10.998828
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_8">
+      <g>
+       <use xlink:href="#descriptions-families-m5e2e97271e" x="348.711949" y="227.214828" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_4">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="348.711949" y="241.812484" transform="rotate(-0 348.711949 241.812484)">15</text>
+     </g>
+    </g>
+    <g id="descriptions-families-xtick_5">
+     <g id="descriptions-families-line2d_9">
+      <path d="M 452.969844 227.214828
+L 452.969844 10.998828
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_10">
+      <g>
+       <use xlink:href="#descriptions-families-m5e2e97271e" x="452.969844" y="227.214828" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_5">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="452.969844" y="241.812484" transform="rotate(-0 452.969844 241.812484)">20</text>
+     </g>
+    </g>
+    <g id="descriptions-families-text_6">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="254.879844" y="255.813266" transform="rotate(-0 254.879844 255.813266)">Largest API families included (ranked within platform)</text>
+    </g>
+   </g>
+   <g id="descriptions-families-matplotlib.axis_2">
+    <g id="descriptions-families-ytick_1">
+     <g id="descriptions-families-line2d_11">
+      <path d="M 56.789844 227.214828
+L 452.969844 227.214828
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_12">
+      <defs>
+       <path id="descriptions-families-m48ab344636" d="M 0 0
+L -3.5 0
+" style="stroke: #233d3c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-families-m48ab344636" x="56.789844" y="227.214828" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_7">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="49.789844" y="231.013656" transform="rotate(-0 49.789844 231.013656)">0%</text>
+     </g>
+    </g>
+    <g id="descriptions-families-ytick_2">
+     <g id="descriptions-families-line2d_13">
+      <path d="M 56.789844 183.971628
+L 452.969844 183.971628
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_14">
+      <g>
+       <use xlink:href="#descriptions-families-m48ab344636" x="56.789844" y="183.971628" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_8">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="49.789844" y="187.770456" transform="rotate(-0 49.789844 187.770456)">20%</text>
+     </g>
+    </g>
+    <g id="descriptions-families-ytick_3">
+     <g id="descriptions-families-line2d_15">
+      <path d="M 56.789844 140.728428
+L 452.969844 140.728428
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_16">
+      <g>
+       <use xlink:href="#descriptions-families-m48ab344636" x="56.789844" y="140.728428" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_9">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="49.789844" y="144.527256" transform="rotate(-0 49.789844 144.527256)">40%</text>
+     </g>
+    </g>
+    <g id="descriptions-families-ytick_4">
+     <g id="descriptions-families-line2d_17">
+      <path d="M 56.789844 97.485228
+L 452.969844 97.485228
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_18">
+      <g>
+       <use xlink:href="#descriptions-families-m48ab344636" x="56.789844" y="97.485228" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_10">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="49.789844" y="101.284056" transform="rotate(-0 49.789844 101.284056)">60%</text>
+     </g>
+    </g>
+    <g id="descriptions-families-ytick_5">
+     <g id="descriptions-families-line2d_19">
+      <path d="M 56.789844 54.242028
+L 452.969844 54.242028
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_20">
+      <g>
+       <use xlink:href="#descriptions-families-m48ab344636" x="56.789844" y="54.242028" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_11">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="49.789844" y="58.040856" transform="rotate(-0 49.789844 58.040856)">80%</text>
+     </g>
+    </g>
+    <g id="descriptions-families-ytick_6">
+     <g id="descriptions-families-line2d_21">
+      <path d="M 56.789844 10.998828
+L 452.969844 10.998828
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_22">
+      <g>
+       <use xlink:href="#descriptions-families-m48ab344636" x="56.789844" y="10.998828" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_12">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="49.789844" y="14.797656" transform="rotate(-0 49.789844 14.797656)">100%</text>
+     </g>
+    </g>
+    <g id="descriptions-families-text_13">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="14.798438" y="119.106828" transform="rotate(-90 14.798438 119.106828)">Cumulative share of platform contracts</text>
+    </g>
+   </g>
+   <g id="descriptions-families-line2d_23">
+    <path d="M 56.789844 191.917138
+L 77.641423 172.838737
+L 98.493002 155.948792
+L 119.344581 139.588313
+L 140.19616 127.375312
+L 161.047738 115.374097
+L 181.899317 104.308272
+L 202.750896 94.901437
+L 223.602475 86.271152
+L 244.454054 77.976195
+L 265.305633 70.122459
+L 286.157212 62.674646
+L 307.008791 55.721001
+L 327.86037 51.750011
+L 348.711949 48.220242
+L 369.563528 45.749404
+L 390.415107 43.455054
+L 411.266686 41.407788
+L 432.118265 39.713499
+L 452.969844 38.089805
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #335c81; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-families-line2d_24">
+    <path d="M 56.789844 225.514689
+L 77.641423 224.411089
+L 98.493002 223.367144
+L 119.344581 222.531987
+L 140.19616 221.696831
+L 161.047738 220.861675
+L 181.899317 220.056346
+L 202.750896 219.31067
+L 223.602475 218.564995
+L 244.454054 217.81932
+L 265.305633 217.103472
+L 286.157212 216.387623
+L 307.008791 215.701602
+L 327.86037 215.015581
+L 348.711949 214.32956
+L 369.563528 213.673365
+L 390.415107 213.017171
+L 411.266686 212.360977
+L 432.118265 211.704783
+L 452.969844 211.078415
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #d1495b; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-families-patch_3">
+    <path d="M 56.789844 227.214828
+L 452.969844 227.214828
+" style="fill: none; stroke: #d8dedc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-families-PathCollection_1">
+    <defs>
+     <path id="descriptions-families-m554ec1fce1" d="M 0 3
+C 0.795609 3 1.55874 2.683901 2.12132 2.12132
+C 2.683901 1.55874 3 0.795609 3 0
+C 3 -0.795609 2.683901 -1.55874 2.12132 -2.12132
+C 1.55874 -2.683901 0.795609 -3 0 -3
+C -0.795609 -3 -1.55874 -2.683901 -2.12132 -2.12132
+C -2.683901 -1.55874 -3 -0.795609 -3 0
+C -3 0.795609 -2.683901 1.55874 -2.12132 2.12132
+C -1.55874 2.683901 -0.795609 3 0 3
+z
+" style="stroke: #335c81"/>
+    </defs>
+    <g clip-path="url(#descriptions-families-pd18b98f1c1)">
+     <use xlink:href="#descriptions-families-m554ec1fce1" x="140.19616" y="127.375312" style="fill: #335c81; stroke: #335c81"/>
+    </g>
+   </g>
+   <g id="descriptions-families-text_14">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="149.19616" y="120.375312" transform="rotate(-0 149.19616 120.375312)">Top 5: 46.2%</text>
+   </g>
+   <g id="descriptions-families-PathCollection_2">
+    <defs>
+     <path id="descriptions-families-m6d1080a18a" d="M 0 3
+C 0.795609 3 1.55874 2.683901 2.12132 2.12132
+C 2.683901 1.55874 3 0.795609 3 0
+C 3 -0.795609 2.683901 -1.55874 2.12132 -2.12132
+C 1.55874 -2.683901 0.795609 -3 0 -3
+C -0.795609 -3 -1.55874 -2.683901 -2.12132 -2.12132
+C -2.683901 -1.55874 -3 -0.795609 -3 0
+C -3 0.795609 -2.683901 1.55874 -2.12132 2.12132
+C -1.55874 2.683901 -0.795609 3 0 3
+z
+" style="stroke: #d1495b"/>
+    </defs>
+    <g clip-path="url(#descriptions-families-pd18b98f1c1)">
+     <use xlink:href="#descriptions-families-m6d1080a18a" x="140.19616" y="221.696831" style="fill: #d1495b; stroke: #d1495b"/>
+    </g>
+   </g>
+   <g id="descriptions-families-text_15">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="149.19616" y="214.696831" transform="rotate(-0 149.19616 214.696831)">Top 5: 2.6%</text>
+   </g>
+   <g id="descriptions-families-legend_1">
+    <g id="descriptions-families-line2d_25">
+     <path d="M 65.789844 24.097266
+L 75.789844 24.097266
+L 85.789844 24.097266
+" style="fill: none; stroke: #335c81; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="descriptions-families-text_16">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="93.789844" y="27.597266" transform="rotate(-0 93.789844 27.597266)">Kalshi</text>
+    </g>
+    <g id="descriptions-families-line2d_26">
+     <path d="M 65.789844 39.098047
+L 75.789844 39.098047
+L 85.789844 39.098047
+" style="fill: none; stroke: #d1495b; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="descriptions-families-text_17">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="93.789844" y="42.598047" transform="rotate(-0 93.789844 42.598047)">Polymarket</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="descriptions-families-pd18b98f1c1">
+   <rect x="56.789844" y="10.998828" width="396.18" height="216.216"/>
+  </clipPath>
+ </defs>
+</svg>

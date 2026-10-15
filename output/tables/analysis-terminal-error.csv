@@ -1,2 +1,2 @@
 model,term,coefficient,std_error,p_value,ci_lower,ci_upper,n,r_squared,clusters,covariance,formula
-kalshi_terminal_error,determinacy_z,0.015649536765434714,0.008457327375868736,0.06425424693632253,-0.0009265202967326525,0.03222559382760208,10400,0.06864294422251505,102,cluster,terminal_abs_error ~ determinacy_z + log_rule_length + log_duration + C(category_group)
+kalshi_terminal_error,determinacy_z,0.015649536765434707,0.008457327375868896,0.0642542469363277,-0.0009265202967329716,0.032225593827602386,10400,0.06864294422251516,102,cluster,terminal_abs_error ~ determinacy_z + log_rule_length + log_duration + C(category_group)

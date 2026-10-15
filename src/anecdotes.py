@@ -35,25 +35,14 @@ POLYMARKET_EVENT_SLUGS = (
 )
 KALSHI_EVENT_TICKERS = ("KXPRESPERSON-28", "KXFEDDECISION-26SEP")
 
-# Manual audits of archived operative inputs, refreshed under approved P5.
+# Manual audits within the supplied source scope, refreshed under approved P1/P2.
 # Fingerprints also bind questions, boundaries, scenario and settlement evidence.
 # Overlap/non-nesting uses three existence witnesses, not an inclusion inference.
 CLAIM_AUDITS: dict[str, tuple[str, ClaimRelation, str, str]] = {
-    "election-call-vs-inauguration": (
-        "ed80a81a468a895b4a4691adef7ca6c4e5fccc1d901821e43b6d1cab3772f567",
-        ClaimRelation.OVERLAP_NON_NESTED,
-        "determinate_binary",
-        "Under the archived binary reading: Rubio called by all three sources but never "
-        "inaugurated gives A=0,B=1. All three call another candidate, who is then unable to "
-        "take office, and Rubio is inaugurated for the 2029 term gives A=1,B=0. "
-        "Rubio called and inaugurated gives A=1,B=1. The inauguration fallback applies "
-        "only absent a unanimous call by January 20, 2029. These existence witnesses "
-        "establish overlap and both differences, not a marginal probability ordering.",
-    ),
     "minerals-agreement-vs-signature": (
         "ed8daafb88abe332d9ec43d4b1510275cafbf5110d69bbafc83b0dab7a1e8cab",
         ClaimRelation.OVERLAP_NON_NESTED,
-        "determinate_binary",
+        "question_rule_binary_model",
         "Both governments announce a rare-earth deal on March 31 but never formally adopt "
         "any mineral deal through April 30: A=1,B=0. No deal by March 31, then an officially "
         "documented rare-earth deal signed on April 15: A=0,B=1. A March 31 rare-earth "
@@ -93,27 +82,26 @@ CLAIM_AUDITS: dict[str, tuple[str, ClaimRelation, str, str]] = {
     ),
     "suit-category-boundary": (
         "4adc9d5061b96588dab2d6cdafc8ec5f7ea565739615b1e7537c4a91abb3d623",
-        ClaimRelation.INDETERMINATE,
-        "adjudicatively_incomplete",
+        ClaimRelation.NOT_APPLICABLE,
+        "delegated_determination",
         "Authenticity and May 22-June 30 image/release requirements fix evidence conditions, "
-        "not the garment category. For the borderline attire witness, the text alone does "
-        "not select a payout; credible-reporting adjudication completes the mapping. "
-        "This is a within-contract illustration, not a second market or proof that "
-        "an eventual institutional settlement is undefined.",
+        "while credible reporting supplies the named resolution source. No independent "
+        "garment classification or proof of multiple institutionally permissible payouts "
+        "is supplied. This is one contract, not a pairwise divergence claim.",
     ),
     "hilton-first-vs-advance": (
         "f7d08b8952136ae4a31ccf4c0725f6369f90d3b02a07c76f7641d9f608e7cc2f",
         ClaimRelation.NON_EQUIVALENT_UNCLASSIFIED,
         "non_binary_exceptions",
         "Archived first-place and advancement records plus certified second place establish "
-        "realized 0/1 payout divergence. The full Kalshi rule also pays 1/n for exact ties, "
+        "realized 0/1 payout divergence. The archived Kalshi rule also pays 1/n for exact ties, "
         "ranks withdrawn/disqualified candidates left on the ballot, excludes write-in winners "
         "without their own option, and pays NO if cancelled/postponed beyond expiration. "
         "Polymarket uses advancement, a December 31 cutoff and official-results fallback. "
         "No binary subset restriction follows from the realized contrast.",
     ),
     "khamenei-death-allocation": (
-        "59572a858384dab769d2f60f4ac0bb6cae6cbd3df2b175dcdf02b026d96df09e",
+        "3dc237c2a4f84c5ebb2cbebb3aec7d3f48fb4bbaae95975caf4c4c63f3279889",
         ClaimRelation.NON_EQUIVALENT_UNCLASSIFIED,
         "non_binary_and_adjudicated_exceptions",
         "Both archived and follow-up official records establish a normalized 0.45/1 contrast. "
@@ -126,21 +114,21 @@ CLAIM_AUDITS: dict[str, tuple[str, ClaimRelation, str, str]] = {
         "reimbursements. No global binary-event restriction is validated.",
     ),
     "suit-adjudication-episode": (
-        "5930677751ed486dc7c8bb462c78a2fcf0751ca21ec321b4ba547ac7edcd7492",
-        ClaimRelation.INDETERMINATE,
-        "adjudicatively_incomplete",
-        "The full rule fixes May 22–June 30 ET image-taking/release and authenticity conditions "
-        "but supplies no garment-level definition of suit. It delegates to credible-reporting "
-        "consensus. The June 24 appearance, repeated proposed/disputed states and final NO "
-        "document institutional completion; they do not prove the complete-history payout "
-        "function is undefined, independently classify the clothing, or measure ambiguity's "
-        "economic effect. This is one contract, so no pairwise probability restriction applies.",
+        "c5a54f792bac882865be0c55795a5dfcb3490699e1e1caf092dd3a976f19ddb2",
+        ClaimRelation.NOT_APPLICABLE,
+        "delegated_determination",
+        "The question names credible-reporting consensus and image/time/authenticity "
+        "conditions. Linked creator updates acknowledge a May 29 dispute and state on "
+        "July 1 that reporting had not confirmed a suit appearance. Pinned Polygon state "
+        "verifies the exact question/condition linkage and NO payout. Neither a complete "
+        "proposal timeline nor the reason for every dispute is recovered. No pairwise "
+        "relation or institutional incompleteness is established.",
     ),
     "minerals-observed-chronology": (
-        "0598420f1dd005161fc488579f3cf9c1cb169dc4ec8bb2cfb64f74a54a96bcd9",
+        "d35145dfbce3b3f164473b64fb10781bb3f5bbeca886cd94ab1d401210bb9013",
         ClaimRelation.OVERLAP_NON_NESTED,
-        "determinate_binary",
-        "Full rules match the audited successive minerals witnesses: announcement-only "
+        "question_rule_binary_model",
+        "The supplied question rules match the successive minerals witnesses: announcement-only "
         "March 31 agreement can give A=1,B=0; no March agreement and qualifying April signature "
         "can give A=0,B=1; both milestones can give A=1,B=1. Different windows, scopes and "
         "authorities prevent nesting. Observed outcomes are YES/YES; the April 30 signing "
@@ -188,6 +176,11 @@ def add_claim_relations(cases: pd.DataFrame) -> pd.DataFrame:
         validated = audit is not None and fingerprint == audit[0]
         if audit is not None and validated:
             _, relation, status, basis = audit
+            basis = (
+                "Scope: supplied API fields and explicitly linked evidence; historical "
+                "governing specifications and all platform fallbacks are not certified. "
+                + basis
+            )
             confidence = (
                 "conditional on literal archived wording"
                 if row["case_id"] == "fed-quantization-convention"
@@ -196,8 +189,9 @@ def add_claim_relations(cases: pd.DataFrame) -> pd.DataFrame:
         else:
             relation, status = ClaimRelation.UNCLASSIFIED, "unreviewed"
             basis = (
-                "Operative inputs or asserted scenario/settlement evidence differ from the "
-                "audited archive; manual review required. Dependent assertions withheld."
+                "Required source versions or scenario/settlement assertions lack a current "
+                "audit of their stated scope; manual review required. Dependent assertions "
+                "withheld."
             )
             confidence = "unreviewed"
             for key in (
@@ -206,7 +200,7 @@ def add_claim_relations(cases: pd.DataFrame) -> pd.DataFrame:
                 "observed_settlement_a", "observed_settlement_b", "explanation", "audit_note",
             ):
                 if key in row:
-                    row[key] = "Withheld pending review of changed inputs."
+                    row[key] = "Withheld pending a supported input-version audit."
             for key in ("truth_condition_divergent", "determinacy_issue"):
                 if key in row:
                     row[key] = False
@@ -403,7 +397,7 @@ def _case(
         "determinacy_issue": determinacy_issue,
         "coder_confidence": coder_confidence,
         "retrieval_date": retrieval_date,
-        "evidence_role": "mechanism case; not an average-effect estimate",
+        "evidence_role": "documentary exhibit within stated source scope; not an average effect",
         "scenario_status": scenario_status,
         "evidence_kind": evidence_kind,
         "event_sources": event_sources,
@@ -418,6 +412,7 @@ def _case(
         "secondary_payout_b": secondary_payout_b,
     }
     for side, contract in (("a", contract_a), ("b", contract_b)):
+        record[f"{side}_operative_inputs"] = contract.get("operative_inputs", "")
         for key, value in contract.items():
             record[f"{side}_{key}"] = value
     return record
@@ -584,7 +579,7 @@ def build_representation_case_matrix(
             contract_b=within_state,
             retrieval_date=retrieval_date,
             truth_condition_divergent=False,
-            determinacy_issue=True,
+            determinacy_issue=False,
             explanation=(
                 "People can see the same clothing and still disagree "
                 "about whether it counts as a suit."
@@ -824,6 +819,9 @@ def _observed_cases(payload: dict[str, Any], retrieval_date: str) -> list[dict[s
             amount_b, evidence_b = _settlement_evidence("Polymarket", source["b"])
         settlement = json.dumps({
             "a": evidence_a, "b": evidence_b,
+            **({"protocol_evidence": source["protocol_evidence"]} if (
+                name == "suit" and "protocol_evidence" in source
+            ) else {}),
             "source_check": source["source_check"],
             "checked_at_utc": source.get("checked_at_utc"),
             "original_http_acquisition_time": payload.get("original_http_acquisition_time"),
@@ -869,7 +867,8 @@ def _observed_cases(payload: dict[str, Any], retrieval_date: str) -> list[dict[s
                 audit_note=(
                     "Both records are in the September-labelled sample and match the preserved "
                     "October follow-up on operative fields. They have different cutoff/fallback "
-                    "conditions; exact ties make Kalshi's full payout mapping fractional. "
+                    "conditions; the archived tie clause permits fractional amounts. "
+                    "Linked governing specifications are not certified historical editions. "
                     "This realized contrast establishes no price error or trader misunderstanding."
                 ),
                 **common,
@@ -888,6 +887,7 @@ def _observed_cases(payload: dict[str, Any], retrieval_date: str) -> list[dict[s
                     "loss of position or ability to perform duties by June 30, 2026, 11:59 PM ET"
                 ),
                 witness_state=(
+                    "Two markets concerned Ali Khamenei's departure as Iran's Supreme Leader. "
                     "Following the February 28, 2026 attack, contemporaneous March 1 reporting "
                     "recorded Iranian state media confirming Khamenei's death. The compared "
                     "contracts recorded scalar 45-cent and resolved-YES settlements."
@@ -908,7 +908,7 @@ def _observed_cases(payload: dict[str, Any], retrieval_date: str) -> list[dict[s
                 ),
                 audit_note=(
                     "The deadlines and exceptions differ, so this is not a controlled clause "
-                    "effect. Full Kalshi mapping includes announcement, ordinary departure, "
+                    "effect. The API description includes announcement, ordinary departure, "
                     "price-based death allocation and binding committee discretion. The exact "
                     "reference-price selection was not audited. Reported reimbursements can "
                     "make account receipts differ from contract settlement; original linked "
@@ -919,42 +919,53 @@ def _observed_cases(payload: dict[str, Any], retrieval_date: str) -> list[dict[s
         elif name == "suit":
             record = _case(
                 case_id="suit-adjudication-episode",
-                phenomenon="Zelenskyy's clothing: appearance, proposals and final adjudication",
+                phenomenon="Zelenskyy's clothing: reporting criterion and recorded adjudication",
                 scope="within-contract; documented adjudication episode",
-                mechanism="category-boundary interpretation",
+                mechanism="delegated reporting criterion and documented adjudication",
                 signature_a=(
                     "authentic images/video taken and released May 22–June 30, 2025 ET; "
                     "wearing a suit; no garment-level definition"
                 ),
                 signature_b="credible-reporting consensus supplies the deciding interpretation",
                 witness_state=(
-                    "Zelenskyy appeared in the Netherlands on June 24, 2025, documented by "
-                    "the Ukrainian presidency and its photograph. The official market record "
-                    "preserves repeated proposal/dispute states and a final NO."
+                    "The Ukrainian presidency documented a June 24, 2025 appearance by "
+                    "President Volodymyr Zelenskyy in the Netherlands, with photographs. "
+                    "A Polymarket contract asked whether authentic images showed him wearing "
+                    "a suit during May 22–June 30. The question creator had "
+                    "already acknowledged a dispute on May 29 and stated on July 1 that "
+                    "credible reporting had not confirmed a qualifying suit appearance. "
+                    "The market record reports NO, corroborated by the linked protocol read."
                 ),
                 payout_a="resolved NO; normalized payout $0",
                 payout_b="N/A; this is one contract and its adjudication procedure",
-                truth_condition_divergent=False, determinacy_issue=True,
+                truth_condition_divergent=False, determinacy_issue=False,
                 evidence_kind="observed_adjudication",
                 scenario_status=(
-                    "observed appearance, documented proposal/dispute sequence and final NO"
+                    "observed creator updates, recorded NO and pinned protocol corroboration"
                 ),
                 chronology=(
-                    "June 24, 2025: photographed appearance; June 30: rule window ends; "
+                    "May 29, 2025 16:35:11 UTC: creator acknowledges a dispute; June 24: "
+                    "photographed appearance; June 30 ET: rule window ends; July 1 "
+                    "13:33:09 UTC: creator reports that consensus has not confirmed a suit; "
+                    "July 5 00:27:54 UTC: request timestamp retained in adapter state; "
                     "archived status history alternates proposed/disputed five times "
                     "(individual timestamps unavailable); July 9 00:30:39 UTC: closure record "
-                    "with current resolved status and NO outcome."
+                    "with resolved status and NO outcome. Polygon block 95,596,076 "
+                    "(October 15, 2026 21:24:02 UTC): resolved state and payout [0,1]."
                 ),
                 explanation=(
-                    "The rules fix timing and image authenticity, while the deciding procedure "
-                    "supplies the interpretation of the clothing category."
+                    "The creator's clarification applies the named reporting criterion. "
+                    "The existing disputes cannot all be attributed to the June 24 appearance, "
+                    "because a dispute was acknowledged before that photograph."
                 ),
                 audit_note=(
                     "The appearance source does not independently classify the clothing. "
-                    "A dispute shows adjudication mattered; it establishes no manipulation, "
-                    "trader consensus or causal ambiguity effect. Final institutional payout "
-                    "is recorded despite incomplete written garment criteria. Closure is "
-                    "not independently verified on-chain finality."
+                    "Question/condition hashes, creator updates and current NO payout are "
+                    "verified at a pinned block. Historical log access returned HTTP 403; "
+                    "no complete proposal/finality chronology or reason for each challenge "
+                    "was recovered. The stored request timestamp is not initialization. "
+                    "No pairwise divergence, institutional incompleteness or holder receipts "
+                    "are inferred."
                 ),
                 **common,
             )
@@ -970,6 +981,9 @@ def _observed_cases(payload: dict[str, Any], retrieval_date: str) -> list[dict[s
                     "announcement alone fails"
                 ),
                 witness_state=(
+                    "During the 2025 U.S.–Ukraine minerals negotiations, one Polymarket "
+                    "contract asked whether Ukraine would agree to a deal before April; "
+                    "another required a signed deal before May. "
                     "The March agreement contract records YES and March 25 closure. "
                     "The U.S. Treasury and Ukrainian ministry record an April 30, 2025 "
                     "signing; the later signed-deal contract records YES and May 4 closure."
@@ -1011,7 +1025,9 @@ def write_casebook(path: Path, cases: pd.DataFrame) -> None:
         "",
         "The leading exhibits separate recorded settlement contrasts, adjudication and "
         "observed chronology. Supplementary scenarios are explicitly hypothetical. "
-        "These cases establish mechanisms and existence, not prevalence or average effects.",
+        "The cases document rule distinctions and recorded outcomes, not prevalence or "
+        "average effects. Audit scope is the supplied API fields and linked records; "
+        "complete historical governing terms are not certified.",
         "A common distribution over scenarios can value different payout claims differently. "
         "The audit supplies no price result; scalar settlements and tie exceptions require "
         "the full payout mapping and cannot enter binary-event restrictions. "
@@ -1033,7 +1049,7 @@ def write_casebook(path: Path, cases: pd.DataFrame) -> None:
         if str(row.get("claim_relation_validated", "")).casefold() != "true":
             lines.extend([
                 "Scenario, implied payout and settlement assertions are withheld pending "
-                "review of the changed operative inputs.",
+                "source-version or changed-input review.",
                 f"- Audit status: {row['claim_relation_basis']}",
                 f"- Contract A: {row['a_contract_id']}; question: {row['a_question']}",
                 f"- Contract B: {row['b_contract_id']}; question: {row['b_question']}",
@@ -1043,12 +1059,12 @@ def write_casebook(path: Path, cases: pd.DataFrame) -> None:
             continue
         lines.extend(
             [
+                f"{row['witness_state']}",
+                "",
                 f"- Scope: {row['scope']}",
                 f"- Evidence status: {row['scenario_status']}",
-                f"- Mechanism: {row['mechanism']}",
+                f"- Rule dimension: {row['mechanism']}",
                 f"- Plain-language explanation: {row['explanation']}",
-                f"- {'Hypothetical scenario' if hypothetical else 'Observed scenario'}: "
-                f"{row['witness_state']}",
                 f"- Qualifying condition A ({row['a_platform']}): {row['signature_a']}",
                 f"- Qualifying condition B ({row['b_platform']}): {row['signature_b']}",
                 f"- {'Implied payouts' if hypothetical else 'Recorded settlements'}: "
@@ -1058,7 +1074,7 @@ def write_casebook(path: Path, cases: pd.DataFrame) -> None:
                 f"- Claim relation: {row['claim_relation']}; "
                 f"representation: {row['representation_status']}",
                 f"- Relation confidence: {row['claim_relation_confidence']}",
-                f"- Complete-rule relation audit: {row['claim_relation_basis']}",
+                f"- Source-scoped relation audit: {row['claim_relation_basis']}",
                 f"- Probability implication: {row['probability_coherence_implication']}; "
                 f"coherence test applicable (semantic gate): {row['coherence_test_applicable']}",
                 f"- Sources: [A: {row['a_platform']}]({row['a_url']})"

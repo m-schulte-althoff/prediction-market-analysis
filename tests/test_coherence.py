@@ -54,6 +54,7 @@ def test_implication_and_price_excess(
         "unclassified",
         "non_equivalent_unclassified",
         "overlap_non_nested",
+        "not_applicable",
     ],
 )
 def test_no_restriction_is_not_a_zero_excess(relation: str) -> None:

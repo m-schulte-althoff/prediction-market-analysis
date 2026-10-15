@@ -1,0 +1,537 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="853.175pt" height="294.636562pt" viewBox="0 0 853.175 294.636562" xmlns="http://www.w3.org/2000/svg" version="1.1" role="img" aria-labelledby="descriptions-categories-title descriptions-categories-desc"><title id="descriptions-categories-title">Topics in the selected portfolios</title><desc id="descriptions-categories-desc">Five largest categories plus the remainder; native labels are not harmonized across platforms.</desc>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="descriptions-categories-figure_1">
+  <g id="descriptions-categories-patch_1">
+   <path d="M 0 294.636562
+L 853.175 294.636562
+L 853.175 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="descriptions-categories-axes_1">
+   <g id="descriptions-categories-patch_2">
+    <path d="M 134.15625 256.435781
+L 410.185625 256.435781
+L 410.185625 22.318125
+L 134.15625 22.318125
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="descriptions-categories-matplotlib.axis_1">
+    <g id="descriptions-categories-xtick_1">
+     <g id="descriptions-categories-line2d_1">
+      <path d="M 134.15625 256.435781
+L 134.15625 22.318125
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_2">
+      <defs>
+       <path id="descriptions-categories-m69861a90fc" d="M 0 0
+L 0 3.5
+" style="stroke: #536766; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="134.15625" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_1">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="134.15625" y="271.033437" transform="rotate(-0 134.15625 271.033437)">0%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_2">
+     <g id="descriptions-categories-line2d_3">
+      <path d="M 174.748805 256.435781
+L 174.748805 22.318125
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_4">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="174.748805" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_2">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="174.748805" y="271.033437" transform="rotate(-0 174.748805 271.033437)">10%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_3">
+     <g id="descriptions-categories-line2d_5">
+      <path d="M 215.34136 256.435781
+L 215.34136 22.318125
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_6">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="215.34136" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_3">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="215.34136" y="271.033437" transform="rotate(-0 215.34136 271.033437)">20%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_4">
+     <g id="descriptions-categories-line2d_7">
+      <path d="M 255.933915 256.435781
+L 255.933915 22.318125
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_8">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="255.933915" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_4">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="255.933915" y="271.033437" transform="rotate(-0 255.933915 271.033437)">30%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_5">
+     <g id="descriptions-categories-line2d_9">
+      <path d="M 296.526471 256.435781
+L 296.526471 22.318125
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_10">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="296.526471" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_5">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="296.526471" y="271.033437" transform="rotate(-0 296.526471 271.033437)">40%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_6">
+     <g id="descriptions-categories-line2d_11">
+      <path d="M 337.119026 256.435781
+L 337.119026 22.318125
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_12">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="337.119026" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_6">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="337.119026" y="271.033437" transform="rotate(-0 337.119026 271.033437)">50%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_7">
+     <g id="descriptions-categories-line2d_13">
+      <path d="M 377.711581 256.435781
+L 377.711581 22.318125
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_14">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="377.711581" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_7">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="377.711581" y="271.033437" transform="rotate(-0 377.711581 271.033437)">60%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-text_8">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="272.170938" y="285.034219" transform="rotate(-0 272.170938 285.034219)">Share of platform contracts</text>
+    </g>
+   </g>
+   <g id="descriptions-categories-matplotlib.axis_2">
+    <g id="descriptions-categories-ytick_1">
+     <g id="descriptions-categories-line2d_15">
+      <defs>
+       <path id="descriptions-categories-m88c43dd6bf" d="M 0 0
+L -3.5 0
+" style="stroke: #233d3c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="134.15625" y="46.232869" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_9">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="127.15625" y="50.032087" transform="rotate(-0 127.15625 50.032087)">Economics</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_2">
+     <g id="descriptions-categories-line2d_16">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="134.15625" y="92.804911" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_10">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="127.15625" y="96.60413" transform="rotate(-0 127.15625 96.60413)">Politics</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_3">
+     <g id="descriptions-categories-line2d_17">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="134.15625" y="139.376953" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_11">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="127.15625" y="143.176172" transform="rotate(-0 127.15625 143.176172)">Elections</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_4">
+     <g id="descriptions-categories-line2d_18">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="134.15625" y="185.948995" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_12">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="127.15625" y="189.748214" transform="rotate(-0 127.15625 189.748214)">Science and Technology</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_5">
+     <g id="descriptions-categories-line2d_19">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="134.15625" y="232.521038" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_13">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="127.15625" y="236.320256" transform="rotate(-0 127.15625 236.320256)">Companies</text>
+     </g>
+    </g>
+   </g>
+   <g id="descriptions-categories-patch_3">
+    <path d="M 134.15625 32.959837
+L 355.624407 32.959837
+L 355.624407 59.505901
+L 134.15625 59.505901
+z
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-categories-patch_4">
+    <path d="M 134.15625 79.531879
+L 211.093572 79.531879
+L 211.093572 106.077943
+L 134.15625 106.077943
+z
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-categories-patch_5">
+    <path d="M 134.15625 126.103921
+L 207.614494 126.103921
+L 207.614494 152.649985
+L 134.15625 152.649985
+z
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-categories-patch_6">
+    <path d="M 134.15625 172.675963
+L 166.594509 172.675963
+L 166.594509 199.222027
+L 134.15625 199.222027
+z
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-categories-patch_7">
+    <path d="M 134.15625 219.248006
+L 135.77982 219.248006
+L 135.77982 245.79407
+L 134.15625 245.79407
+z
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-categories-patch_8">
+    <path d="M 134.15625 256.435781
+L 410.185625 256.435781
+" style="fill: none; stroke: #d8dedc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-categories-text_14">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="360.495513" y="48.570759" transform="rotate(-0 360.495513 48.570759)">54.6%</text>
+   </g>
+   <g id="descriptions-categories-text_15">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="215.964679" y="95.142802" transform="rotate(-0 215.964679 95.142802)">19.0%</text>
+   </g>
+   <g id="descriptions-categories-text_16">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="212.485601" y="141.714844" transform="rotate(-0 212.485601 141.714844)">18.1%</text>
+   </g>
+   <g id="descriptions-categories-text_17">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="171.465616" y="188.286886" transform="rotate(-0 171.465616 188.286886)">8.0%</text>
+   </g>
+   <g id="descriptions-categories-text_18">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="140.650926" y="234.858928" transform="rotate(-0 140.650926 234.858928)">0.4%</text>
+   </g>
+   <g id="descriptions-categories-text_19">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #233d3c" x="272.170938" y="16.318125" transform="rotate(-0 272.170938 16.318125)">Kalshi</text>
+   </g>
+  </g>
+  <g id="descriptions-categories-axes_2">
+   <g id="descriptions-categories-patch_9">
+    <path d="M 569.945625 256.435781
+L 845.975 256.435781
+L 845.975 22.318125
+L 569.945625 22.318125
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="descriptions-categories-matplotlib.axis_3">
+    <g id="descriptions-categories-xtick_8">
+     <g id="descriptions-categories-line2d_20">
+      <path d="M 569.945625 256.435781
+L 569.945625 22.318125
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_21">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="569.945625" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_20">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="569.945625" y="271.033437" transform="rotate(-0 569.945625 271.033437)">0%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_9">
+     <g id="descriptions-categories-line2d_22">
+      <path d="M 610.53818 256.435781
+L 610.53818 22.318125
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_23">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="610.53818" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_21">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="610.53818" y="271.033437" transform="rotate(-0 610.53818 271.033437)">10%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_10">
+     <g id="descriptions-categories-line2d_24">
+      <path d="M 651.130735 256.435781
+L 651.130735 22.318125
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_25">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="651.130735" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_22">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="651.130735" y="271.033437" transform="rotate(-0 651.130735 271.033437)">20%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_11">
+     <g id="descriptions-categories-line2d_26">
+      <path d="M 691.72329 256.435781
+L 691.72329 22.318125
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_27">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="691.72329" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_23">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="691.72329" y="271.033437" transform="rotate(-0 691.72329 271.033437)">30%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_12">
+     <g id="descriptions-categories-line2d_28">
+      <path d="M 732.315846 256.435781
+L 732.315846 22.318125
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_29">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="732.315846" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_24">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="732.315846" y="271.033437" transform="rotate(-0 732.315846 271.033437)">40%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_13">
+     <g id="descriptions-categories-line2d_30">
+      <path d="M 772.908401 256.435781
+L 772.908401 22.318125
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_31">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="772.908401" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_25">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="772.908401" y="271.033437" transform="rotate(-0 772.908401 271.033437)">50%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_14">
+     <g id="descriptions-categories-line2d_32">
+      <path d="M 813.500956 256.435781
+L 813.500956 22.318125
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_33">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="813.500956" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_26">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="813.500956" y="271.033437" transform="rotate(-0 813.500956 271.033437)">60%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-text_27">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="707.960312" y="285.034219" transform="rotate(-0 707.960312 285.034219)">Share of platform contracts</text>
+    </g>
+   </g>
+   <g id="descriptions-categories-matplotlib.axis_4">
+    <g id="descriptions-categories-ytick_6">
+     <g id="descriptions-categories-line2d_34">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="569.945625" y="43.849919" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_28">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="562.945625" y="47.649137" transform="rotate(-0 562.945625 47.649137)">Elections and Politics</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_7">
+     <g id="descriptions-categories-line2d_35">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="569.945625" y="82.060732" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_29">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="562.945625" y="85.859561" transform="rotate(-0 562.945625 85.859561)">Crypto</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_8">
+     <g id="descriptions-categories-line2d_36">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="569.945625" y="120.271546" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_30">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="562.945625" y="124.070765" transform="rotate(-0 562.945625 124.070765)">Other non-sports</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_9">
+     <g id="descriptions-categories-line2d_37">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="569.945625" y="158.48236" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_31">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="562.945625" y="162.281579" transform="rotate(-0 562.945625 162.281579)">World</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_10">
+     <g id="descriptions-categories-line2d_38">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="569.945625" y="196.693174" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_32">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="562.945625" y="200.492393" transform="rotate(-0 562.945625 200.492393)">Companies and Markets</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_11">
+     <g id="descriptions-categories-line2d_39">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="569.945625" y="234.903988" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_33">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="562.945625" y="238.703206" transform="rotate(-0 562.945625 238.703206)">Remaining categories</text>
+     </g>
+    </g>
+   </g>
+   <g id="descriptions-categories-patch_10">
+    <path d="M 569.945625 32.959837
+L 730.378334 32.959837
+L 730.378334 54.740001
+L 569.945625 54.740001
+z
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-categories-patch_11">
+    <path d="M 569.945625 71.17065
+L 677.964716 71.17065
+L 677.964716 92.950814
+L 569.945625 92.950814
+z
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-categories-patch_12">
+    <path d="M 569.945625 109.381464
+L 643.526281 109.381464
+L 643.526281 131.161628
+L 569.945625 131.161628
+z
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-categories-patch_13">
+    <path d="M 569.945625 147.592278
+L 597.608368 147.592278
+L 597.608368 169.372442
+L 569.945625 169.372442
+z
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-categories-patch_14">
+    <path d="M 569.945625 185.803092
+L 582.489055 185.803092
+L 582.489055 207.583256
+L 569.945625 207.583256
+z
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-categories-patch_15">
+    <path d="M 569.945625 224.013906
+L 593.632548 224.013906
+L 593.632548 245.79407
+L 569.945625 245.79407
+z
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-categories-patch_16">
+    <path d="M 569.945625 256.435781
+L 845.975 256.435781
+" style="fill: none; stroke: #d8dedc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-categories-text_34">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="735.24944" y="46.187809" transform="rotate(-0 735.24944 46.187809)">39.5%</text>
+   </g>
+   <g id="descriptions-categories-text_35">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="682.835822" y="84.398623" transform="rotate(-0 682.835822 84.398623)">26.6%</text>
+   </g>
+   <g id="descriptions-categories-text_36">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="648.397388" y="122.609437" transform="rotate(-0 648.397388 122.609437)">18.1%</text>
+   </g>
+   <g id="descriptions-categories-text_37">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="602.479474" y="160.820251" transform="rotate(-0 602.479474 160.820251)">6.8%</text>
+   </g>
+   <g id="descriptions-categories-text_38">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="587.360162" y="199.031064" transform="rotate(-0 587.360162 199.031064)">3.1%</text>
+   </g>
+   <g id="descriptions-categories-text_39">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="598.503655" y="237.241878" transform="rotate(-0 598.503655 237.241878)">5.8%</text>
+   </g>
+   <g id="descriptions-categories-text_40">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #233d3c" x="707.960312" y="16.318125" transform="rotate(-0 707.960312 16.318125)">Polymarket</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="descriptions-categories-p3ad6cefe8d">
+   <rect x="134.15625" y="22.318125" width="276.029375" height="234.117656"/>
+  </clipPath>
+  <clipPath id="descriptions-categories-p1dad9c5fbb">
+   <rect x="569.945625" y="22.318125" width="276.029375" height="234.117656"/>
+  </clipPath>
+ </defs>
+</svg>

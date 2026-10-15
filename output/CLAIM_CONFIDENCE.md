@@ -1,15 +1,15 @@
 # Claim confidence and disposition
 
-Updated 2026-10-13 under approved P1–P7. Claim IDs preserve the former overview; row counts denote exhibits rather than independent mechanisms.
+Updated 2026-10-15 under approved cycle 2026-10-15-01, P1–P6. Claim IDs preserve the former overview; row counts denote exhibits rather than independent mechanisms.
 
 | ID | Claim | Current evidence and boundary |
 |---:|---|---|
-| 1 | First place versus advancement | Hilton supplies archived NO/$0 versus resolved YES; supplementary Steyer second-place witness remains hypothetical. Complete-rule audit gates each case. |
-| 2 | Call versus inauguration | Bounded counterfactual; overlapping/non-nested under the archived model; no realized split or global ordering estimated. |
+| 1 | First place versus advancement | Hilton supplies archived NO/$0 versus resolved YES; supplementary Steyer second-place witness remains hypothetical. Source-scoped audit gates each case; historical governing coverage remains qualified. |
+| 2 | Call versus inauguration | Case assertion withheld: verified operative inputs are unavailable or changed; re-audit required. |
 | 3 | Fed quantization | 12.5-bp counterfactual conditional on literal wording and other operative clauses; no realized unusual-rate case established. |
 | 4 | Announcement versus signature | Minerals chronology records YES/YES; separate YES/NO witness concerns dates, scope and milestones together. |
 | 5 | Announcement versus first departure | Trump witness remains hypothetical with competing leaders and death-price exception; no global binary relation. |
-| 6 | Suit category and adjudication | Observed appearance, proposed/disputed sequence and final NO support adjudication relevance; no manipulation or causal ambiguity inference. |
+| 6 | Suit category and adjudication | Creator updates acknowledge a May 29 dispute and a July 1 reporting-consensus clarification; pinned protocol state corroborates NO. Individual dispute reasons and a complete historical log chronology remain unverified. |
 | 7 | Portfolio text descriptions | Corrected literal components describe selected rule text; independent human scale validation is absent. |
 | 8 | Composition reversal | WITHDRAWN: bounded parser corrections eliminate the old overall/within-stratum reversal; no replacement institutional ranking. |
 | 9 | Threshold and family composition | Corrected flag shares and API-family descriptions are sample context; granularity differs between platforms. |

@@ -177,7 +177,15 @@ def test_observed_cases_separate_splits_disputes_and_chronology(tmp_path: Path) 
     assert not minerals.truth_condition_divergent
     suit = indexed.loc["suit-adjudication-episode"]
     assert suit.observed_settlement_a == "0"
-    assert suit.determinacy_issue
+    assert not suit.determinacy_issue
+    assert suit.claim_relation == "not_applicable"
+    assert suit.representation_status == "delegated_determination"
+    settlement = suit["settlement_evidence"]
+    assert isinstance(settlement, str)
+    protocol = json.loads(settlement)["protocol_evidence"]
+    assert protocol["condition_link_verified"]
+    assert protocol["payout_numerators"] == [0, 1]
+    assert "May 29" in suit.chronology
     assert "individual timestamps unavailable" in suit.chronology
     assert "July 9" in suit.chronology
     csv = tmp_path / "cases.csv"
@@ -223,6 +231,19 @@ def test_observed_cases_require_final_status_and_payout_vector(field: str, value
     evidence["observed_cases"]["hilton"]["b"][field] = value
     with pytest.raises(ValueError, match="final"):
         build_representation_case_matrix(_rules_payload(), case_evidence=evidence)
+
+
+@pytest.mark.parametrize("field", ["condition_id", "payout_numerators", "creator_updates"])
+def test_changed_protocol_evidence_withholds_derived_case(field: str) -> None:
+    """Protocol corroboration cannot transfer to a different question, payout or update."""
+
+    evidence = _observed_evidence()
+    evidence["observed_cases"]["suit"]["protocol_evidence"][field] = "changed"
+    cases = build_representation_case_matrix(_rules_payload(), case_evidence=evidence)
+    suit = cases.loc[cases.case_id.eq("suit-adjudication-episode")].iloc[0]
+    assert not suit.claim_relation_validated
+    assert "Withheld" in suit.witness_state
+    assert not suit.coherence_test_applicable
 
 
 class _OfflineClient:

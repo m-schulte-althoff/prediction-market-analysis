@@ -52,8 +52,8 @@ Legacy snapshot date label for the included metadata package: **2026-09-10**. Or
 
 - Polymarket endpoint: `GET https://gamma-api.polymarket.com/events?slug=...` for the 2028 presidential winner, September 2026 Fed decision, two Ukraine-minerals markets, and Zelenskyy-suit market.
 - Kalshi endpoint: `GET https://external-api.kalshi.com/trade-api/v2/events/{event_ticker}` for `KXPRESPERSON-28` and `KXFEDDECISION-26SEP`.
-- Fields archived: event and contract identifiers, questions, complete rule descriptions, statuses, and timestamps returned by the official endpoints.
-- Purpose: mechanism evidence only. A manually coded truth-condition divergence requires a plausible witness state and different implied settlements; these cases do not estimate population prevalence or average price effects.
+- Fields archived: event and contract identifiers, questions, rule descriptions, statuses, and timestamps returned by the official endpoints. These are complete returned fields, not a reconstruction of all historical governing specifications or updates.
+- Purpose: documentary case evidence. A manually coded payoff divergence requires a specified witness scenario and different implied settlements within the audited source scope; these cases do not estimate population prevalence or average price effects.
 
 ### CLOB price history
 
@@ -72,14 +72,30 @@ Exposure is metadata elapsed time to the minimum of close, resolution and snapsh
 
 ### Versioned real cases
 
-The review-cycle `case-evidence/case-source-bundle.json` preserves the bounded observed-case inputs and source roles. Original September-labelled records and separately acquired October checks remain distinct; no missing HTTP timestamp is invented.
+The approved [2026-10-15-01 source bundle](output/paper-revision/2026-10-15-01/case-evidence/case-source-bundle.json) preserves the bounded observed-case inputs and source roles, including the newly verified suit records. It retains the older source files byte-for-byte. Original September-labelled records and separately acquired October checks remain distinct; no missing HTTP timestamp is invented.
 
-- **Hilton:** Kalshi `KXCAGOVPRIMARY1ST-26JUN02-1ST-SHIL` and Gamma `825460` record NO/$0 versus resolved YES. Full operative rules match restored metadata and dated follow-up records. The [certified California result](https://elections.cdn.sos.ca.gov/sov/2026-primary/sov/06-sov-summary.pdf) records second place and top-two advancement. No redemption transaction or pre-trading rule-version audit was performed.
-- **Khamenei:** Kalshi `KXKHAMENEIOUT-AKHA-26JUL01` records scalar settlement `0.4500`; Gamma `661699` records resolved YES. Full operative fields match archived/current versions. Different deadlines and the Kalshi price-based death allocation prevent a controlled clause-effect interpretation. [AP death reporting](https://apnews.com/article/5b13b69b708c4ed38e8f95f5fb41a597) and [contemporaneous reporting on the carve-out/reimbursements](https://cointelegraph.com/news/kalshi-founder-khamenei-market-carveout) are independent episode sources. Original linked social posts were inaccessible. Reimbursements can affect account cash returns independently of recorded contract settlement.
-- **Suit:** Gamma `546814` and the preserved market-page sequence show proposals, disputes and final NO. A [dated Ukrainian presidency account](https://www.president.gov.ua/en/news/vidbulasya-audiyenciya-prezidenta-ukrayini-v-korolya-niderla-98637) records the June 24, 2025 appearance. The audit does not independently classify the clothing, infer manipulation or reconstruct an on-chain finality trail.
+- **Hilton:** Kalshi `KXCAGOVPRIMARY1ST-26JUN02-1ST-SHIL` and Gamma `825460` record NO/$0 versus resolved YES. Supplied API question/rule fields match restored metadata and dated follow-up records; exhaustive historical governing-specification coverage is unverified. The [certified California result](https://elections.cdn.sos.ca.gov/sov/2026-primary/sov/06-sov-summary.pdf) records second place and top-two advancement. No redemption transaction or pre-trading rule-version audit was performed.
+- **Khamenei:** Kalshi `KXKHAMENEIOUT-AKHA-26JUL01` records scalar settlement `0.4500`; Gamma `661699` records resolved YES. Supplied API operative fields match archived/current versions. Different deadlines and the Kalshi price-based death allocation prevent a controlled clause-effect interpretation. [AP death reporting](https://apnews.com/article/5b13b69b708c4ed38e8f95f5fb41a597) and [contemporaneous reporting on the carve-out/reimbursements](https://cointelegraph.com/news/kalshi-founder-khamenei-market-carveout) are independent episode sources. Original linked social posts were inaccessible. Reference-price selection and individual account receipts are unverified; reimbursements can affect cash returns independently of contract settlement.
+- **Suit:** Gamma `546814` and the preserved market-page sequence show proposals, disputes and final NO. A [dated Ukrainian presidency account](https://www.president.gov.ua/en/news/vidbulasya-audiyenciya-prezidenta-ukrayini-v-korolya-niderla-98637) records the June 24, 2025 appearance. A bounded public Polygon read now verifies the question/condition linkage, stored creator updates and current condition payout `[0,1]` (NO). The May 29 update acknowledges a dispute before the June 24 photograph; the July 1 update says the named credible-reporting consensus has not confirmed a suit. This is a single-contract exhibit. The audit does not independently classify the clothing or attribute individual challenges to that photograph.
 - **Minerals:** Gamma `521607` and `532897` ultimately record YES/YES, with March 25 and May 4 closure fields around the [April 30 signing announcement](https://home.treasury.gov/news/press-releases/sb0126). Closure is a lifecycle record, not a complete settlement timestamp. The distinct announcement-versus-signature YES/NO scenario remains hypothetical; the observed chronology does not instantiate it.
 
-Case assertions and logical-relation labels are bound to complete operative inputs, including questions, source fields, rules, windows and exceptions. Mutation fails closed pending re-audit. Exhibits and mechanisms are counted separately. Fractional payout mappings cannot enter binary-event coherence restrictions.
+Case assertions and relation labels are bound to all supplied input fields, including questions, source fields, rules, windows, exceptions and explicitly linked new evidence. Mutation fails closed pending re-audit; hash agreement does not certify exhaustive governing coverage. Raw Kalshi series metadata retain `contract_url` and `terms_url`; the unresolved gap is the contents and historical applicability of those linked specifications. Current PDFs contain additional death, accelerated-call and announcement provisions and are not silently substituted for historical versions. The presidential death/interruption witness is withheld. Minerals' binary label is conditional on its archived question-rule model, with platform fallbacks uncertified. Single-contract suit evidence has no pairwise relation. Fractional payout mappings cannot enter binary-event coherence restrictions.
+
+### Named rule deadlines versus metadata timestamps
+
+The explicit deadlines use Eastern Time. `America/New_York` is on daylight-saving time (UTC−04:00) on all three dates. The UTC conversions below were checked with Python's `zoneinfo`; the difference is the operative deadline minus Gamma `endDate`. These meanings are retained separately. No bulk deadline parser, metadata replacement or new price-window analysis was added.
+
+| Gamma market | Metadata `endDate` (UTC) | Written-rule deadline (ET) | Rule deadline (UTC) | Difference |
+|---|---|---|---|---|
+| 661699, Khamenei | 2026-06-30 00:00 | 2026-06-30 23:59 EDT | 2026-07-01 03:59 | 27h59m |
+| 521607, March minerals | 2025-03-31 12:00 | 2025-03-31 23:59 EDT | 2025-04-01 03:59 | 15h59m |
+| 532897, April minerals | 2025-04-30 12:00 | 2025-04-30 23:59 EDT | 2025-05-01 03:59 | 15h59m |
+
+### Bounded suit protocol evidence
+
+The [P2 acquisition record](output/paper-revision/2026-10-15-01/P2_OUTCOME.md) preserves raw responses, decoded fields, hashes, the exact adapter/request identifiers and access failures. At Polygon block 95,596,076 (`0x9751daf09ba364fc77858fc7921c00198e38523d2f3c2c3f66ee5057d4b94b4a`, 2026-10-15 21:24:02 UTC), the recorded adapter's question and CTF condition link uniquely and the payout numerators are `[0,1]`. The creator's two stored updates carry May 29 and July 1 timestamps. The adapter's stored July 5 request time is the current remaining request, not an initialization timestamp or a complete history of rounds.
+
+A historical `eth_getLogs` query returned HTTP 403, triggering the approved stop rule. No final-resolution transaction/log index or full proposal/reset chronology was recovered. Current protocol state corroborates NO without proving the exact historical finality time, individual dispute reasons or holder receipts. The attempt used $0, five supporting documents and 23 RPC calls for one question; no wallet or price data were added.
 
 ### Dormant panel
 

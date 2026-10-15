@@ -1,0 +1,10 @@
+platform,outcome_category,outcome_evidence,contracts,share
+Kalshi,no_recorded_outcome,none,1172,0.09566565994612684
+Kalshi,recorded_binary,platform_result,11073,0.9038445841155824
+Kalshi,scalar_settlement,platform_result,6,0.0004897559382907518
+Polymarket,intermediate_price,intermediate_price_missing_status,1,0.00013795006207752792
+Polymarket,intermediate_price,intermediate_price_resolved,9,0.0012415505586977514
+Polymarket,price_inferred_binary,price_inferred_missing_status,38,0.0052421023589460615
+Polymarket,price_inferred_binary,price_inferred_proposed,15,0.002069250931162919
+Polymarket,price_inferred_binary,price_inferred_resolved,7184,0.9910332459649607
+Polymarket,price_inferred_binary,price_inferred_settled,2,0.00027590012415505585

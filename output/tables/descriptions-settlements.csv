@@ -1,0 +1,4 @@
+case_id,phenomenon,evidence_kind,a_platform,b_platform,observed_settlement_a,observed_settlement_b
+hilton-first-vs-advance,Steve Hilton: first place versus advancing in the California primary,observed_settlement_divergence,Kalshi,Polymarket,0,1
+khamenei-death-allocation,Ali Khamenei departure: price-based death allocation versus YES,observed_settlement_divergence,Kalshi,Polymarket,0.45,1
+minerals-observed-chronology,U.S.–Ukraine minerals agreement: two YES resolutions across milestones,observed_chronology,Polymarket,Polymarket,1,1

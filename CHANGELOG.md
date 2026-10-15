@@ -1,5 +1,10 @@
 # Change Log
 
+## 2026-10-15
+
+- Added a reproducible offline HTML data atlas with descriptive tables, six SVG graphs and a filterable audited case inventory, connecting sample composition and outcome provenance to the study's construct definitions.
+- Implemented approved P1–P6: expanded the paper's motivation and literature engagement, organized findings around qualifying conditions, payout amounts and institutional determination, and added bounded suit-contract evidence. Withheld the unsupported presidential witness and clarified source scope, deadlines and weighted text-score labels while preserving the sample and supplementary estimates.
+
 ## 2026-10-13
 
 - Implemented approved P1–P7 with immutable historical-cache safeguards, auditable sample/outcome/timing ledgers and corrected text extraction; preserved the fixed historical sample and withdrew its composition-reversal claim.

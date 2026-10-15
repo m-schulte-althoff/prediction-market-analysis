@@ -1,0 +1,2878 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A descriptive atlas of the prediction-market study: sample composition, rule-text features, outcome provenance and audited settlement cases.">
+  <title>Same Future, Different Claim · Data atlas</title>
+  <style>
+    :root { --ink:#233d3c; --muted:#60716e; --paper:#f5f5f0; --line:#dce2db; --blue:#335c81; --rose:#d1495b; --green:#2e6658; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:28px; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif; }
+    a { color:var(--blue); text-underline-offset:3px; }
+    a:hover { color:var(--rose); }
+    :focus-visible { outline:3px solid var(--blue); outline-offset:4px; }
+    .skip { position:absolute; left:20px; top:-100px; background:white; padding:10px; z-index:10; }
+    .skip:focus { top:12px; }
+    .layout { max-width:1510px; margin:auto; display:grid; grid-template-columns:210px minmax(0,1fr); }
+    aside { padding:36px 24px; border-right:1px solid var(--line); }
+    .rail { position:sticky; top:30px; }
+    .brand { font-size:12px; letter-spacing:.12em; text-transform:uppercase; font-weight:750; }
+    .brand-mark { display:block; width:29px; height:29px; border:7px solid var(--green); border-right-color:var(--rose); border-radius:50%; margin-bottom:15px; }
+    .rail p { font-size:12px; line-height:1.65; color:var(--muted); margin-bottom:30px; }
+    nav a { display:block; color:var(--muted); text-decoration:none; padding:10px 0; border-bottom:1px solid var(--line); font-size:13px; }
+    nav a span { color:#82948c; font-size:11px; padding-right:8px; }
+    .rail-note { margin-top:35px; font-size:11px; color:var(--muted); }
+    main { min-width:0; padding:43px 48px 30px; }
+    .eyebrow { text-transform:uppercase; letter-spacing:.15em; font-size:10px; font-weight:750; color:var(--green); margin:0 0 18px; }
+    .topline { display:flex; justify-content:space-between; gap:15px; align-items:center; }
+    .snapshot { border:1px solid var(--line); border-radius:20px; padding:4px 12px; font-size:11px; color:var(--muted); white-space:nowrap; }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { font:normal clamp(37px,4.1vw,61px)/1.07 Georgia,"Times New Roman",serif; letter-spacing:-.035em; margin:16px 0 23px; max-width:780px; }
+    h1 em { font-weight:normal; color:var(--green); }
+    .intro { max-width:740px; font-size:16px; line-height:1.8; color:var(--muted); }
+    .stats { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin:29px 0 18px; padding:23px 0; }
+    .stat { padding:0 20px; border-left:1px solid var(--line); }
+    .stat:first-child { padding-left:0; border:0; }
+    .stat strong { display:block; font:35px/1.1 Georgia,serif; letter-spacing:-.03em; }
+    .stat span { display:block; margin-top:8px; font-size:11px; color:var(--muted); }
+    .blue { color:var(--blue); } .rose { color:var(--rose); }
+    .scope { color:var(--muted); font-size:12px; max-width:840px; }
+    section { padding-top:47px; }
+    .section-title { display:flex; align-items:baseline; gap:12px; margin-bottom:12px; }
+    .section-title .number { font-size:11px; color:var(--green); font-weight:700; }
+    h2 { font:normal 29px/1.2 Georgia,serif; letter-spacing:-.025em; margin:0; }
+    .section-deck { max-width:850px; color:var(--muted); font-size:14px; margin-bottom:22px; }
+    h3 { font-size:16px; line-height:1.45; font-weight:650; margin-bottom:7px; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:19px; }
+    .card { border:1px solid var(--line); border-radius:12px; background:#fff; padding:23px 23px 18px; min-width:0; }
+    .card .kicker { font-size:10px; text-transform:uppercase; letter-spacing:.11em; color:var(--muted); margin:0 0 8px; }
+    .card p { color:var(--muted); font-size:12px; }
+    figure { margin:12px 0 0; }
+    figure svg { width:100%; height:auto; display:block; }
+    figcaption { color:var(--muted); font-size:11px; line-height:1.65; margin-top:10px; }
+    .insight { padding-top:13px; border-top:1px solid var(--line); margin-top:17px; font-size:12px; }
+    .legend { display:flex; flex-wrap:wrap; gap:17px; font-size:11px; margin:14px 0 5px; color:var(--muted); }
+    .dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; background:var(--blue); }
+    .dot.rose { background:var(--rose); }
+    .table-scroll { overflow-x:auto; }
+    .data-table { width:100%; border-collapse:collapse; font-size:12px; line-height:1.6; white-space:normal; }
+    .data-table caption { text-align:left; color:var(--muted); font-size:11px; margin:0 0 10px; }
+    .data-table th { text-align:left; color:var(--muted); font-size:10px; font-weight:650; border-bottom:1px solid var(--line); padding:10px 12px; vertical-align:bottom; }
+    .data-table td { border-bottom:1px solid #eef0eb; padding:11px 12px; font-variant-numeric:tabular-nums; vertical-align:top; }
+    .data-table tr:last-child td { border-bottom:0; }
+    .data-table tbody tr:hover { background:#f7f8f4; }
+    details { margin-top:15px; }
+    summary { cursor:pointer; font-size:12px; color:var(--blue); }
+    details[open] > summary { margin-bottom:15px; }
+    .downloads { display:flex; gap:16px; flex-wrap:wrap; margin-top:14px; font-size:11px; }
+    .constructs { background:var(--ink); color:#fff; border-radius:12px; padding:28px; margin-top:23px; }
+    .constructs h3 { font:normal 22px Georgia,serif; color:#fff; }
+    .constructs p { color:#d4dfd7; font-size:12px; }
+    .construct-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:25px; }
+    .construct-grid > div { border-left:1px solid #526562; padding-left:18px; }
+    .construct-grid > div:first-child { border:0; padding:0; }
+    .constructs .label { display:block; text-transform:uppercase; letter-spacing:.1em; font-size:9px; color:#a9c6b2; margin-bottom:11px; }
+    .formula { padding-top:18px; border-top:1px solid #526562; margin-top:15px; font-size:13px; color:#e4ece5; }
+    .formula code { font-size:15px; }
+    .note { border-left:3px solid #bb9b53; background:#eeeadc; padding:14px 18px; color:#625a43; font-size:12px; margin-top:20px; border-radius:0 6px 6px 0; }
+    .case { padding:17px 19px; margin-top:10px; background:white; border:1px solid var(--line); border-radius:8px; }
+    .case summary { color:var(--ink); font-size:13px; }
+    .case summary > span:last-child { display:block; font-weight:600; margin:7px 0 0 16px; }
+    .tag { font-size:9px; text-transform:uppercase; letter-spacing:.05em; padding:4px 8px; border-radius:4px; display:inline-block; background:#e8eee9; color:var(--green); }
+    .tag.hypothetical { background:#f3edde; color:#7c683a; }
+    .tag.unreviewed { background:#f6e7e8; color:#a73749; }
+    .case dl { font-size:12px; display:grid; grid-template-columns:160px minmax(0,1fr); gap:9px 18px; }
+    .case dt { color:var(--muted); } .case dd { margin:0; overflow-wrap:anywhere; }
+    .case p { font-size:11px; }
+    .filter { display:none; align-items:center; flex-wrap:wrap; gap:12px; margin:20px 0; font-size:12px; }
+    select { font:inherit; color:var(--ink); border:1px solid var(--line); border-radius:6px; padding:8px 30px 8px 12px; background:white; }
+    .case[hidden] { display:none; }
+    .sources { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+    .sources ul { margin:10px 0; padding-left:18px; font-size:12px; color:var(--muted); }
+    .sources li { margin:9px 0; }
+    code { font-size:.9em; overflow-wrap:anywhere; }
+    footer { border-top:1px solid var(--line); margin-top:35px; padding-top:20px; color:var(--muted); font-size:10px; }
+    @media (min-width:1450px) { main { padding-left:58px; padding-right:58px; } }
+    @media (max-width:1100px) { .layout { grid-template-columns:170px minmax(0,1fr); } aside { padding:30px 17px; } main { padding:32px 25px; } .grid { grid-template-columns:1fr; } .construct-grid { gap:16px; } }
+    @media (max-width:720px) { .layout { display:block; } aside { border:0; padding:16px 22px; border-bottom:1px solid var(--line); } .rail { position:static; } .brand-mark,.rail p,.rail-note,nav { display:none; } main { padding:24px 20px; } .topline { display:block; } .snapshot { display:inline-block; margin-bottom:10px; } h1 { margin-top:9px; } .stats { grid-template-columns:1fr 1fr; row-gap:24px; } .stat { padding:0 12px; } .stat:nth-child(3) { border:0; padding:0; } .construct-grid,.sources { grid-template-columns:1fr; } .construct-grid > div { padding:0; border:0; } .case dl { grid-template-columns:1fr; gap:4px; } .case dd { margin-bottom:10px; } .card { padding:19px 15px; } section { padding-top:35px; } }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+    @media print { body { background:white; } .layout { display:block; } aside,.filter,.downloads { display:none; } main { padding:0; } section { padding-top:24px; } .card,figure { break-inside:avoid; } .grid { grid-template-columns:1fr; } .constructs { background:#eef2ef; color:var(--ink); } .constructs h3,.constructs p,.constructs .label,.formula { color:var(--ink); } .case[hidden] { display:block; } }
+  </style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to data atlas</a>
+<div class="layout">
+  <aside><div class="rail">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <div class="brand">Same Future,<br>Different Claim</div>
+    <p>Prediction-market research<br>Descriptive data atlas</p>
+    <nav aria-label="Page sections">
+      <a href="#sample"><span>01</span>The sample</a>
+      <a href="#constructs"><span>02</span>The constructs</a>
+      <a href="#text"><span>03</span>Rule-text patterns</a>
+      <a href="#composition"><span>04</span>Portfolio composition</a>
+      <a href="#outcomes"><span>05</span>Outcome evidence</a>
+      <a href="#cases"><span>06</span>Audited cases</a>
+      <a href="#sources"><span>07</span>Sources &amp; methods</a>
+    </nav>
+    <div class="rail-note">Offline HTML · embedded graphs<br>All charts available as SVG</div>
+  </div></aside>
+  <main id="main">
+    <header>
+      <div class="topline"><p class="eyebrow">The data behind the study</p><span class="snapshot">Snapshot label · 2026-09-10</span></div>
+      <h1>Same future.<br><em>What actually pays?</em></h1>
+      <p class="intro">Prediction markets can ask similar questions while rewarding different outcomes.
+        Explore the contracts, the language that defines them, and the evidence used to distinguish a shared topic from a shared claim.</p>
+      <div class="stats">
+        <div class="stat"><strong>19,500</strong><span>Contracts in the historical sample</span></div>
+        <div class="stat"><strong class="blue">12,251</strong><span>Kalshi contracts</span></div>
+        <div class="stat"><strong class="rose">7,249</strong><span>Polymarket contracts</span></div>
+        <div class="stat"><strong>9</strong><span>Exhibits in a separate case inventory</span></div>
+      </div>
+      <p class="scope">One row represents one contract. The sample is purposive and selected by volume; the case inventory provides focused rule and settlement evidence. Neither estimates population prevalence.</p>
+    </header>
+
+    <section id="sample">
+      <div class="section-title"><span class="number">01</span><h2>Two selected portfolios</h2></div>
+      <p class="section-deck">The platforms contribute different mixes of topics and contract families. Read their descriptive statistics in the context of those selection decisions.</p>
+      <div class="card"><div class="table-scroll"><table class="dataframe data-table"><caption>Overview · descriptive values</caption>
+  <thead>
+    <tr style="text-align: right;">
+      <th>Platform</th>
+      <th>Contracts</th>
+      <th>API families</th>
+      <th>Categories</th>
+      <th>Index mean</th>
+      <th>Median text words [IQR]</th>
+      <th>Threshold flag</th>
+      <th>Top-five family share</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Kalshi</td>
+      <td>12,251</td>
+      <td>120</td>
+      <td>5</td>
+      <td>0.621</td>
+      <td>78 [36–109]</td>
+      <td>82.2%</td>
+      <td>46.2%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>7,249</td>
+      <td>2,634</td>
+      <td>14</td>
+      <td>0.657</td>
+      <td>138 [120–175]</td>
+      <td>24.7%</td>
+      <td>2.6%</td>
+    </tr>
+  </tbody>
+</table></div>
+        <div class="downloads"><a href="tables/descriptions-overview.csv" download>Summary CSV ↗</a></div>
+      </div>
+      <details><summary>How archived rows become the analysis sample</summary>
+        <div class="table-scroll"><table class="dataframe data-table"><caption>Attrition · descriptive values</caption>
+  <thead>
+    <tr style="text-align: right;">
+      <th>Platform</th>
+      <th>Normalization disposition</th>
+      <th>Rows</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Kalshi</td>
+      <td>question_length_le4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>Kalshi</td>
+      <td>retained</td>
+      <td>12251</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>retained</td>
+      <td>7249</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>unsupported_binary_labels</td>
+      <td>751</td>
+    </tr>
+  </tbody>
+</table></div>
+        <p class="scope">Disposition codes are taken directly from the normalization ledger. Kalshi loses two rows with missing titles; Polymarket loses 751 rows with unsupported outcome labels.</p>
+      </details>
+      <div class="note"><strong>Selection matters.</strong> Kalshi acquisition selected high-volume series with per-tier caps. Polymarket acquisition selected high-volume closed markets using a flawed historical sports filter. The classifier is repaired for future acquisition; the omitted historical records and exact sports/overflow split remain unavailable. Native category and family definitions differ.</div>
+    </section>
+
+    <section id="constructs">
+      <div class="section-title"><span class="number">02</span><h2>What is being measured?</h2></div>
+      <p class="section-deck">The study separates a comparison between contracts, a question about a rule given specified information, and an automated description of the text.</p>
+      <div class="constructs">
+        <div class="construct-grid">
+          <div><span class="label">Between contracts</span><h3>Payoff divergence</h3><p>Two contracts assign different normalized settlements to at least one explicitly specified scenario. A separating scenario establishes non-equivalence over the audited domain; it does not measure frequency or economic magnitude.</p></div>
+          <div><span class="label">Within a contract</span><h3>Written-rule determinacy</h3><p>Given a rule version and stated information, is the payout fixed? Record any remaining fact, reference price, interpretation or authority decision. Later adjudication can supply a required input.</p></div>
+          <div><span class="label">Descriptive text proxy</span><h3>Rule-text specificity</h3><p>An exploratory equal-weight average of five literal text components. The legacy field is <code>determinacy_score</code>. It has no independent human construct validation and does not establish a payout mapping.</p></div>
+        </div>
+        <div class="formula"><code>q<sub>c</sub> = E<sub>μ</sub>[r<sub>c</sub>]</code> &nbsp; Expected normalized payout depends on the settlement mapping, including fractional amounts. It is not automatically an observed market price.</div>
+      </div>
+    </section>
+
+    <section id="text">
+      <div class="section-title"><span class="number">03</span><h2>The language of settlement</h2></div>
+      <p class="section-deck">Literal cues show how these sampled contracts describe sources, timing, definitions and exceptions. Means conceal substantial variation within each portfolio.</p>
+      <div class="grid">
+        <article class="card"><p class="kicker">Component profile</p><h3>Which cues appear in the text?</h3>
+          <figure><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="595.034687pt" height="295.53488pt" viewBox="0 0 595.034687 295.53488" xmlns="http://www.w3.org/2000/svg" version="1.1" role="img" aria-labelledby="descriptions-components-title descriptions-components-desc"><title id="descriptions-components-title">Five literal rule-text components</title><desc id="descriptions-components-desc">Mean scores by platform; exact values in the adjacent table.</desc>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="descriptions-components-figure_1">
+  <g id="descriptions-components-patch_1">
+   <path d="M 0 295.53488
+L 595.034687 295.53488
+L 595.034687 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="descriptions-components-axes_1">
+   <g id="descriptions-components-patch_2">
+    <path d="M 191.654687 257.33488
+L 587.834687 257.33488
+L 587.834687 41.11888
+L 191.654687 41.11888
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="descriptions-components-matplotlib.axis_1">
+    <g id="descriptions-components-xtick_1">
+     <g id="descriptions-components-line2d_1">
+      <path d="M 201.900722 257.33488
+L 201.900722 41.11888
+" clip-path="url(#descriptions-components-p6d0e0d306d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-components-line2d_2">
+      <defs>
+       <path id="descriptions-components-mf30e5520b9" d="M 0 0
+L 0 3.5
+" style="stroke: #536766; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-components-mf30e5520b9" x="201.900722" y="257.33488" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-components-text_1">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="201.900722" y="271.932536" transform="rotate(-0 201.900722 271.932536)">0.00</text>
+     </g>
+    </g>
+    <g id="descriptions-components-xtick_2">
+     <g id="descriptions-components-line2d_3">
+      <path d="M 287.284343 257.33488
+L 287.284343 41.11888
+" clip-path="url(#descriptions-components-p6d0e0d306d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-components-line2d_4">
+      <g>
+       <use xlink:href="#descriptions-components-mf30e5520b9" x="287.284343" y="257.33488" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-components-text_2">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="287.284343" y="271.932536" transform="rotate(-0 287.284343 271.932536)">0.25</text>
+     </g>
+    </g>
+    <g id="descriptions-components-xtick_3">
+     <g id="descriptions-components-line2d_5">
+      <path d="M 372.667963 257.33488
+L 372.667963 41.11888
+" clip-path="url(#descriptions-components-p6d0e0d306d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-components-line2d_6">
+      <g>
+       <use xlink:href="#descriptions-components-mf30e5520b9" x="372.667963" y="257.33488" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-components-text_3">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="372.667963" y="271.932536" transform="rotate(-0 372.667963 271.932536)">0.50</text>
+     </g>
+    </g>
+    <g id="descriptions-components-xtick_4">
+     <g id="descriptions-components-line2d_7">
+      <path d="M 458.051584 257.33488
+L 458.051584 41.11888
+" clip-path="url(#descriptions-components-p6d0e0d306d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-components-line2d_8">
+      <g>
+       <use xlink:href="#descriptions-components-mf30e5520b9" x="458.051584" y="257.33488" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-components-text_4">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="458.051584" y="271.932536" transform="rotate(-0 458.051584 271.932536)">0.75</text>
+     </g>
+    </g>
+    <g id="descriptions-components-xtick_5">
+     <g id="descriptions-components-line2d_9">
+      <path d="M 543.435205 257.33488
+L 543.435205 41.11888
+" clip-path="url(#descriptions-components-p6d0e0d306d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-components-line2d_10">
+      <g>
+       <use xlink:href="#descriptions-components-mf30e5520b9" x="543.435205" y="257.33488" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-components-text_5">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="543.435205" y="271.932536" transform="rotate(-0 543.435205 271.932536)">1.00</text>
+     </g>
+    </g>
+    <g id="descriptions-components-text_6">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="389.744687" y="285.932536" transform="rotate(-0 389.744687 285.932536)">Mean component score (0–1)</text>
+    </g>
+   </g>
+   <g id="descriptions-components-matplotlib.axis_2">
+    <g id="descriptions-components-ytick_1">
+     <g id="descriptions-components-line2d_11">
+      <defs>
+       <path id="descriptions-components-me940aee5e5" d="M 0 0
+L -3.5 0
+" style="stroke: #233d3c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-components-me940aee5e5" x="191.654687" y="56.94519" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-components-text_7">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="184.654687" y="60.744409" transform="rotate(-0 184.654687 60.744409)">Authority / source cues</text>
+     </g>
+    </g>
+    <g id="descriptions-components-ytick_2">
+     <g id="descriptions-components-line2d_12">
+      <g>
+       <use xlink:href="#descriptions-components-me940aee5e5" x="191.654687" y="103.086035" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-components-text_8">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="184.654687" y="106.885254" transform="rotate(-0 184.654687 106.885254)">Date / time cues</text>
+     </g>
+    </g>
+    <g id="descriptions-components-ytick_3">
+     <g id="descriptions-components-line2d_13">
+      <g>
+       <use xlink:href="#descriptions-components-me940aee5e5" x="191.654687" y="149.22688" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-components-text_9">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="184.654687" y="153.026099" transform="rotate(-0 184.654687 153.026099)">Definition / threshold cues</text>
+     </g>
+    </g>
+    <g id="descriptions-components-ytick_4">
+     <g id="descriptions-components-line2d_14">
+      <g>
+       <use xlink:href="#descriptions-components-me940aee5e5" x="191.654687" y="195.367725" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-components-text_10">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="184.654687" y="199.166944" transform="rotate(-0 184.654687 199.166944)">Conditional / fallback cues</text>
+     </g>
+    </g>
+    <g id="descriptions-components-ytick_5">
+     <g id="descriptions-components-line2d_15">
+      <g>
+       <use xlink:href="#descriptions-components-me940aee5e5" x="191.654687" y="241.50857" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-components-text_11">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="184.654687" y="245.307789" transform="rotate(-0 184.654687 245.307789)">Discretion-term score (1 − penalty)</text>
+     </g>
+    </g>
+   </g>
+   <g id="descriptions-components-patch_3">
+    <path d="M 191.654687 257.33488
+L 587.834687 257.33488
+" style="fill: none; stroke: #d8dedc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-components-PathCollection_1">
+    <defs>
+     <path id="descriptions-components-m48b4d13a68" d="M 0 3.872983
+C 1.027127 3.872983 2.012324 3.464901 2.738613 2.738613
+C 3.464901 2.012324 3.872983 1.027127 3.872983 0
+C 3.872983 -1.027127 3.464901 -2.012324 2.738613 -2.738613
+C 2.012324 -3.464901 1.027127 -3.872983 0 -3.872983
+C -1.027127 -3.872983 -2.012324 -3.464901 -2.738613 -2.738613
+C -3.464901 -2.012324 -3.872983 -1.027127 -3.872983 0
+C -3.872983 1.027127 -3.464901 2.012324 -2.738613 2.738613
+C -2.012324 3.464901 -1.027127 3.872983 0 3.872983
+z
+" style="stroke: #335c81"/>
+    </defs>
+    <g clip-path="url(#descriptions-components-p6d0e0d306d)">
+     <use xlink:href="#descriptions-components-m48b4d13a68" x="389.79905" y="50.94688" style="fill: #335c81; stroke: #335c81"/>
+     <use xlink:href="#descriptions-components-m48b4d13a68" x="408.523369" y="97.087725" style="fill: #335c81; stroke: #335c81"/>
+     <use xlink:href="#descriptions-components-m48b4d13a68" x="433.695891" y="143.22857" style="fill: #335c81; stroke: #335c81"/>
+     <use xlink:href="#descriptions-components-m48b4d13a68" x="294.778252" y="189.369415" style="fill: #335c81; stroke: #335c81"/>
+     <use xlink:href="#descriptions-components-m48b4d13a68" x="542.515228" y="235.51026" style="fill: #335c81; stroke: #335c81"/>
+    </g>
+   </g>
+   <g id="descriptions-components-text_12">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="394.79905" y="53.025005" transform="rotate(-0 394.79905 53.025005)">0.55</text>
+   </g>
+   <g id="descriptions-components-text_13">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="413.523369" y="99.16585" transform="rotate(-0 413.523369 99.16585)">0.60</text>
+   </g>
+   <g id="descriptions-components-text_14">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="438.695891" y="145.306695" transform="rotate(-0 438.695891 145.306695)">0.68</text>
+   </g>
+   <g id="descriptions-components-text_15">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="299.778252" y="191.44754" transform="rotate(-0 299.778252 191.44754)">0.27</text>
+   </g>
+   <g id="descriptions-components-text_16">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="547.515228" y="237.588385" transform="rotate(-0 547.515228 237.588385)">1.00</text>
+   </g>
+   <g id="descriptions-components-PathCollection_2">
+    <defs>
+     <path id="descriptions-components-ma4796b509b" d="M 0 3.872983
+C 1.027127 3.872983 2.012324 3.464901 2.738613 2.738613
+C 3.464901 2.012324 3.872983 1.027127 3.872983 0
+C 3.872983 -1.027127 3.464901 -2.012324 2.738613 -2.738613
+C 2.012324 -3.464901 1.027127 -3.872983 0 -3.872983
+C -1.027127 -3.872983 -2.012324 -3.464901 -2.738613 -2.738613
+C -3.464901 -2.012324 -3.872983 -1.027127 -3.872983 0
+C -3.872983 1.027127 -3.464901 2.012324 -2.738613 2.738613
+C -2.012324 3.464901 -1.027127 3.872983 0 3.872983
+z
+" style="stroke: #d1495b"/>
+    </defs>
+    <g clip-path="url(#descriptions-components-p6d0e0d306d)">
+     <use xlink:href="#descriptions-components-ma4796b509b" x="425.024177" y="62.9435" style="fill: #d1495b; stroke: #d1495b"/>
+     <use xlink:href="#descriptions-components-ma4796b509b" x="474.405097" y="109.084345" style="fill: #d1495b; stroke: #d1495b"/>
+     <use xlink:href="#descriptions-components-ma4796b509b" x="412.649029" y="155.22519" style="fill: #d1495b; stroke: #d1495b"/>
+     <use xlink:href="#descriptions-components-ma4796b509b" x="339.824304" y="201.366035" style="fill: #d1495b; stroke: #d1495b"/>
+     <use xlink:href="#descriptions-components-ma4796b509b" x="478.888061" y="247.50688" style="fill: #d1495b; stroke: #d1495b"/>
+    </g>
+   </g>
+   <g id="descriptions-components-text_17">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="430.024177" y="65.021625" transform="rotate(-0 430.024177 65.021625)">0.65</text>
+   </g>
+   <g id="descriptions-components-text_18">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="479.405097" y="111.16247" transform="rotate(-0 479.405097 111.16247)">0.80</text>
+   </g>
+   <g id="descriptions-components-text_19">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="417.649029" y="157.303315" transform="rotate(-0 417.649029 157.303315)">0.62</text>
+   </g>
+   <g id="descriptions-components-text_20">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="344.824304" y="203.44416" transform="rotate(-0 344.824304 203.44416)">0.40</text>
+   </g>
+   <g id="descriptions-components-text_21">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="483.888061" y="249.585005" transform="rotate(-0 483.888061 249.585005)">0.81</text>
+   </g>
+   <g id="descriptions-components-legend_1">
+    <g id="descriptions-components-PathCollection_3">
+     <g>
+      <use xlink:href="#descriptions-components-m48b4d13a68" x="318.949375" y="16.173437" style="fill: #335c81; stroke: #335c81"/>
+     </g>
+    </g>
+    <g id="descriptions-components-text_22">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="336.949375" y="18.798437" transform="rotate(-0 336.949375 18.798437)">Kalshi</text>
+    </g>
+    <g id="descriptions-components-PathCollection_4">
+     <g>
+      <use xlink:href="#descriptions-components-ma4796b509b" x="396.563437" y="16.173437" style="fill: #d1495b; stroke: #d1495b"/>
+     </g>
+    </g>
+    <g id="descriptions-components-text_23">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="414.563437" y="18.798437" transform="rotate(-0 414.563437 18.798437)">Polymarket</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="descriptions-components-p6d0e0d306d">
+   <rect x="191.654687" y="41.11888" width="396.18" height="216.216"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>These are mean weighted cue scores, not proportions. The discretion-term score is max(0, 1 − 0.25 × distinct configured phrases); a score of 0.811 is not an 81.1% no-flag share. Cues can also describe the event subject rather than a deciding source.</figcaption></figure>
+          <details><summary>Read exact component means</summary><div class="table-scroll"><table class="dataframe data-table"><caption>Components · descriptive values</caption>
+  <thead>
+    <tr style="text-align: right;">
+      <th>platform</th>
+      <th>Literal component</th>
+      <th>Kalshi</th>
+      <th>Polymarket</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th></th>
+      <td>Authority / source cues</td>
+      <td>0.550</td>
+      <td>0.653</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>Date / time cues</td>
+      <td>0.605</td>
+      <td>0.798</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>Definition / threshold cues</td>
+      <td>0.679</td>
+      <td>0.617</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>Conditional / fallback cues</td>
+      <td>0.272</td>
+      <td>0.404</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>Discretion-term score (1 − penalty)</td>
+      <td>0.997</td>
+      <td>0.811</td>
+    </tr>
+  </tbody>
+</table></div></details>
+          <div class="downloads"><a href="figures/descriptions-components.svg" download>SVG ↗</a><a href="tables/descriptions-components.csv" download>CSV ↗</a></div>
+        </article>
+        <article class="card"><p class="kicker">Distribution</p><h3>Similar averages, different distributions</h3>
+          <figure><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="471.299531pt" height="265.080801pt" viewBox="0 0 471.299531 265.080801" xmlns="http://www.w3.org/2000/svg" version="1.1" role="img" aria-labelledby="descriptions-distribution-title descriptions-distribution-desc"><title id="descriptions-distribution-title">Distribution of the exploratory text index</title><desc id="descriptions-distribution-desc">Twenty fixed bins of width 0.05; shares use nonmissing scores within each platform.</desc>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="descriptions-distribution-figure_1">
+  <g id="descriptions-distribution-patch_1">
+   <path d="M 0 265.080801
+L 471.299531 265.080801
+L 471.299531 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="descriptions-distribution-axes_1">
+   <g id="descriptions-distribution-patch_2">
+    <path d="M 59.967969 226.880019
+L 456.147969 226.880019
+L 456.147969 10.664019
+L 59.967969 10.664019
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="descriptions-distribution-patch_3">
+    <path d="M 59.967969 226.880019
+L 59.967969 226.880019
+L 79.776969 226.880019
+L 79.776969 226.880019
+L 99.585969 226.880019
+L 99.585969 226.880019
+L 119.394969 226.880019
+L 119.394969 226.880019
+L 139.203969 226.880019
+L 139.203969 226.678631
+L 159.012969 226.678631
+L 159.012969 226.477242
+L 178.821969 226.477242
+L 178.821969 214.192528
+L 198.630969 214.192528
+L 198.630969 221.996342
+L 218.439969 221.996342
+L 218.439969 219.579677
+L 238.248969 219.579677
+L 238.248969 208.553643
+L 258.057969 208.553643
+L 258.057969 162.737701
+L 277.866969 162.737701
+L 277.866969 20.960019
+L 297.675969 20.960019
+L 297.675969 203.972049
+L 317.484969 203.972049
+L 317.484969 120.949535
+L 337.293969 120.949535
+L 337.293969 156.393956
+L 357.102969 156.393956
+L 357.102969 126.789809
+L 376.911969 126.789809
+L 376.911969 224.966826
+L 396.720969 224.966826
+L 396.720969 225.268909
+L 416.529969 225.268909
+L 416.529969 226.880019
+L 436.338969 226.880019
+L 436.338969 226.880019
+L 456.147969 226.880019
+L 456.147969 226.880019
+" clip-path="url(#descriptions-distribution-p303fb0e627)" style="fill: none; stroke: #335c81; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="descriptions-distribution-patch_4">
+    <path d="M 59.967969 226.880019
+L 59.967969 226.880019
+L 79.776969 226.880019
+L 79.776969 226.880019
+L 99.585969 226.880019
+L 99.585969 226.880019
+L 119.394969 226.880019
+L 119.394969 226.880019
+L 139.203969 226.880019
+L 139.203969 226.709843
+L 159.012969 226.709843
+L 159.012969 218.711565
+L 178.821969 218.711565
+L 178.821969 221.944911
+L 198.630969 221.944911
+L 198.630969 219.562445
+L 218.439969 219.562445
+L 218.439969 191.653559
+L 238.248969 191.653559
+L 238.248969 161.617471
+L 258.057969 161.617471
+L 258.057969 170.721895
+L 277.866969 170.721895
+L 277.866969 194.121113
+L 297.675969 194.121113
+L 297.675969 199.56675
+L 317.484969 199.56675
+L 317.484969 149.109525
+L 337.293969 149.109525
+L 337.293969 101.460207
+L 357.102969 101.460207
+L 357.102969 105.204082
+L 376.911969 105.204082
+L 376.911969 195.652698
+L 396.720969 195.652698
+L 396.720969 207.650116
+L 416.529969 207.650116
+L 416.529969 222.710704
+L 436.338969 222.710704
+L 436.338969 226.880019
+L 456.147969 226.880019
+L 456.147969 226.880019
+" clip-path="url(#descriptions-distribution-p303fb0e627)" style="fill: none; stroke: #d1495b; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="descriptions-distribution-matplotlib.axis_1">
+    <g id="descriptions-distribution-xtick_1">
+     <g id="descriptions-distribution-line2d_1">
+      <defs>
+       <path id="descriptions-distribution-m25a740116a" d="M 0 0
+L 0 3.5
+" style="stroke: #536766; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-distribution-m25a740116a" x="59.967969" y="226.880019" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-distribution-text_1">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="59.967969" y="241.477676" transform="rotate(-0 59.967969 241.477676)">0.0</text>
+     </g>
+    </g>
+    <g id="descriptions-distribution-xtick_2">
+     <g id="descriptions-distribution-line2d_2">
+      <g>
+       <use xlink:href="#descriptions-distribution-m25a740116a" x="139.203969" y="226.880019" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-distribution-text_2">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="139.203969" y="241.477676" transform="rotate(-0 139.203969 241.477676)">0.2</text>
+     </g>
+    </g>
+    <g id="descriptions-distribution-xtick_3">
+     <g id="descriptions-distribution-line2d_3">
+      <g>
+       <use xlink:href="#descriptions-distribution-m25a740116a" x="218.439969" y="226.880019" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-distribution-text_3">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="218.439969" y="241.477676" transform="rotate(-0 218.439969 241.477676)">0.4</text>
+     </g>
+    </g>
+    <g id="descriptions-distribution-xtick_4">
+     <g id="descriptions-distribution-line2d_4">
+      <g>
+       <use xlink:href="#descriptions-distribution-m25a740116a" x="297.675969" y="226.880019" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-distribution-text_4">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="297.675969" y="241.477676" transform="rotate(-0 297.675969 241.477676)">0.6</text>
+     </g>
+    </g>
+    <g id="descriptions-distribution-xtick_5">
+     <g id="descriptions-distribution-line2d_5">
+      <g>
+       <use xlink:href="#descriptions-distribution-m25a740116a" x="376.911969" y="226.880019" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-distribution-text_5">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="376.911969" y="241.477676" transform="rotate(-0 376.911969 241.477676)">0.8</text>
+     </g>
+    </g>
+    <g id="descriptions-distribution-xtick_6">
+     <g id="descriptions-distribution-line2d_6">
+      <g>
+       <use xlink:href="#descriptions-distribution-m25a740116a" x="456.147969" y="226.880019" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-distribution-text_6">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="456.147969" y="241.477676" transform="rotate(-0 456.147969 241.477676)">1.0</text>
+     </g>
+    </g>
+    <g id="descriptions-distribution-text_7">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="258.057969" y="255.478457" transform="rotate(-0 258.057969 255.478457)">Exploratory rule-text specificity index</text>
+    </g>
+   </g>
+   <g id="descriptions-distribution-matplotlib.axis_2">
+    <g id="descriptions-distribution-ytick_1">
+     <g id="descriptions-distribution-line2d_7">
+      <path d="M 59.967969 226.880019
+L 456.147969 226.880019
+" clip-path="url(#descriptions-distribution-p303fb0e627)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-distribution-line2d_8">
+      <defs>
+       <path id="descriptions-distribution-m0de440e4f5" d="M 0 0
+L -3.5 0
+" style="stroke: #233d3c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-distribution-m0de440e4f5" x="59.967969" y="226.880019" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-distribution-text_8">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="52.967969" y="230.678847" transform="rotate(-0 52.967969 230.678847)">0.0%</text>
+     </g>
+    </g>
+    <g id="descriptions-distribution-ytick_2">
+     <g id="descriptions-distribution-line2d_9">
+      <path d="M 59.967969 196.039849
+L 456.147969 196.039849
+" clip-path="url(#descriptions-distribution-p303fb0e627)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-distribution-line2d_10">
+      <g>
+       <use xlink:href="#descriptions-distribution-m0de440e4f5" x="59.967969" y="196.039849" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-distribution-text_9">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="52.967969" y="199.838677" transform="rotate(-0 52.967969 199.838677)">5.0%</text>
+     </g>
+    </g>
+    <g id="descriptions-distribution-ytick_3">
+     <g id="descriptions-distribution-line2d_11">
+      <path d="M 59.967969 165.199679
+L 456.147969 165.199679
+" clip-path="url(#descriptions-distribution-p303fb0e627)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-distribution-line2d_12">
+      <g>
+       <use xlink:href="#descriptions-distribution-m0de440e4f5" x="59.967969" y="165.199679" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-distribution-text_10">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="52.967969" y="168.998507" transform="rotate(-0 52.967969 168.998507)">10.0%</text>
+     </g>
+    </g>
+    <g id="descriptions-distribution-ytick_4">
+     <g id="descriptions-distribution-line2d_13">
+      <path d="M 59.967969 134.359509
+L 456.147969 134.359509
+" clip-path="url(#descriptions-distribution-p303fb0e627)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-distribution-line2d_14">
+      <g>
+       <use xlink:href="#descriptions-distribution-m0de440e4f5" x="59.967969" y="134.359509" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-distribution-text_11">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="52.967969" y="138.158337" transform="rotate(-0 52.967969 138.158337)">15.0%</text>
+     </g>
+    </g>
+    <g id="descriptions-distribution-ytick_5">
+     <g id="descriptions-distribution-line2d_15">
+      <path d="M 59.967969 103.519339
+L 456.147969 103.519339
+" clip-path="url(#descriptions-distribution-p303fb0e627)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-distribution-line2d_16">
+      <g>
+       <use xlink:href="#descriptions-distribution-m0de440e4f5" x="59.967969" y="103.519339" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-distribution-text_12">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="52.967969" y="107.318167" transform="rotate(-0 52.967969 107.318167)">20.0%</text>
+     </g>
+    </g>
+    <g id="descriptions-distribution-ytick_6">
+     <g id="descriptions-distribution-line2d_17">
+      <path d="M 59.967969 72.679168
+L 456.147969 72.679168
+" clip-path="url(#descriptions-distribution-p303fb0e627)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-distribution-line2d_18">
+      <g>
+       <use xlink:href="#descriptions-distribution-m0de440e4f5" x="59.967969" y="72.679168" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-distribution-text_13">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="52.967969" y="76.477997" transform="rotate(-0 52.967969 76.477997)">25.0%</text>
+     </g>
+    </g>
+    <g id="descriptions-distribution-ytick_7">
+     <g id="descriptions-distribution-line2d_19">
+      <path d="M 59.967969 41.838998
+L 456.147969 41.838998
+" clip-path="url(#descriptions-distribution-p303fb0e627)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-distribution-line2d_20">
+      <g>
+       <use xlink:href="#descriptions-distribution-m0de440e4f5" x="59.967969" y="41.838998" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-distribution-text_14">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="52.967969" y="45.637826" transform="rotate(-0 52.967969 45.637826)">30.0%</text>
+     </g>
+    </g>
+    <g id="descriptions-distribution-ytick_8">
+     <g id="descriptions-distribution-line2d_21">
+      <path d="M 59.967969 10.998828
+L 456.147969 10.998828
+" clip-path="url(#descriptions-distribution-p303fb0e627)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-distribution-line2d_22">
+      <g>
+       <use xlink:href="#descriptions-distribution-m0de440e4f5" x="59.967969" y="10.998828" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-distribution-text_15">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="52.967969" y="14.797656" transform="rotate(-0 52.967969 14.797656)">35.0%</text>
+     </g>
+    </g>
+    <g id="descriptions-distribution-text_16">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="14.798438" y="118.772019" transform="rotate(-90 14.798438 118.772019)">Share of platform contracts</text>
+    </g>
+   </g>
+   <g id="descriptions-distribution-patch_5">
+    <path d="M 59.967969 226.880019
+L 456.147969 226.880019
+" style="fill: none; stroke: #d8dedc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-distribution-legend_1">
+    <g id="descriptions-distribution-line2d_23">
+     <path d="M 363.171406 23.762457
+L 383.171406 23.762457
+" style="fill: none; stroke: #335c81; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="descriptions-distribution-text_17">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="391.171406" y="27.262457" transform="rotate(-0 391.171406 27.262457)">Kalshi</text>
+    </g>
+    <g id="descriptions-distribution-line2d_24">
+     <path d="M 363.171406 38.763238
+L 383.171406 38.763238
+" style="fill: none; stroke: #d1495b; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="descriptions-distribution-text_18">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="391.171406" y="42.263238" transform="rotate(-0 391.171406 42.263238)">Polymarket</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="descriptions-distribution-p303fb0e627">
+   <rect x="59.967969" y="10.664019" width="396.18" height="216.216"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>Each platform is normalized separately. Twenty fixed bins of width 0.05; the final bin includes 1. Missing scores excluded: 0. The index is descriptive, with no validated “high determinacy” cutoff.</figcaption></figure>
+          <div class="insight">The index combines source, time, definition, fallback and discretion-term components with equal weights.</div>
+          <div class="downloads"><a href="figures/descriptions-distribution.svg" download>SVG ↗</a><a href="tables/descriptions-distribution.csv" download>Bin counts CSV ↗</a></div>
+        </article>
+        <article class="card"><p class="kicker">Text length</p><h3>How much text defines a claim?</h3>
+          <figure><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="463.347969pt" height="261.616781pt" viewBox="0 0 463.347969 261.616781" xmlns="http://www.w3.org/2000/svg" version="1.1" role="img" aria-labelledby="descriptions-length-title descriptions-length-desc"><title id="descriptions-length-title">How much text defines a claim?</title><desc id="descriptions-length-desc">Question, rules and source text combined; 500+ includes all long texts.</desc>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="descriptions-length-figure_1">
+  <g id="descriptions-length-patch_1">
+   <path d="M 0 261.616781
+L 463.347969 261.616781
+L 463.347969 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="descriptions-length-axes_1">
+   <g id="descriptions-length-patch_2">
+    <path d="M 59.967969 223.416
+L 456.147969 223.416
+L 456.147969 7.2
+L 59.967969 7.2
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="descriptions-length-matplotlib.axis_1">
+    <g id="descriptions-length-xtick_1">
+     <g id="descriptions-length-line2d_1">
+      <defs>
+       <path id="descriptions-length-m5e504a7a49" d="M 0 0
+L 0 3.5
+" style="stroke: #536766; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-length-m5e504a7a49" x="97.747745" y="223.416" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-length-text_1">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="97.747745" y="238.013656" transform="rotate(-0 97.747745 238.013656)">0–49</text>
+     </g>
+    </g>
+    <g id="descriptions-length-xtick_2">
+     <g id="descriptions-length-line2d_2">
+      <g>
+       <use xlink:href="#descriptions-length-m5e504a7a49" x="151.184486" y="223.416" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-length-text_2">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="151.184486" y="238.013656" transform="rotate(-0 151.184486 238.013656)">50–99</text>
+     </g>
+    </g>
+    <g id="descriptions-length-xtick_3">
+     <g id="descriptions-length-line2d_3">
+      <g>
+       <use xlink:href="#descriptions-length-m5e504a7a49" x="204.621227" y="223.416" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-length-text_3">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="204.621227" y="238.013656" transform="rotate(-0 204.621227 238.013656)">100–149</text>
+     </g>
+    </g>
+    <g id="descriptions-length-xtick_4">
+     <g id="descriptions-length-line2d_4">
+      <g>
+       <use xlink:href="#descriptions-length-m5e504a7a49" x="258.057969" y="223.416" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-length-text_4">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="258.057969" y="238.013656" transform="rotate(-0 258.057969 238.013656)">150–199</text>
+     </g>
+    </g>
+    <g id="descriptions-length-xtick_5">
+     <g id="descriptions-length-line2d_5">
+      <g>
+       <use xlink:href="#descriptions-length-m5e504a7a49" x="311.49471" y="223.416" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-length-text_5">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="311.49471" y="238.013656" transform="rotate(-0 311.49471 238.013656)">200–299</text>
+     </g>
+    </g>
+    <g id="descriptions-length-xtick_6">
+     <g id="descriptions-length-line2d_6">
+      <g>
+       <use xlink:href="#descriptions-length-m5e504a7a49" x="364.931451" y="223.416" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-length-text_6">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="364.931451" y="238.013656" transform="rotate(-0 364.931451 238.013656)">300–499</text>
+     </g>
+    </g>
+    <g id="descriptions-length-xtick_7">
+     <g id="descriptions-length-line2d_7">
+      <g>
+       <use xlink:href="#descriptions-length-m5e504a7a49" x="418.368193" y="223.416" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-length-text_7">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="418.368193" y="238.013656" transform="rotate(-0 418.368193 238.013656)">500+</text>
+     </g>
+    </g>
+    <g id="descriptions-length-text_8">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="258.057969" y="252.014437" transform="rotate(-0 258.057969 252.014437)">Analyzed text length (words)</text>
+    </g>
+   </g>
+   <g id="descriptions-length-matplotlib.axis_2">
+    <g id="descriptions-length-ytick_1">
+     <g id="descriptions-length-line2d_8">
+      <path d="M 59.967969 223.416
+L 456.147969 223.416
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-length-line2d_9">
+      <defs>
+       <path id="descriptions-length-m1db6d04374" d="M 0 0
+L -3.5 0
+" style="stroke: #233d3c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-length-m1db6d04374" x="59.967969" y="223.416" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-length-text_9">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="52.967969" y="227.214828" transform="rotate(-0 52.967969 227.214828)">0.0%</text>
+     </g>
+    </g>
+    <g id="descriptions-length-ytick_2">
+     <g id="descriptions-length-line2d_10">
+      <path d="M 59.967969 178.454733
+L 456.147969 178.454733
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-length-line2d_11">
+      <g>
+       <use xlink:href="#descriptions-length-m1db6d04374" x="59.967969" y="178.454733" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-length-text_10">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="52.967969" y="182.253561" transform="rotate(-0 52.967969 182.253561)">10.0%</text>
+     </g>
+    </g>
+    <g id="descriptions-length-ytick_3">
+     <g id="descriptions-length-line2d_12">
+      <path d="M 59.967969 133.493465
+L 456.147969 133.493465
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-length-line2d_13">
+      <g>
+       <use xlink:href="#descriptions-length-m1db6d04374" x="59.967969" y="133.493465" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-length-text_11">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="52.967969" y="137.292293" transform="rotate(-0 52.967969 137.292293)">20.0%</text>
+     </g>
+    </g>
+    <g id="descriptions-length-ytick_4">
+     <g id="descriptions-length-line2d_14">
+      <path d="M 59.967969 88.532198
+L 456.147969 88.532198
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-length-line2d_15">
+      <g>
+       <use xlink:href="#descriptions-length-m1db6d04374" x="59.967969" y="88.532198" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-length-text_12">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="52.967969" y="92.331026" transform="rotate(-0 52.967969 92.331026)">30.0%</text>
+     </g>
+    </g>
+    <g id="descriptions-length-ytick_5">
+     <g id="descriptions-length-line2d_16">
+      <path d="M 59.967969 43.57093
+L 456.147969 43.57093
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-length-line2d_17">
+      <g>
+       <use xlink:href="#descriptions-length-m1db6d04374" x="59.967969" y="43.57093" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-length-text_13">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="52.967969" y="47.369758" transform="rotate(-0 52.967969 47.369758)">40.0%</text>
+     </g>
+    </g>
+    <g id="descriptions-length-text_14">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="14.798438" y="115.308" transform="rotate(-90 14.798438 115.308)">Share of platform contracts</text>
+    </g>
+   </g>
+   <g id="descriptions-length-patch_3">
+    <path d="M 77.976151 223.416
+L 97.213377 223.416
+L 97.213377 79.661788
+L 77.976151 79.661788
+z
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-length-patch_4">
+    <path d="M 131.412892 223.416
+L 150.650119 223.416
+L 150.650119 73.973276
+L 131.412892 73.973276
+z
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-length-patch_5">
+    <path d="M 184.849633 223.416
+L 204.08686 223.416
+L 204.08686 157.392557
+L 184.849633 157.392557
+z
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-length-patch_6">
+    <path d="M 238.286374 223.416
+L 257.523601 223.416
+L 257.523601 179.449305
+L 238.286374 179.449305
+z
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-length-patch_7">
+    <path d="M 291.723116 223.416
+L 310.960343 223.416
+L 310.960343 197.285543
+L 291.723116 197.285543
+z
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-length-patch_8">
+    <path d="M 345.159857 223.416
+L 364.397084 223.416
+L 364.397084 204.73566
+L 345.159857 204.73566
+z
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-length-patch_9">
+    <path d="M 398.596598 223.416
+L 417.833825 223.416
+L 417.833825 221.801196
+L 398.596598 221.801196
+z
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-length-patch_10">
+    <path d="M 98.282112 223.416
+L 117.519339 223.416
+L 117.519339 222.299566
+L 98.282112 222.299566
+z
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-length-patch_11">
+    <path d="M 151.718854 223.416
+L 170.95608 223.416
+L 170.95608 164.927277
+L 151.718854 164.927277
+z
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-length-patch_12">
+    <path d="M 205.155595 223.416
+L 224.392822 223.416
+L 224.392822 17.496
+L 205.155595 17.496
+z
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-length-patch_13">
+    <path d="M 258.592336 223.416
+L 277.829563 223.416
+L 277.829563 114.501687
+L 258.592336 114.501687
+z
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-length-patch_14">
+    <path d="M 312.029077 223.416
+L 331.266304 223.416
+L 331.266304 168.214554
+L 312.029077 168.214554
+z
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-length-patch_15">
+    <path d="M 365.465819 223.416
+L 384.703046 223.416
+L 384.703046 205.180916
+L 365.465819 205.180916
+z
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-length-patch_16">
+    <path d="M 418.90256 223.416
+L 438.139787 223.416
+L 438.139787 221.679325
+L 418.90256 221.679325
+z
+" clip-path="url(#descriptions-length-pc0a272f359)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-length-patch_17">
+    <path d="M 59.967969 223.416
+L 456.147969 223.416
+" style="fill: none; stroke: #d8dedc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-length-legend_1">
+    <g id="descriptions-length-patch_18">
+     <path d="M 363.171406 23.798437
+L 383.171406 23.798437
+L 383.171406 16.798437
+L 363.171406 16.798437
+z
+" style="fill: #335c81"/>
+    </g>
+    <g id="descriptions-length-text_15">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="391.171406" y="23.798437" transform="rotate(-0 391.171406 23.798437)">Kalshi</text>
+    </g>
+    <g id="descriptions-length-patch_19">
+     <path d="M 363.171406 38.799219
+L 383.171406 38.799219
+L 383.171406 31.799219
+L 363.171406 31.799219
+z
+" style="fill: #d1495b"/>
+    </g>
+    <g id="descriptions-length-text_16">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="391.171406" y="38.799219" transform="rotate(-0 391.171406 38.799219)">Polymarket</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="descriptions-length-pc0a272f359">
+   <rect x="59.967969" y="7.2" width="396.18" height="216.216"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>The word count covers the question, operative rules and source text combined. Bins include every nonmissing observation, with a 500+ overflow bin. Missing lengths excluded: 0.</figcaption></figure>
+          <div class="insight">Longer descriptions can contain more qualifications, but word count alone does not establish that the rules fix a payout.</div>
+          <div class="downloads"><a href="figures/descriptions-length.svg" download>SVG ↗</a><a href="tables/descriptions-length.csv" download>Bin counts CSV ↗</a></div>
+        </article>
+        <article class="card"><p class="kicker">Threshold composition</p><h3>Numeric contract language is unevenly distributed</h3>
+          <div class="table-scroll"><table class="dataframe data-table"><caption>Strata · descriptive values</caption>
+  <thead>
+    <tr style="text-align: right;">
+      <th>Platform</th>
+      <th>Threshold stratum</th>
+      <th>Contracts</th>
+      <th>Mean index</th>
+      <th>Mean text words</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Kalshi</td>
+      <td>Overall</td>
+      <td>12251</td>
+      <td>0.621</td>
+      <td>100.5</td>
+    </tr>
+    <tr>
+      <td>Kalshi</td>
+      <td>No threshold flag</td>
+      <td>2180</td>
+      <td>0.540</td>
+      <td>111.4</td>
+    </tr>
+    <tr>
+      <td>Kalshi</td>
+      <td>Threshold flag</td>
+      <td>10071</td>
+      <td>0.638</td>
+      <td>98.1</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>Overall</td>
+      <td>7249</td>
+      <td>0.657</td>
+      <td>157.8</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>No threshold flag</td>
+      <td>5455</td>
+      <td>0.621</td>
+      <td>162.7</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>Threshold flag</td>
+      <td>1794</td>
+      <td>0.764</td>
+      <td>142.9</td>
+    </tr>
+  </tbody>
+</table></div>
+          <div class="insight">A threshold flag contributes directly to the definition component. Differences across these strata are descriptive and do not independently validate the index. Corrected parsing eliminated the study’s earlier composition-reversal claim.</div>
+          <div class="downloads"><a href="tables/descriptions-strata.csv" download>Stratum summaries CSV ↗</a><a href="MEASUREMENT_NOTE.md">Measurement correction ↗</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="composition">
+      <div class="section-title"><span class="number">04</span><h2>What shapes the portfolios?</h2></div>
+      <p class="section-deck">Repeated contract templates and platform-specific topic groupings help explain why a contract-level average need not represent an independent rule design.</p>
+      <article class="card"><p class="kicker">Topic mix</p><h3>Economics dominates the Kalshi sample; Polymarket spans a different topic mix</h3>
+        <figure><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="853.175pt" height="294.636562pt" viewBox="0 0 853.175 294.636562" xmlns="http://www.w3.org/2000/svg" version="1.1" role="img" aria-labelledby="descriptions-categories-title descriptions-categories-desc"><title id="descriptions-categories-title">Topics in the selected portfolios</title><desc id="descriptions-categories-desc">Five largest categories plus the remainder; native labels are not harmonized across platforms.</desc>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="descriptions-categories-figure_1">
+  <g id="descriptions-categories-patch_1">
+   <path d="M 0 294.636562
+L 853.175 294.636562
+L 853.175 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="descriptions-categories-axes_1">
+   <g id="descriptions-categories-patch_2">
+    <path d="M 134.15625 256.435781
+L 410.185625 256.435781
+L 410.185625 22.318125
+L 134.15625 22.318125
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="descriptions-categories-matplotlib.axis_1">
+    <g id="descriptions-categories-xtick_1">
+     <g id="descriptions-categories-line2d_1">
+      <path d="M 134.15625 256.435781
+L 134.15625 22.318125
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_2">
+      <defs>
+       <path id="descriptions-categories-m69861a90fc" d="M 0 0
+L 0 3.5
+" style="stroke: #536766; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="134.15625" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_1">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="134.15625" y="271.033437" transform="rotate(-0 134.15625 271.033437)">0%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_2">
+     <g id="descriptions-categories-line2d_3">
+      <path d="M 174.748805 256.435781
+L 174.748805 22.318125
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_4">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="174.748805" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_2">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="174.748805" y="271.033437" transform="rotate(-0 174.748805 271.033437)">10%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_3">
+     <g id="descriptions-categories-line2d_5">
+      <path d="M 215.34136 256.435781
+L 215.34136 22.318125
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_6">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="215.34136" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_3">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="215.34136" y="271.033437" transform="rotate(-0 215.34136 271.033437)">20%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_4">
+     <g id="descriptions-categories-line2d_7">
+      <path d="M 255.933915 256.435781
+L 255.933915 22.318125
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_8">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="255.933915" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_4">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="255.933915" y="271.033437" transform="rotate(-0 255.933915 271.033437)">30%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_5">
+     <g id="descriptions-categories-line2d_9">
+      <path d="M 296.526471 256.435781
+L 296.526471 22.318125
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_10">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="296.526471" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_5">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="296.526471" y="271.033437" transform="rotate(-0 296.526471 271.033437)">40%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_6">
+     <g id="descriptions-categories-line2d_11">
+      <path d="M 337.119026 256.435781
+L 337.119026 22.318125
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_12">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="337.119026" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_6">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="337.119026" y="271.033437" transform="rotate(-0 337.119026 271.033437)">50%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_7">
+     <g id="descriptions-categories-line2d_13">
+      <path d="M 377.711581 256.435781
+L 377.711581 22.318125
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_14">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="377.711581" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_7">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="377.711581" y="271.033437" transform="rotate(-0 377.711581 271.033437)">60%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-text_8">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="272.170938" y="285.034219" transform="rotate(-0 272.170938 285.034219)">Share of platform contracts</text>
+    </g>
+   </g>
+   <g id="descriptions-categories-matplotlib.axis_2">
+    <g id="descriptions-categories-ytick_1">
+     <g id="descriptions-categories-line2d_15">
+      <defs>
+       <path id="descriptions-categories-m88c43dd6bf" d="M 0 0
+L -3.5 0
+" style="stroke: #233d3c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="134.15625" y="46.232869" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_9">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="127.15625" y="50.032087" transform="rotate(-0 127.15625 50.032087)">Economics</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_2">
+     <g id="descriptions-categories-line2d_16">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="134.15625" y="92.804911" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_10">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="127.15625" y="96.60413" transform="rotate(-0 127.15625 96.60413)">Politics</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_3">
+     <g id="descriptions-categories-line2d_17">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="134.15625" y="139.376953" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_11">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="127.15625" y="143.176172" transform="rotate(-0 127.15625 143.176172)">Elections</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_4">
+     <g id="descriptions-categories-line2d_18">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="134.15625" y="185.948995" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_12">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="127.15625" y="189.748214" transform="rotate(-0 127.15625 189.748214)">Science and Technology</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_5">
+     <g id="descriptions-categories-line2d_19">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="134.15625" y="232.521038" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_13">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="127.15625" y="236.320256" transform="rotate(-0 127.15625 236.320256)">Companies</text>
+     </g>
+    </g>
+   </g>
+   <g id="descriptions-categories-patch_3">
+    <path d="M 134.15625 32.959837
+L 355.624407 32.959837
+L 355.624407 59.505901
+L 134.15625 59.505901
+z
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-categories-patch_4">
+    <path d="M 134.15625 79.531879
+L 211.093572 79.531879
+L 211.093572 106.077943
+L 134.15625 106.077943
+z
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-categories-patch_5">
+    <path d="M 134.15625 126.103921
+L 207.614494 126.103921
+L 207.614494 152.649985
+L 134.15625 152.649985
+z
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-categories-patch_6">
+    <path d="M 134.15625 172.675963
+L 166.594509 172.675963
+L 166.594509 199.222027
+L 134.15625 199.222027
+z
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-categories-patch_7">
+    <path d="M 134.15625 219.248006
+L 135.77982 219.248006
+L 135.77982 245.79407
+L 134.15625 245.79407
+z
+" clip-path="url(#descriptions-categories-p3ad6cefe8d)" style="fill: #335c81"/>
+   </g>
+   <g id="descriptions-categories-patch_8">
+    <path d="M 134.15625 256.435781
+L 410.185625 256.435781
+" style="fill: none; stroke: #d8dedc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-categories-text_14">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="360.495513" y="48.570759" transform="rotate(-0 360.495513 48.570759)">54.6%</text>
+   </g>
+   <g id="descriptions-categories-text_15">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="215.964679" y="95.142802" transform="rotate(-0 215.964679 95.142802)">19.0%</text>
+   </g>
+   <g id="descriptions-categories-text_16">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="212.485601" y="141.714844" transform="rotate(-0 212.485601 141.714844)">18.1%</text>
+   </g>
+   <g id="descriptions-categories-text_17">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="171.465616" y="188.286886" transform="rotate(-0 171.465616 188.286886)">8.0%</text>
+   </g>
+   <g id="descriptions-categories-text_18">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="140.650926" y="234.858928" transform="rotate(-0 140.650926 234.858928)">0.4%</text>
+   </g>
+   <g id="descriptions-categories-text_19">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #233d3c" x="272.170938" y="16.318125" transform="rotate(-0 272.170938 16.318125)">Kalshi</text>
+   </g>
+  </g>
+  <g id="descriptions-categories-axes_2">
+   <g id="descriptions-categories-patch_9">
+    <path d="M 569.945625 256.435781
+L 845.975 256.435781
+L 845.975 22.318125
+L 569.945625 22.318125
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="descriptions-categories-matplotlib.axis_3">
+    <g id="descriptions-categories-xtick_8">
+     <g id="descriptions-categories-line2d_20">
+      <path d="M 569.945625 256.435781
+L 569.945625 22.318125
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_21">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="569.945625" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_20">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="569.945625" y="271.033437" transform="rotate(-0 569.945625 271.033437)">0%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_9">
+     <g id="descriptions-categories-line2d_22">
+      <path d="M 610.53818 256.435781
+L 610.53818 22.318125
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_23">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="610.53818" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_21">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="610.53818" y="271.033437" transform="rotate(-0 610.53818 271.033437)">10%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_10">
+     <g id="descriptions-categories-line2d_24">
+      <path d="M 651.130735 256.435781
+L 651.130735 22.318125
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_25">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="651.130735" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_22">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="651.130735" y="271.033437" transform="rotate(-0 651.130735 271.033437)">20%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_11">
+     <g id="descriptions-categories-line2d_26">
+      <path d="M 691.72329 256.435781
+L 691.72329 22.318125
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_27">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="691.72329" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_23">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="691.72329" y="271.033437" transform="rotate(-0 691.72329 271.033437)">30%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_12">
+     <g id="descriptions-categories-line2d_28">
+      <path d="M 732.315846 256.435781
+L 732.315846 22.318125
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_29">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="732.315846" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_24">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="732.315846" y="271.033437" transform="rotate(-0 732.315846 271.033437)">40%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_13">
+     <g id="descriptions-categories-line2d_30">
+      <path d="M 772.908401 256.435781
+L 772.908401 22.318125
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_31">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="772.908401" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_25">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="772.908401" y="271.033437" transform="rotate(-0 772.908401 271.033437)">50%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-xtick_14">
+     <g id="descriptions-categories-line2d_32">
+      <path d="M 813.500956 256.435781
+L 813.500956 22.318125
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-categories-line2d_33">
+      <g>
+       <use xlink:href="#descriptions-categories-m69861a90fc" x="813.500956" y="256.435781" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_26">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="813.500956" y="271.033437" transform="rotate(-0 813.500956 271.033437)">60%</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-text_27">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="707.960312" y="285.034219" transform="rotate(-0 707.960312 285.034219)">Share of platform contracts</text>
+    </g>
+   </g>
+   <g id="descriptions-categories-matplotlib.axis_4">
+    <g id="descriptions-categories-ytick_6">
+     <g id="descriptions-categories-line2d_34">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="569.945625" y="43.849919" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_28">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="562.945625" y="47.649137" transform="rotate(-0 562.945625 47.649137)">Elections and Politics</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_7">
+     <g id="descriptions-categories-line2d_35">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="569.945625" y="82.060732" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_29">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="562.945625" y="85.859561" transform="rotate(-0 562.945625 85.859561)">Crypto</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_8">
+     <g id="descriptions-categories-line2d_36">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="569.945625" y="120.271546" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_30">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="562.945625" y="124.070765" transform="rotate(-0 562.945625 124.070765)">Other non-sports</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_9">
+     <g id="descriptions-categories-line2d_37">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="569.945625" y="158.48236" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_31">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="562.945625" y="162.281579" transform="rotate(-0 562.945625 162.281579)">World</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_10">
+     <g id="descriptions-categories-line2d_38">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="569.945625" y="196.693174" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_32">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="562.945625" y="200.492393" transform="rotate(-0 562.945625 200.492393)">Companies and Markets</text>
+     </g>
+    </g>
+    <g id="descriptions-categories-ytick_11">
+     <g id="descriptions-categories-line2d_39">
+      <g>
+       <use xlink:href="#descriptions-categories-m88c43dd6bf" x="569.945625" y="234.903988" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-categories-text_33">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="562.945625" y="238.703206" transform="rotate(-0 562.945625 238.703206)">Remaining categories</text>
+     </g>
+    </g>
+   </g>
+   <g id="descriptions-categories-patch_10">
+    <path d="M 569.945625 32.959837
+L 730.378334 32.959837
+L 730.378334 54.740001
+L 569.945625 54.740001
+z
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-categories-patch_11">
+    <path d="M 569.945625 71.17065
+L 677.964716 71.17065
+L 677.964716 92.950814
+L 569.945625 92.950814
+z
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-categories-patch_12">
+    <path d="M 569.945625 109.381464
+L 643.526281 109.381464
+L 643.526281 131.161628
+L 569.945625 131.161628
+z
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-categories-patch_13">
+    <path d="M 569.945625 147.592278
+L 597.608368 147.592278
+L 597.608368 169.372442
+L 569.945625 169.372442
+z
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-categories-patch_14">
+    <path d="M 569.945625 185.803092
+L 582.489055 185.803092
+L 582.489055 207.583256
+L 569.945625 207.583256
+z
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-categories-patch_15">
+    <path d="M 569.945625 224.013906
+L 593.632548 224.013906
+L 593.632548 245.79407
+L 569.945625 245.79407
+z
+" clip-path="url(#descriptions-categories-p1dad9c5fbb)" style="fill: #d1495b"/>
+   </g>
+   <g id="descriptions-categories-patch_16">
+    <path d="M 569.945625 256.435781
+L 845.975 256.435781
+" style="fill: none; stroke: #d8dedc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-categories-text_34">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="735.24944" y="46.187809" transform="rotate(-0 735.24944 46.187809)">39.5%</text>
+   </g>
+   <g id="descriptions-categories-text_35">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="682.835822" y="84.398623" transform="rotate(-0 682.835822 84.398623)">26.6%</text>
+   </g>
+   <g id="descriptions-categories-text_36">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="648.397388" y="122.609437" transform="rotate(-0 648.397388 122.609437)">18.1%</text>
+   </g>
+   <g id="descriptions-categories-text_37">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="602.479474" y="160.820251" transform="rotate(-0 602.479474 160.820251)">6.8%</text>
+   </g>
+   <g id="descriptions-categories-text_38">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="587.360162" y="199.031064" transform="rotate(-0 587.360162 199.031064)">3.1%</text>
+   </g>
+   <g id="descriptions-categories-text_39">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="598.503655" y="237.241878" transform="rotate(-0 598.503655 237.241878)">5.8%</text>
+   </g>
+   <g id="descriptions-categories-text_40">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #233d3c" x="707.960312" y="16.318125" transform="rotate(-0 707.960312 16.318125)">Polymarket</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="descriptions-categories-p3ad6cefe8d">
+   <rect x="134.15625" y="22.318125" width="276.029375" height="234.117656"/>
+  </clipPath>
+  <clipPath id="descriptions-categories-p1dad9c5fbb">
+   <rect x="569.945625" y="22.318125" width="276.029375" height="234.117656"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>The five largest native categories are shown for each platform; smaller categories are grouped only for display. Category schemes are not harmonized. Percentages use all contracts within the respective platform.</figcaption></figure>
+        <details><summary>Read all native categories and counts</summary><div class="table-scroll"><table class="dataframe data-table"><caption>Categories · descriptive values</caption>
+  <thead>
+    <tr style="text-align: right;">
+      <th>platform</th>
+      <th>category</th>
+      <th>contracts</th>
+      <th>share</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Kalshi</td>
+      <td>Economics</td>
+      <td>6684</td>
+      <td>54.6%</td>
+    </tr>
+    <tr>
+      <td>Kalshi</td>
+      <td>Politics</td>
+      <td>2322</td>
+      <td>19.0%</td>
+    </tr>
+    <tr>
+      <td>Kalshi</td>
+      <td>Elections</td>
+      <td>2217</td>
+      <td>18.1%</td>
+    </tr>
+    <tr>
+      <td>Kalshi</td>
+      <td>Science and Technology</td>
+      <td>979</td>
+      <td>8.0%</td>
+    </tr>
+    <tr>
+      <td>Kalshi</td>
+      <td>Companies</td>
+      <td>49</td>
+      <td>0.4%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>Elections and Politics</td>
+      <td>2865</td>
+      <td>39.5%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>Crypto</td>
+      <td>1929</td>
+      <td>26.6%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>Other non-sports</td>
+      <td>1314</td>
+      <td>18.1%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>World</td>
+      <td>494</td>
+      <td>6.8%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>Companies and Markets</td>
+      <td>224</td>
+      <td>3.1%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>Economics</td>
+      <td>144</td>
+      <td>2.0%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>Technology and Science</td>
+      <td>143</td>
+      <td>2.0%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>Entertainment</td>
+      <td>99</td>
+      <td>1.4%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>US-current-affairs</td>
+      <td>25</td>
+      <td>0.3%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>Coronavirus</td>
+      <td>7</td>
+      <td>0.1%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>Pop-Culture</td>
+      <td>2</td>
+      <td>0.0%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>Business</td>
+      <td>1</td>
+      <td>0.0%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>Global Politics</td>
+      <td>1</td>
+      <td>0.0%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>Ukraine &amp; Russia</td>
+      <td>1</td>
+      <td>0.0%</td>
+    </tr>
+  </tbody>
+</table></div></details>
+        <div class="downloads"><a href="figures/descriptions-categories.svg" download>SVG ↗</a><a href="tables/descriptions-categories.csv" download>All categories CSV ↗</a></div>
+      </article>
+      <div class="grid" style="margin-top:19px">
+        <article class="card"><p class="kicker">Family concentration</p><h3>Many contracts can share a family</h3>
+          <figure><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="466.532344pt" height="265.415609pt" viewBox="0 0 466.532344 265.415609" xmlns="http://www.w3.org/2000/svg" version="1.1" role="img" aria-labelledby="descriptions-families-title descriptions-families-desc"><title id="descriptions-families-title">Contract concentration in API families</title><desc id="descriptions-families-desc">Kalshi series and Polymarket events have different granularity. This does not rank platform diversity.</desc>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="descriptions-families-figure_1">
+  <g id="descriptions-families-patch_1">
+   <path d="M 0 265.415609
+L 466.532344 265.415609
+L 466.532344 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="descriptions-families-axes_1">
+   <g id="descriptions-families-patch_2">
+    <path d="M 56.789844 227.214828
+L 452.969844 227.214828
+L 452.969844 10.998828
+L 56.789844 10.998828
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="descriptions-families-matplotlib.axis_1">
+    <g id="descriptions-families-xtick_1">
+     <g id="descriptions-families-line2d_1">
+      <path d="M 56.789844 227.214828
+L 56.789844 10.998828
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_2">
+      <defs>
+       <path id="descriptions-families-m5e2e97271e" d="M 0 0
+L 0 3.5
+" style="stroke: #536766; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-families-m5e2e97271e" x="56.789844" y="227.214828" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_1">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="56.789844" y="241.812484" transform="rotate(-0 56.789844 241.812484)">1</text>
+     </g>
+    </g>
+    <g id="descriptions-families-xtick_2">
+     <g id="descriptions-families-line2d_3">
+      <path d="M 140.19616 227.214828
+L 140.19616 10.998828
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_4">
+      <g>
+       <use xlink:href="#descriptions-families-m5e2e97271e" x="140.19616" y="227.214828" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_2">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="140.19616" y="241.812484" transform="rotate(-0 140.19616 241.812484)">5</text>
+     </g>
+    </g>
+    <g id="descriptions-families-xtick_3">
+     <g id="descriptions-families-line2d_5">
+      <path d="M 244.454054 227.214828
+L 244.454054 10.998828
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_6">
+      <g>
+       <use xlink:href="#descriptions-families-m5e2e97271e" x="244.454054" y="227.214828" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_3">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="244.454054" y="241.812484" transform="rotate(-0 244.454054 241.812484)">10</text>
+     </g>
+    </g>
+    <g id="descriptions-families-xtick_4">
+     <g id="descriptions-families-line2d_7">
+      <path d="M 348.711949 227.214828
+L 348.711949 10.998828
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_8">
+      <g>
+       <use xlink:href="#descriptions-families-m5e2e97271e" x="348.711949" y="227.214828" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_4">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="348.711949" y="241.812484" transform="rotate(-0 348.711949 241.812484)">15</text>
+     </g>
+    </g>
+    <g id="descriptions-families-xtick_5">
+     <g id="descriptions-families-line2d_9">
+      <path d="M 452.969844 227.214828
+L 452.969844 10.998828
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_10">
+      <g>
+       <use xlink:href="#descriptions-families-m5e2e97271e" x="452.969844" y="227.214828" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_5">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="452.969844" y="241.812484" transform="rotate(-0 452.969844 241.812484)">20</text>
+     </g>
+    </g>
+    <g id="descriptions-families-text_6">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="254.879844" y="255.813266" transform="rotate(-0 254.879844 255.813266)">Largest API families included (ranked within platform)</text>
+    </g>
+   </g>
+   <g id="descriptions-families-matplotlib.axis_2">
+    <g id="descriptions-families-ytick_1">
+     <g id="descriptions-families-line2d_11">
+      <path d="M 56.789844 227.214828
+L 452.969844 227.214828
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_12">
+      <defs>
+       <path id="descriptions-families-m48ab344636" d="M 0 0
+L -3.5 0
+" style="stroke: #233d3c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-families-m48ab344636" x="56.789844" y="227.214828" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_7">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="49.789844" y="231.013656" transform="rotate(-0 49.789844 231.013656)">0%</text>
+     </g>
+    </g>
+    <g id="descriptions-families-ytick_2">
+     <g id="descriptions-families-line2d_13">
+      <path d="M 56.789844 183.971628
+L 452.969844 183.971628
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_14">
+      <g>
+       <use xlink:href="#descriptions-families-m48ab344636" x="56.789844" y="183.971628" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_8">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="49.789844" y="187.770456" transform="rotate(-0 49.789844 187.770456)">20%</text>
+     </g>
+    </g>
+    <g id="descriptions-families-ytick_3">
+     <g id="descriptions-families-line2d_15">
+      <path d="M 56.789844 140.728428
+L 452.969844 140.728428
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_16">
+      <g>
+       <use xlink:href="#descriptions-families-m48ab344636" x="56.789844" y="140.728428" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_9">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="49.789844" y="144.527256" transform="rotate(-0 49.789844 144.527256)">40%</text>
+     </g>
+    </g>
+    <g id="descriptions-families-ytick_4">
+     <g id="descriptions-families-line2d_17">
+      <path d="M 56.789844 97.485228
+L 452.969844 97.485228
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_18">
+      <g>
+       <use xlink:href="#descriptions-families-m48ab344636" x="56.789844" y="97.485228" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_10">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="49.789844" y="101.284056" transform="rotate(-0 49.789844 101.284056)">60%</text>
+     </g>
+    </g>
+    <g id="descriptions-families-ytick_5">
+     <g id="descriptions-families-line2d_19">
+      <path d="M 56.789844 54.242028
+L 452.969844 54.242028
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_20">
+      <g>
+       <use xlink:href="#descriptions-families-m48ab344636" x="56.789844" y="54.242028" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_11">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="49.789844" y="58.040856" transform="rotate(-0 49.789844 58.040856)">80%</text>
+     </g>
+    </g>
+    <g id="descriptions-families-ytick_6">
+     <g id="descriptions-families-line2d_21">
+      <path d="M 56.789844 10.998828
+L 452.969844 10.998828
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-families-line2d_22">
+      <g>
+       <use xlink:href="#descriptions-families-m48ab344636" x="56.789844" y="10.998828" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-families-text_12">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="49.789844" y="14.797656" transform="rotate(-0 49.789844 14.797656)">100%</text>
+     </g>
+    </g>
+    <g id="descriptions-families-text_13">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="14.798438" y="119.106828" transform="rotate(-90 14.798438 119.106828)">Cumulative share of platform contracts</text>
+    </g>
+   </g>
+   <g id="descriptions-families-line2d_23">
+    <path d="M 56.789844 191.917138
+L 77.641423 172.838737
+L 98.493002 155.948792
+L 119.344581 139.588313
+L 140.19616 127.375312
+L 161.047738 115.374097
+L 181.899317 104.308272
+L 202.750896 94.901437
+L 223.602475 86.271152
+L 244.454054 77.976195
+L 265.305633 70.122459
+L 286.157212 62.674646
+L 307.008791 55.721001
+L 327.86037 51.750011
+L 348.711949 48.220242
+L 369.563528 45.749404
+L 390.415107 43.455054
+L 411.266686 41.407788
+L 432.118265 39.713499
+L 452.969844 38.089805
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #335c81; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-families-line2d_24">
+    <path d="M 56.789844 225.514689
+L 77.641423 224.411089
+L 98.493002 223.367144
+L 119.344581 222.531987
+L 140.19616 221.696831
+L 161.047738 220.861675
+L 181.899317 220.056346
+L 202.750896 219.31067
+L 223.602475 218.564995
+L 244.454054 217.81932
+L 265.305633 217.103472
+L 286.157212 216.387623
+L 307.008791 215.701602
+L 327.86037 215.015581
+L 348.711949 214.32956
+L 369.563528 213.673365
+L 390.415107 213.017171
+L 411.266686 212.360977
+L 432.118265 211.704783
+L 452.969844 211.078415
+" clip-path="url(#descriptions-families-pd18b98f1c1)" style="fill: none; stroke: #d1495b; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-families-patch_3">
+    <path d="M 56.789844 227.214828
+L 452.969844 227.214828
+" style="fill: none; stroke: #d8dedc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-families-PathCollection_1">
+    <defs>
+     <path id="descriptions-families-m554ec1fce1" d="M 0 3
+C 0.795609 3 1.55874 2.683901 2.12132 2.12132
+C 2.683901 1.55874 3 0.795609 3 0
+C 3 -0.795609 2.683901 -1.55874 2.12132 -2.12132
+C 1.55874 -2.683901 0.795609 -3 0 -3
+C -0.795609 -3 -1.55874 -2.683901 -2.12132 -2.12132
+C -2.683901 -1.55874 -3 -0.795609 -3 0
+C -3 0.795609 -2.683901 1.55874 -2.12132 2.12132
+C -1.55874 2.683901 -0.795609 3 0 3
+z
+" style="stroke: #335c81"/>
+    </defs>
+    <g clip-path="url(#descriptions-families-pd18b98f1c1)">
+     <use xlink:href="#descriptions-families-m554ec1fce1" x="140.19616" y="127.375312" style="fill: #335c81; stroke: #335c81"/>
+    </g>
+   </g>
+   <g id="descriptions-families-text_14">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="149.19616" y="120.375312" transform="rotate(-0 149.19616 120.375312)">Top 5: 46.2%</text>
+   </g>
+   <g id="descriptions-families-PathCollection_2">
+    <defs>
+     <path id="descriptions-families-m6d1080a18a" d="M 0 3
+C 0.795609 3 1.55874 2.683901 2.12132 2.12132
+C 2.683901 1.55874 3 0.795609 3 0
+C 3 -0.795609 2.683901 -1.55874 2.12132 -2.12132
+C 1.55874 -2.683901 0.795609 -3 0 -3
+C -0.795609 -3 -1.55874 -2.683901 -2.12132 -2.12132
+C -2.683901 -1.55874 -3 -0.795609 -3 0
+C -3 0.795609 -2.683901 1.55874 -2.12132 2.12132
+C -1.55874 2.683901 -0.795609 3 0 3
+z
+" style="stroke: #d1495b"/>
+    </defs>
+    <g clip-path="url(#descriptions-families-pd18b98f1c1)">
+     <use xlink:href="#descriptions-families-m6d1080a18a" x="140.19616" y="221.696831" style="fill: #d1495b; stroke: #d1495b"/>
+    </g>
+   </g>
+   <g id="descriptions-families-text_15">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="149.19616" y="214.696831" transform="rotate(-0 149.19616 214.696831)">Top 5: 2.6%</text>
+   </g>
+   <g id="descriptions-families-legend_1">
+    <g id="descriptions-families-line2d_25">
+     <path d="M 65.789844 24.097266
+L 75.789844 24.097266
+L 85.789844 24.097266
+" style="fill: none; stroke: #335c81; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="descriptions-families-text_16">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="93.789844" y="27.597266" transform="rotate(-0 93.789844 27.597266)">Kalshi</text>
+    </g>
+    <g id="descriptions-families-line2d_26">
+     <path d="M 65.789844 39.098047
+L 75.789844 39.098047
+L 85.789844 39.098047
+" style="fill: none; stroke: #d1495b; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="descriptions-families-text_17">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #233d3c" x="93.789844" y="42.598047" transform="rotate(-0 93.789844 42.598047)">Polymarket</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="descriptions-families-pd18b98f1c1">
+   <rect x="56.789844" y="10.998828" width="396.18" height="216.216"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>Cumulative share of contracts in the 20 largest API families, ranked separately by size. Kalshi families are series; Polymarket families are events. Their granularity differs, so this is not a diversity ranking.</figcaption></figure>
+          <div class="downloads"><a href="figures/descriptions-families.svg" download>SVG ↗</a><a href="tables/descriptions-families.csv" download>All family counts CSV ↗</a></div>
+        </article>
+        <article class="card"><p class="kicker">Why this matters for the study</p><h3>A contract count is not a rule-design count</h3>
+          <p>Threshold ladders and other families can repeat the same rule template across many contracts. A large family can therefore contribute heavily to an overall text-feature mean.</p>
+          <p>The supplementary activity analysis uses platform-qualified family clusters for its preferred uncertainty estimate. It remains an association in selected portfolios; it does not identify a causal effect of specificity on trading.</p>
+          <p>Volume is the platform-reported cumulative field. Platform units and acquisition selection differ; pooled volume totals are not used here as comparable dollar turnover.</p>
+          <div class="downloads"><a href="SUPPLEMENTARY_ANALYSIS.md">Supplementary estimates ↗</a><a href="tables/analysis-market-models.csv" download>Existing model table ↗</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="outcomes">
+      <div class="section-title"><span class="number">05</span><h2>What counts as outcome evidence?</h2></div>
+      <p class="section-deck">A recorded platform result, an endpoint price and a fractional settlement convey different information. The ledger keeps those categories separate.</p>
+      <div class="card"><div class="table-scroll"><table class="dataframe data-table"><caption>Outcomes · descriptive values</caption>
+  <thead>
+    <tr style="text-align: right;">
+      <th>Platform</th>
+      <th>Outcome category</th>
+      <th>Evidence basis</th>
+      <th>Contracts</th>
+      <th>Within-platform share</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Kalshi</td>
+      <td>no_recorded_outcome</td>
+      <td>No recorded outcome</td>
+      <td>1172</td>
+      <td>9.6%</td>
+    </tr>
+    <tr>
+      <td>Kalshi</td>
+      <td>recorded_binary</td>
+      <td>Recorded platform result</td>
+      <td>11073</td>
+      <td>90.4%</td>
+    </tr>
+    <tr>
+      <td>Kalshi</td>
+      <td>scalar_settlement</td>
+      <td>Recorded platform result</td>
+      <td>6</td>
+      <td>0.0%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>intermediate_price</td>
+      <td>Intermediate price; status missing</td>
+      <td>1</td>
+      <td>0.0%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>intermediate_price</td>
+      <td>Intermediate price; resolved status</td>
+      <td>9</td>
+      <td>0.1%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>price_inferred_binary</td>
+      <td>Endpoint inference; final status missing</td>
+      <td>38</td>
+      <td>0.5%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>price_inferred_binary</td>
+      <td>Endpoint inference; proposed status</td>
+      <td>15</td>
+      <td>0.2%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>price_inferred_binary</td>
+      <td>Endpoint inference; resolved status</td>
+      <td>7184</td>
+      <td>99.1%</td>
+    </tr>
+    <tr>
+      <td>Polymarket</td>
+      <td>price_inferred_binary</td>
+      <td>Endpoint inference; settled status</td>
+      <td>2</td>
+      <td>0.0%</td>
+    </tr>
+  </tbody>
+</table></div>
+        <p class="insight">Polymarket endpoint inference with resolved or settled status is distinguished from proposed or missing-status inference. An intermediate price is not converted to a binary outcome. Kalshi scalar settlements remain separate from recorded YES/NO results.</p>
+        <div class="downloads"><a href="tables/descriptions-outcomes.csv" download>Outcome evidence CSV ↗</a><a href="tables/preprocessing-outcome-ledger.csv" download>Full status ledger ↗</a></div>
+      </div>
+      <div class="note"><strong>A timing boundary remains.</strong> The September 10 label is not a verified HTTP acquisition timestamp. Three Polymarket source updates fall on September 11. Elapsed metadata time is an exposure proxy; it does not establish that the archived rules preceded trading.</div>
+    </section>
+
+    <section id="cases">
+      <div class="section-title"><span class="number">06</span><h2>When the distinction changes the payout</h2></div>
+      <p class="section-deck">The separate inventory contains 4 validated observed exhibits and 4 validated hypothetical witnesses. Cases establish specific distinctions; they are not a representative denominator for their prevalence.</p>
+      <article class="card"><p class="kicker">Recorded settlements · separate case evidence</p><h3>Different claims can pay differently on the same event</h3>
+        <div class="legend"><span><i class="dot" aria-hidden="true"></i>Kalshi</span><span><i class="dot rose" aria-hidden="true"></i>Polymarket</span><span>● Contract A &nbsp; ◆ Contract B</span></div>
+        <figure><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="673.064375pt" height="222.810344pt" viewBox="0 0 673.064375 222.810344" xmlns="http://www.w3.org/2000/svg" version="1.1" role="img" aria-labelledby="descriptions-settlements-title descriptions-settlements-desc"><title id="descriptions-settlements-title">Observed contract settlements</title><desc id="descriptions-settlements-desc">Circles are contract A; diamonds are B. Blue is Kalshi, coral is Polymarket. Cases form a separate purposive evidence inventory.</desc>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="descriptions-settlements-figure_1">
+  <g id="descriptions-settlements-patch_1">
+   <path d="M 0 222.810344
+L 673.064375 222.810344
+L 673.064375 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="descriptions-settlements-axes_1">
+   <g id="descriptions-settlements-patch_2">
+    <path d="M 185.984375 184.608
+L 665.864375 184.608
+L 665.864375 7.2
+L 185.984375 7.2
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="descriptions-settlements-line2d_1">
+    <path d="M 232.424375 42.144
+L 619.424375 42.144
+" clip-path="url(#descriptions-settlements-p176d9b0a04)" style="fill: none; stroke: #cfd8d5; stroke-width: 4; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-settlements-line2d_2">
+    <path d="M 406.574375 95.904
+L 619.424375 95.904
+" clip-path="url(#descriptions-settlements-p176d9b0a04)" style="fill: none; stroke: #cfd8d5; stroke-width: 4; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-settlements-line2d_3">
+    <path d="M 619.424375 149.664
+L 619.424375 149.664
+" clip-path="url(#descriptions-settlements-p176d9b0a04)" style="fill: none; stroke: #cfd8d5; stroke-width: 4; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-settlements-matplotlib.axis_1">
+    <g id="descriptions-settlements-xtick_1">
+     <g id="descriptions-settlements-line2d_4">
+      <path d="M 232.424375 184.608
+L 232.424375 7.2
+" clip-path="url(#descriptions-settlements-p176d9b0a04)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-settlements-line2d_5">
+      <defs>
+       <path id="descriptions-settlements-m44736501fb" d="M 0 0
+L 0 3.5
+" style="stroke: #536766; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-settlements-m44736501fb" x="232.424375" y="184.608" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-settlements-text_1">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="232.424375" y="199.205656" transform="rotate(-0 232.424375 199.205656)">0.00</text>
+     </g>
+    </g>
+    <g id="descriptions-settlements-xtick_2">
+     <g id="descriptions-settlements-line2d_6">
+      <path d="M 329.174375 184.608
+L 329.174375 7.2
+" clip-path="url(#descriptions-settlements-p176d9b0a04)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-settlements-line2d_7">
+      <g>
+       <use xlink:href="#descriptions-settlements-m44736501fb" x="329.174375" y="184.608" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-settlements-text_2">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="329.174375" y="199.205656" transform="rotate(-0 329.174375 199.205656)">0.25</text>
+     </g>
+    </g>
+    <g id="descriptions-settlements-xtick_3">
+     <g id="descriptions-settlements-line2d_8">
+      <path d="M 425.924375 184.608
+L 425.924375 7.2
+" clip-path="url(#descriptions-settlements-p176d9b0a04)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-settlements-line2d_9">
+      <g>
+       <use xlink:href="#descriptions-settlements-m44736501fb" x="425.924375" y="184.608" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-settlements-text_3">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="425.924375" y="199.205656" transform="rotate(-0 425.924375 199.205656)">0.50</text>
+     </g>
+    </g>
+    <g id="descriptions-settlements-xtick_4">
+     <g id="descriptions-settlements-line2d_10">
+      <path d="M 522.674375 184.608
+L 522.674375 7.2
+" clip-path="url(#descriptions-settlements-p176d9b0a04)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-settlements-line2d_11">
+      <g>
+       <use xlink:href="#descriptions-settlements-m44736501fb" x="522.674375" y="184.608" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-settlements-text_4">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="522.674375" y="199.205656" transform="rotate(-0 522.674375 199.205656)">0.75</text>
+     </g>
+    </g>
+    <g id="descriptions-settlements-xtick_5">
+     <g id="descriptions-settlements-line2d_12">
+      <path d="M 619.424375 184.608
+L 619.424375 7.2
+" clip-path="url(#descriptions-settlements-p176d9b0a04)" style="fill: none; stroke: #b0b0b0; stroke-opacity: 0.18; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="descriptions-settlements-line2d_13">
+      <g>
+       <use xlink:href="#descriptions-settlements-m44736501fb" x="619.424375" y="184.608" style="fill: #536766; stroke: #536766; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-settlements-text_5">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #536766" x="619.424375" y="199.205656" transform="rotate(-0 619.424375 199.205656)">1.00</text>
+     </g>
+    </g>
+    <g id="descriptions-settlements-text_6">
+     <!-- Recorded normalized contract settlement ($ per $1 maximum payout) -->
+     <g style="fill: #536766" transform="translate(259.174375 213.208)">
+      <text>
+       <tspan x="0" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">R</tspan>
+       <tspan x="6.948242" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">e</tspan>
+       <tspan x="13.100586" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">c</tspan>
+       <tspan x="18.598633" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">o</tspan>
+       <tspan x="24.716797" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">r</tspan>
+       <tspan x="28.828125" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">d</tspan>
+       <tspan x="35.175781" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">e</tspan>
+       <tspan x="41.328125" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">d</tspan>
+       <tspan x="47.675781" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766"> </tspan>
+       <tspan x="50.854492" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">n</tspan>
+       <tspan x="57.192383" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">o</tspan>
+       <tspan x="63.310547" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">r</tspan>
+       <tspan x="67.421875" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">m</tspan>
+       <tspan x="77.163086" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">a</tspan>
+       <tspan x="83.291016" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">l</tspan>
+       <tspan x="86.069336" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">i</tspan>
+       <tspan x="88.847656" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">z</tspan>
+       <tspan x="94.09668" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">e</tspan>
+       <tspan x="100.249023" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">d</tspan>
+       <tspan x="106.59668" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766"> </tspan>
+       <tspan x="109.775391" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">c</tspan>
+       <tspan x="115.273438" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">o</tspan>
+       <tspan x="121.391602" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">n</tspan>
+       <tspan x="127.729492" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">t</tspan>
+       <tspan x="131.650391" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">r</tspan>
+       <tspan x="135.761719" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">a</tspan>
+       <tspan x="141.889648" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">c</tspan>
+       <tspan x="147.387695" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">t</tspan>
+       <tspan x="151.308594" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766"> </tspan>
+       <tspan x="154.487305" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">s</tspan>
+       <tspan x="159.697266" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">e</tspan>
+       <tspan x="165.849609" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">t</tspan>
+       <tspan x="169.770508" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">t</tspan>
+       <tspan x="173.691406" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">l</tspan>
+       <tspan x="176.469727" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">e</tspan>
+       <tspan x="182.62207" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">m</tspan>
+       <tspan x="192.363281" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">e</tspan>
+       <tspan x="198.515625" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">n</tspan>
+       <tspan x="204.853516" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">t</tspan>
+       <tspan x="208.774414" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766"> </tspan>
+       <tspan x="211.953125" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">(</tspan>
+       <tspan x="232.46582" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">1</tspan>
+       <tspan x="238.828125" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766"> </tspan>
+       <tspan x="242.006836" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">m</tspan>
+       <tspan x="251.748047" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">a</tspan>
+       <tspan x="257.875977" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">x</tspan>
+       <tspan x="263.793945" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">i</tspan>
+       <tspan x="266.572266" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">m</tspan>
+       <tspan x="276.313477" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">u</tspan>
+       <tspan x="282.651367" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">m</tspan>
+       <tspan x="292.392578" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766"> </tspan>
+       <tspan x="295.571289" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">p</tspan>
+       <tspan x="301.918945" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">a</tspan>
+       <tspan x="308.046875" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">y</tspan>
+       <tspan x="313.964844" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">o</tspan>
+       <tspan x="320.083008" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">u</tspan>
+       <tspan x="326.420898" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">t</tspan>
+       <tspan x="330.341797" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">)</tspan>
+       <tspan x="215.854492" y="-0.40625" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">p</tspan>
+       <tspan x="222.202148" y="-0.40625" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">e</tspan>
+       <tspan x="228.354492" y="-0.40625" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'; fill: #536766">r</tspan>
+      </text>
+     </g>
+    </g>
+   </g>
+   <g id="descriptions-settlements-matplotlib.axis_2">
+    <g id="descriptions-settlements-ytick_1">
+     <g id="descriptions-settlements-line2d_14">
+      <defs>
+       <path id="descriptions-settlements-m242f89a216" d="M 0 0
+L -3.5 0
+" style="stroke: #233d3c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#descriptions-settlements-m242f89a216" x="185.984375" y="42.144" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-settlements-text_7">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="178.984375" y="45.943219" transform="rotate(-0 178.984375 45.943219)">Hilton · first place / advancement</text>
+     </g>
+    </g>
+    <g id="descriptions-settlements-ytick_2">
+     <g id="descriptions-settlements-line2d_15">
+      <g>
+       <use xlink:href="#descriptions-settlements-m242f89a216" x="185.984375" y="95.904" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-settlements-text_8">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="178.984375" y="99.703219" transform="rotate(-0 178.984375 99.703219)">Khamenei · departure settlements</text>
+     </g>
+    </g>
+    <g id="descriptions-settlements-ytick_3">
+     <g id="descriptions-settlements-line2d_16">
+      <g>
+       <use xlink:href="#descriptions-settlements-m242f89a216" x="185.984375" y="149.664" style="fill: #233d3c; stroke: #233d3c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="descriptions-settlements-text_9">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #233d3c" x="178.984375" y="153.463219" transform="rotate(-0 178.984375 153.463219)">Minerals · different milestones</text>
+     </g>
+    </g>
+   </g>
+   <g id="descriptions-settlements-patch_3">
+    <path d="M 185.984375 184.608
+L 665.864375 184.608
+" style="fill: none; stroke: #d8dedc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="descriptions-settlements-PathCollection_1">
+    <defs>
+     <path id="descriptions-settlements-m4c834f7950" d="M 0 4.1833
+C 1.109424 4.1833 2.173559 3.742521 2.95804 2.95804
+C 3.742521 2.173559 4.1833 1.109424 4.1833 0
+C 4.1833 -1.109424 3.742521 -2.173559 2.95804 -2.95804
+C 2.173559 -3.742521 1.109424 -4.1833 0 -4.1833
+C -1.109424 -4.1833 -2.173559 -3.742521 -2.95804 -2.95804
+C -3.742521 -2.173559 -4.1833 -1.109424 -4.1833 0
+C -4.1833 1.109424 -3.742521 2.173559 -2.95804 2.95804
+C -2.173559 3.742521 -1.109424 4.1833 0 4.1833
+z
+" style="stroke: #335c81"/>
+    </defs>
+    <g clip-path="url(#descriptions-settlements-p176d9b0a04)">
+     <use xlink:href="#descriptions-settlements-m4c834f7950" x="232.424375" y="37.3056" style="fill: #335c81; stroke: #335c81"/>
+    </g>
+   </g>
+   <g id="descriptions-settlements-text_10">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #233d3c" x="232.424375" y="52.3056" transform="rotate(-0 232.424375 52.3056)">A: $0.00</text>
+   </g>
+   <g id="descriptions-settlements-PathCollection_2">
+    <defs>
+     <path id="descriptions-settlements-me2565b72a6" d="M -0 5.91608
+L 5.91608 0
+L 0 -5.91608
+L -5.91608 -0
+z
+" style="stroke: #d1495b"/>
+    </defs>
+    <g clip-path="url(#descriptions-settlements-p176d9b0a04)">
+     <use xlink:href="#descriptions-settlements-me2565b72a6" x="619.424375" y="46.9824" style="fill: #d1495b; stroke: #d1495b"/>
+    </g>
+   </g>
+   <g id="descriptions-settlements-text_11">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #233d3c" x="619.424375" y="37.9824" transform="rotate(-0 619.424375 37.9824)">B: $1.00</text>
+   </g>
+   <g id="descriptions-settlements-PathCollection_3">
+    <g clip-path="url(#descriptions-settlements-p176d9b0a04)">
+     <use xlink:href="#descriptions-settlements-m4c834f7950" x="406.574375" y="91.0656" style="fill: #335c81; stroke: #335c81"/>
+    </g>
+   </g>
+   <g id="descriptions-settlements-text_12">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #233d3c" x="406.574375" y="106.0656" transform="rotate(-0 406.574375 106.0656)">A: $0.45</text>
+   </g>
+   <g id="descriptions-settlements-PathCollection_4">
+    <g clip-path="url(#descriptions-settlements-p176d9b0a04)">
+     <use xlink:href="#descriptions-settlements-me2565b72a6" x="619.424375" y="100.7424" style="fill: #d1495b; stroke: #d1495b"/>
+    </g>
+   </g>
+   <g id="descriptions-settlements-text_13">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #233d3c" x="619.424375" y="91.7424" transform="rotate(-0 619.424375 91.7424)">B: $1.00</text>
+   </g>
+   <g id="descriptions-settlements-PathCollection_5">
+    <defs>
+     <path id="descriptions-settlements-m04fcc7298f" d="M 0 4.1833
+C 1.109424 4.1833 2.173559 3.742521 2.95804 2.95804
+C 3.742521 2.173559 4.1833 1.109424 4.1833 0
+C 4.1833 -1.109424 3.742521 -2.173559 2.95804 -2.95804
+C 2.173559 -3.742521 1.109424 -4.1833 0 -4.1833
+C -1.109424 -4.1833 -2.173559 -3.742521 -2.95804 -2.95804
+C -3.742521 -2.173559 -4.1833 -1.109424 -4.1833 0
+C -4.1833 1.109424 -3.742521 2.173559 -2.95804 2.95804
+C -2.173559 3.742521 -1.109424 4.1833 0 4.1833
+z
+" style="stroke: #d1495b"/>
+    </defs>
+    <g clip-path="url(#descriptions-settlements-p176d9b0a04)">
+     <use xlink:href="#descriptions-settlements-m04fcc7298f" x="619.424375" y="144.8256" style="fill: #d1495b; stroke: #d1495b"/>
+    </g>
+   </g>
+   <g id="descriptions-settlements-text_14">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #233d3c" x="619.424375" y="159.8256" transform="rotate(-0 619.424375 159.8256)">A: $1.00</text>
+   </g>
+   <g id="descriptions-settlements-PathCollection_6">
+    <g clip-path="url(#descriptions-settlements-p176d9b0a04)">
+     <use xlink:href="#descriptions-settlements-me2565b72a6" x="619.424375" y="154.5024" style="fill: #d1495b; stroke: #d1495b"/>
+    </g>
+   </g>
+   <g id="descriptions-settlements-text_15">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #233d3c" x="619.424375" y="145.5024" transform="rotate(-0 619.424375 145.5024)">B: $1.00</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="descriptions-settlements-p176d9b0a04">
+   <rect x="185.984375" y="7.2" width="479.88" height="177.408"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>Hilton: first place versus top-two advancement. Khamenei: price-based death allocation versus a YES departure settlement. Minerals: distinct milestones with two YES outcomes. These amounts are normalized contract settlements; account reimbursements and individual receipts were not audited. The clothing/adjudication case concerns one contract and is described below.</figcaption></figure>
+        <details><summary>Read exact observed settlement amounts</summary><div class="table-scroll"><table class="dataframe data-table"><caption>Settlements · descriptive values</caption>
+  <thead>
+    <tr style="text-align: right;">
+      <th>case_id</th>
+      <th>phenomenon</th>
+      <th>evidence_kind</th>
+      <th>a_platform</th>
+      <th>b_platform</th>
+      <th>observed_settlement_a</th>
+      <th>observed_settlement_b</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hilton-first-vs-advance</td>
+      <td>Steve Hilton: first place versus advancing in the California primary</td>
+      <td>observed_settlement_divergence</td>
+      <td>Kalshi</td>
+      <td>Polymarket</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>khamenei-death-allocation</td>
+      <td>Ali Khamenei departure: price-based death allocation versus YES</td>
+      <td>observed_settlement_divergence</td>
+      <td>Kalshi</td>
+      <td>Polymarket</td>
+      <td>0.45</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>minerals-observed-chronology</td>
+      <td>U.S.–Ukraine minerals agreement: two YES resolutions across milestones</td>
+      <td>observed_chronology</td>
+      <td>Polymarket</td>
+      <td>Polymarket</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table></div></details>
+        <div class="downloads"><a href="figures/descriptions-settlements.svg" download>SVG ↗</a><a href="tables/descriptions-settlements.csv" download>Recorded settlements CSV ↗</a></div>
+      </article>
+      <div class="filter"><label for="evidence-filter">Explore the case inventory</label><select id="evidence-filter"><option value="all">All evidence</option><option value="observed">Observed exhibits</option><option value="hypothetical">Hypothetical witnesses</option><option value="unreviewed">Re-audit required</option></select><span id="case-count" role="status" aria-live="polite"></span></div>
+      <details class="case" data-kind="observed"><summary><span class="tag observed">Observed payout difference</span><span>Steve Hilton: first place versus advancing in the California primary</span></summary><dl><dt>Scenario / event</dt><dd>Steve Hilton finished second in the June 2, 2026 California primary and advanced to the general election. Certified results place Becerra first (28.0%), Hilton second (24.6%) and Steyer third (22.8%).</dd><dt>A · qualifying condition</dt><dd>first place in the primary; proportional payout for exact ties</dd><dt>B · qualifying condition</dt><dd>advance to the general election; the top two candidates qualify</dd><dt>A · settlement / scenario payout</dt><dd>NO; recorded normalized settlement $0</dd><dt>B · settlement / scenario payout</dt><dd>resolved YES; normalized payout $1</dd><dt>Interpretation</dt><dd>Finishing second loses the first-place contract and wins advancement.</dd><dt>Audit boundary</dt><dd>Both records are in the September-labelled sample and match the preserved October follow-up on operative fields. They have different cutoff/fallback conditions; the archived tie clause permits fractional amounts. Linked governing specifications are not certified historical editions. This realized contrast establishes no price error or trader misunderstanding.</dd></dl><p><a href="https://kalshi.com/markets/kxcagovprimary1st-26jun02-1st-shil">Kalshi KXCAGOVPRIMARY1ST-26JUN02-1ST-SHIL</a> · <a href="https://polymarket.com/event/will-steve-hilton-get-the-first-or-second-most-votes-in-the-2026-california-governor-primary-election">Polymarket 825460</a></p></details>
+<details class="case" data-kind="observed"><summary><span class="tag observed">Observed payout difference</span><span>Ali Khamenei departure: price-based death allocation versus YES</span></summary><dl><dt>Scenario / event</dt><dd>Two markets concerned Ali Khamenei&#x27;s departure as Iran&#x27;s Supreme Leader. Following the February 28, 2026 attack, contemporaneous March 1 reporting recorded Iranian state media confirming Khamenei&#x27;s death. The compared contracts recorded scalar 45-cent and resolved-YES settlements.</dd><dt>A · qualifying condition</dt><dd>departure before July 1, 2026; qualifying announcement also covered; death-only departure uses a pre-death price or committee fair allocation</dd><dt>B · qualifying condition</dt><dd>loss of position or ability to perform duties by June 30, 2026, 11:59 PM ET</dd><dt>A · settlement / scenario payout</dt><dd>scalar; recorded normalized settlement $0.45</dd><dt>B · settlement / scenario payout</dt><dd>resolved YES; normalized payout $1</dd><dt>Interpretation</dt><dd>Forecasting departure is insufficient to value a contract whose death clause can pay a fraction of the unit payout.</dd><dt>Audit boundary</dt><dd>The deadlines and exceptions differ, so this is not a controlled clause effect. The API description includes announcement, ordinary departure, price-based death allocation and binding committee discretion. The exact reference-price selection was not audited. Reported reimbursements can make account receipts differ from contract settlement; original linked social posts were inaccessible. No binary-event restriction applies.</dd></dl><p><a href="https://kalshi.com/markets/kxkhameneiout-akha-26jul01">Kalshi KXKHAMENEIOUT-AKHA-26JUL01</a> · <a href="https://polymarket.com/event/khamenei-out-as-supreme-leader-of-iran-by-june-30-747">Polymarket 661699</a></p></details>
+<details class="case" data-kind="observed"><summary><span class="tag observed">Observed adjudication; one contract</span><span>Zelenskyy&#x27;s clothing: reporting criterion and recorded adjudication</span></summary><dl><dt>Scenario / event</dt><dd>The Ukrainian presidency documented a June 24, 2025 appearance by President Volodymyr Zelenskyy in the Netherlands, with photographs. A Polymarket contract asked whether authentic images showed him wearing a suit during May 22–June 30. The question creator had already acknowledged a dispute on May 29 and stated on July 1 that credible reporting had not confirmed a qualifying suit appearance. The market record reports NO, corroborated by the linked protocol read.</dd><dt>A · qualifying condition</dt><dd>authentic images/video taken and released May 22–June 30, 2025 ET; wearing a suit; no garment-level definition</dd><dt>B · qualifying condition</dt><dd>credible-reporting consensus supplies the deciding interpretation</dd><dt>A · settlement / scenario payout</dt><dd>resolved NO; normalized payout $0</dd><dt>B · settlement / scenario payout</dt><dd>N/A; this is one contract and its adjudication procedure</dd><dt>Interpretation</dt><dd>The creator&#x27;s clarification applies the named reporting criterion. The existing disputes cannot all be attributed to the June 24 appearance, because a dispute was acknowledged before that photograph.</dd><dt>Audit boundary</dt><dd>The appearance source does not independently classify the clothing. Question/condition hashes, creator updates and current NO payout are verified at a pinned block. Historical log access returned HTTP 403; no complete proposal/finality chronology or reason for each challenge was recovered. The stored request timestamp is not initialization. No pairwise divergence, institutional incompleteness or holder receipts are inferred.</dd></dl><p><a href="https://polymarket.com/event/will-zelenskyy-wear-a-suit-before-july">Polymarket 546814</a></p></details>
+<details class="case" data-kind="observed"><summary><span class="tag observed">Observed chronology; same payout</span><span>U.S.–Ukraine minerals agreement: two YES resolutions across milestones</span></summary><dl><dt>Scenario / event</dt><dd>During the 2025 U.S.–Ukraine minerals negotiations, one Polymarket contract asked whether Ukraine would agree to a deal before April; another required a signed deal before May. The March agreement contract records YES and March 25 closure. The U.S. Treasury and Ukrainian ministry record an April 30, 2025 signing; the later signed-deal contract records YES and May 4 closure.</dd><dt>A · qualifying condition</dt><dd>rare-earth agreement by March 31; public announcement qualifies</dd><dt>B · qualifying condition</dt><dd>minerals agreement signed or formally adopted by April 30; announcement alone fails</dd><dt>A · settlement / scenario payout</dt><dd>resolved YES; normalized payout $1</dd><dt>B · settlement / scenario payout</dt><dd>resolved YES; normalized payout $1</dd><dt>Interpretation</dt><dd>An agreement announcement and a signature are distinct milestones, and both successive contracts can ultimately pay YES.</dd><dt>Audit boundary</dt><dd>Different windows, rare-earth/mineral scope and evidence authorities prevent a controlled milestone comparison. The YES/YES chronology does not instantiate the supplementary hypothetical YES/NO witness and establishes no manipulation or erroneous March outcome.</dd></dl><p><a href="https://polymarket.com/event/ukraine-agrees-to-give-trump-rare-earth-metals-before-april">Polymarket 521607</a> · <a href="https://polymarket.com/event/trump-x-ukraine-mineral-deal-signed-before-may">Polymarket 532897</a></p></details>
+<details class="case" data-kind="unreviewed"><summary><span class="tag unreviewed">Re-audit required</span><span>2028 U.S. presidential winner</span></summary><p>Scenario and payout assertions withheld pending review of changed inputs.</p></details>
+<details class="case" data-kind="hypothetical"><summary><span class="tag hypothetical">Hypothetical separating scenario</span><span>September 2026 Federal Reserve decision</span></summary><dl><dt>Scenario / event</dt><dd>The target-range upper bound falls by an unusual 12.5 bp.</dd><dt>A · qualifying condition</dt><dd>exactly a 25 bp cut within a mutually exclusive bucket family</dd><dt>B · qualifying condition</dt><dd>upper-bound change rounded up to 25 bp increments; no-statement fallback</dd><dt>A · settlement / scenario payout</dt><dd>NO under the literal exact-25-bp rule</dd><dt>B · settlement / scenario payout</dt><dd>YES because 12.5 bp rounds up to the 25-bp bucket</dd><dt>Interpretation</dt><dd>Even numerical markets need a rule for assigning an unusual measurement to an answer bucket.</dd><dt>Audit boundary</dt><dd>The witness isolates rounding under the archived literal Kalshi wording. Cancellation and no-statement fallbacks also differ, but are not tested by this scenario.</dd></dl><p><a href="https://kalshi.com/markets/kxfeddecision-26sep-c25">Kalshi KXFEDDECISION-26SEP-C25</a> · <a href="https://polymarket.com/event/will-the-fed-decrease-interest-rates-by-25-bps-after-the-september-2026-meeting-586">Polymarket 2252243</a></p></details>
+<details class="case" data-kind="hypothetical"><summary><span class="tag hypothetical">Hypothetical separating scenario</span><span>Donald Trump leaving office versus being the next leader out</span></summary><dl><dt>Scenario / event</dt><dd>Before the deadline, Trump announces a non-term-limit resignation within the next year but stays in office through 2026. No listed leader leaves by December 31, 2026, 11:59 PM ET.</dd><dt>A · qualifying condition</dt><dd>departure announcement can qualify; death triggers price-based allocation</dd><dt>B · qualifying condition</dt><dd>Trump must be FIRST among listed leaders to permanently cease office; announcement and caretaker status fail</dd><dt>A · settlement / scenario payout</dt><dd>YES</dd><dt>B · settlement / scenario payout</dt><dd>NO</dd><dt>Interpretation</dt><dd>Leaving office at some point and being the first listed leader to leave are different bets.</dd><dt>Audit boundary</dt><dd>The primary witness separates announcement from actual departure. The second isolates competition with other leaders. Kalshi&#x27;s death-allocation clause is an additional rule feature, not demonstrated by either witness.</dd></dl><p><a href="https://external-api.kalshi.com/trade-api/v2/markets/KXTRUMPOUT27-27-DJT">Kalshi kalshi:KXTRUMPOUT27-27-DJT</a> · <a href="https://gamma-api.polymarket.com/markets/1116033">Polymarket polymarket:1116033</a></p></details>
+<details class="case" data-kind="hypothetical"><summary><span class="tag hypothetical">Hypothetical separating scenario</span><span>U.S.–Ukraine minerals agreement</span></summary><dl><dt>Scenario / event</dt><dd>On March 31, 2025 before 11:59 PM ET, both governments announce a deal explicitly involving Ukrainian rare earths. No qualifying mineral deal is signed, enacted, or formally adopted through April 30, 2025, 11:59 PM ET.</dd><dt>A · qualifying condition</dt><dd>public announcement that a deal has been reached can qualify</dd><dt>B · qualifying condition</dt><dd>deal must be enacted, signed, or formally adopted; announcement alone fails</dd><dt>A · settlement / scenario payout</dt><dd>YES</dd><dt>B · settlement / scenario payout</dt><dd>NO</dd><dt>Interpretation</dt><dd>Saying &#x27;we have a deal&#x27; and signing the deal are different milestones.</dd><dt>Audit boundary</dt><dd>Successive Polymarket contracts also differ in dates, rare-earth versus mineral scope, and evidence sources. The witness specifies rare earths and both windows; this is not a synchronized cross-platform comparison.</dd></dl><p><a href="https://polymarket.com/event/ukraine-agrees-to-give-trump-rare-earth-metals-before-april">Polymarket 521607</a> · <a href="https://polymarket.com/event/trump-x-ukraine-mineral-deal-signed-before-may">Polymarket 532897</a></p></details>
+<details class="case" data-kind="hypothetical"><summary><span class="tag hypothetical">Hypothetical separating scenario</span><span>Tom Steyer finishing first versus advancing in the California primary</span></summary><dl><dt>Scenario / event</dt><dd>Steyer finishes second without a tie in the June 2, 2026 primary and advances to the general election.</dd><dt>A · qualifying condition</dt><dd>must finish first in the California gubernatorial primary</dd><dt>B · qualifying condition</dt><dd>must advance to the general election; top two candidates qualify</dd><dt>A · settlement / scenario payout</dt><dd>NO</dd><dt>B · settlement / scenario payout</dt><dd>YES</dd><dt>Interpretation</dt><dd>A runner-up can lose the contest for first place and still qualify for the next round.</dd><dt>Audit boundary</dt><dd>This is a hypothetical second-place scenario, not a claim about the observed primary result. Similar headlines retrieved the pair; different success conditions prevent a claim-equivalence label.</dd></dl><p><a href="https://external-api.kalshi.com/trade-api/v2/markets/KXCAGOVPRIMARY1ST-26JUN02-1ST-TSTE">Kalshi kalshi:KXCAGOVPRIMARY1ST-26JUN02-1ST-TSTE</a> · <a href="https://gamma-api.polymarket.com/markets/825450">Polymarket polymarket:825450</a></p></details>
+      <div class="note"><strong>Evidence boundary.</strong> A separating scenario alone establishes no binary marginal probability ordering. The retained inventory and price archives supply no eligible synchronized-price test. Missing price excess is “not estimable”; it is not evidence of zero excess, irrationality or manipulation. See the <a href="REPRESENTATION_CASEBOOK.md">full casebook</a> for sources, dates, operative clauses and audit details.</div>
+    </section>
+
+    <section id="sources">
+      <div class="section-title"><span class="number">07</span><h2>Sources, definitions &amp; reproduction</h2></div>
+      <div class="sources">
+        <div><h3>Where the descriptions come from</h3><ul>
+          <li><code>data/processed/semantics-contracts.csv</code>: contract-level descriptions, native categories, text features and outcome provenance.</li>
+          <li><a href="tables/preprocessing-normalization-ledger.csv">Normalization ledger</a>: retained and excluded archived rows.</li>
+          <li><a href="tables/representation-case-matrix.csv">Case matrix</a>: supplied rule versions, witnesses and recorded settlements. Fingerprints bind assertions to audited inputs; they do not certify exhaustive historical governing-rule coverage.</li>
+          <li><a href="../DATA_SOURCES.md">Data sources</a> · <a href="../docs/CONSTRUCTS.md">Construct definitions</a> · <a href="MEASUREMENT_NOTE.md">Measurement note</a>.</li>
+        </ul></div>
+        <div><h3>How to reproduce this page</h3><p class="scope">From the repository root, with the existing processed archives available:</p>
+          <p><code>uv run python3 main.py describe</code></p>
+          <p class="scope">The command reads local data, regenerates this page, and writes descriptive CSV tables and standalone SVG figures. It performs no acquisition or model fitting. The HTML embeds all charts and styling, so the page remains readable when shared alone; relative source and download links require the repository output files.</p>
+          <p class="scope">Graph percentages use within-platform denominators. IQR is the 25th–75th percentile. Components and the composite range from 0 to 1. No inferred population estimates or new construct-validation scores are introduced.</p>
+        </div>
+      </div>
+    </section>
+    <footer>Same Future, Different Claim · Descriptive atlas of the retained research archives · Snapshot label 2026-09-10 · No external scripts, fonts or chart services.</footer>
+  </main>
+</div>
+<script>
+  const filter = document.querySelector('#evidence-filter');
+  const cards = [...document.querySelectorAll('.case')];
+  const count = document.querySelector('#case-count');
+  function filterCases() {
+    let visible = 0;
+    for (const card of cards) {
+      card.hidden = filter.value !== 'all' && card.dataset.kind !== filter.value;
+      if (!card.hidden) visible += 1;
+    }
+    count.textContent = visible + ' of ' + cards.length + ' exhibits';
+  }
+  document.querySelector('.filter').style.display = 'flex';
+  filter.addEventListener('change', filterCases);
+  filterCases();
+</script>
+</body>
+</html>
